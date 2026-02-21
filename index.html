@@ -1,0 +1,2473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>F1 PRODE — Temporada 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   F1 PRODE — MASTER STYLESHEET
+   Mobile-first, F1 Editorial aesthetic
+   ============================================================ */
+
+:root {
+  --f1-red: #E8002D;
+  --f1-red-dark: #B0001F;
+  --f1-red-glow: rgba(232, 0, 45, 0.25);
+  --black: #08080D;
+  --black-2: #0F0F17;
+  --black-3: #16161F;
+  --card-bg: #1A1A25;
+  --card-border: #252535;
+  --card-border-hover: #35354A;
+  --white: #F5F5F8;
+  --white-muted: rgba(245, 245, 248, 0.6);
+  --white-faint: rgba(245, 245, 248, 0.12);
+  --gold: #FFD100;
+  --silver: #C4C4CC;
+  --bronze: #CD7F32;
+  --green: #00E664;
+  --accent-blue: #00C8FF;
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+
+  --radius: 6px;
+  --radius-lg: 10px;
+  --transition: 0.18s ease;
+  --shadow: 0 8px 32px rgba(0,0,0,0.5);
+  --shadow-red: 0 8px 32px rgba(232,0,45,0.2);
+}
+
+/* ============================================================ RESET */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle grid texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.014) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.014) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================ LOADER */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#loader.hidden { opacity: 0; visibility: hidden; }
+
+.loader-inner { text-align: center; }
+.loader-flag {
+  width: 60px;
+  height: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin: 0 auto 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  animation: flagWave 1.5s ease-in-out infinite;
+}
+.loader-stripe.white { background: #fff; }
+.loader-stripe.black { background: #111; }
+
+@keyframes flagWave {
+  0%, 100% { transform: perspective(200px) rotateY(0deg); }
+  50% { transform: perspective(200px) rotateY(-15deg); }
+}
+
+.loader-title {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.loader-bar {
+  width: 180px;
+  height: 3px;
+  background: var(--white-faint);
+  border-radius: 2px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.loader-fill {
+  height: 100%;
+  background: var(--f1-red);
+  border-radius: 2px;
+  animation: loadFill 1.2s ease forwards;
+}
+@keyframes loadFill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ============================================================ HEADER */
+#site-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(8, 8, 13, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--f1-red);
+  box-shadow: 0 4px 40px rgba(232,0,45,0.15);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logo-flag-icon {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 28px;
+  height: 20px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.logo-flag-icon span:nth-child(1) { background: #fff; }
+.logo-flag-icon span:nth-child(2) { background: #111; }
+.logo-flag-icon span:nth-child(3) { background: #111; }
+.logo-flag-icon span:nth-child(4) { background: #fff; }
+
+.logo-text-block { display: flex; flex-direction: column; line-height: 1; }
+.logo-main {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+.logo-season {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: var(--f1-red);
+  font-weight: 700;
+}
+
+/* NAV */
+.main-nav {
+  display: none;
+  gap: 4px;
+}
+.main-nav.open { display: flex; }
+
+@media (min-width: 640px) {
+  .main-nav { display: flex; }
+  .hamburger { display: none !important; }
+}
+
+/* Mobile nav dropdown */
+@media (max-width: 639px) {
+  .main-nav {
+    position: absolute;
+    top: 58px;
+    left: 0; right: 0;
+    background: rgba(8,8,13,0.98);
+    border-bottom: 1px solid var(--card-border);
+    flex-direction: column;
+    padding: 8px;
+    gap: 4px;
+    z-index: 199;
+  }
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--white-muted);
+  padding: 8px 14px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.nav-btn:hover { color: var(--white); border-color: var(--card-border); }
+.nav-btn.active {
+  background: var(--f1-red);
+  border-color: var(--f1-red);
+  color: #fff;
+  box-shadow: var(--shadow-red);
+}
+.nav-icon { font-size: 1rem; }
+.nav-label { }
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================================ RACE BANNER */
+.race-banner {
+  background: linear-gradient(135deg, var(--black-3) 0%, #1a0308 60%, var(--black-3) 100%);
+  border-bottom: 1px solid var(--card-border);
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.race-banner::before {
+  content: 'GP';
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  font-family: var(--font-display);
+  font-size: 7rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.025);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.race-banner-content {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.race-round-badge {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--f1-red);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.race-banner-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.race-banner-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--white-muted);
+}
+
+.race-banner-stripe {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--f1-red) 0%, transparent 100%);
+}
+
+/* ============================================================ MAIN / CONTAINER */
+#app-main { position: relative; z-index: 1; padding-bottom: 60px; }
+.container { max-width: 640px; margin: 0 auto; padding: 20px 14px; }
+@media (min-width: 900px) { .container { max-width: 900px; } }
+
+/* ============================================================ VIEWS */
+.view { display: none; animation: viewIn 0.3s ease; }
+.view.active { display: block; }
+@keyframes viewIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================ CARDS */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 16px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--f1-red), transparent);
+  opacity: 0.6;
+}
+
+.card-selector { padding: 14px 16px; }
+
+.card-header { margin-bottom: 20px; }
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.card-subtitle { font-size: 0.8rem; color: var(--white-muted); margin-top: 2px; }
+.card-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--f1-red);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--card-border);
+}
+
+/* ============================================================ GP SELECT */
+.gp-select {
+  width: 100%;
+  background: var(--black-2);
+  border: 1px solid var(--card-border);
+  color: var(--white);
+  padding: 12px 14px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23E8002D' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.gp-select:focus { border-color: var(--f1-red); box-shadow: 0 0 0 2px var(--f1-red-glow); }
+
+/* ============================================================ FORM */
+.form-field { margin-bottom: 16px; }
+.field-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  margin-bottom: 7px;
+}
+.field-label.required::after {
+  content: ' *';
+  color: var(--f1-red);
+}
+.label-icon { margin-right: 4px; }
+
+.field-input, .field-select {
+  width: 100%;
+  background: var(--black-2);
+  border: 1px solid var(--card-border);
+  color: var(--white);
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--radius);
+  outline: none;
+  transition: all var(--transition);
+  -webkit-appearance: none;
+}
+.field-input::placeholder { color: rgba(255,255,255,0.25); }
+.field-input:focus, .field-select:focus {
+  border-color: var(--f1-red);
+  box-shadow: 0 0 0 2px var(--f1-red-glow);
+  background: var(--black-3);
+}
+.field-input.error, .field-select.error {
+  border-color: var(--f1-red);
+  animation: shake 0.3s ease;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.field-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+.field-select option { background: var(--black-3); }
+
+.field-hint { font-size: 0.75rem; color: var(--white-muted); margin-top: 4px; }
+
+/* Form sections */
+.form-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 16px;
+}
+.form-divider::before, .form-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--card-border);
+}
+.form-divider span {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  white-space: nowrap;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 400px) { .form-grid-2 { grid-template-columns: 1fr; } }
+
+.podio-note {
+  font-size: 0.75rem;
+  color: var(--white-muted);
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: var(--white-faint);
+  border-radius: var(--radius);
+  border-left: 2px solid var(--f1-red);
+}
+
+.podio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 380px) { .podio-grid { grid-template-columns: 1fr; } }
+
+.podio-field .field-label { text-align: center; justify-content: center; display: flex; }
+.medal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+.medal.gold { background: var(--gold); color: #000; }
+.medal.silver { background: var(--silver); color: #000; }
+.medal.bronze { background: var(--bronze); color: #fff; }
+.podio-field .field-select { text-align: center; font-size: 0.82rem; padding: 10px 6px; padding-right: 24px; }
+
+.form-error {
+  background: rgba(232, 0, 45, 0.1);
+  border: 1px solid rgba(232, 0, 45, 0.4);
+  color: #ff7b7b;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+/* ============================================================ BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px 24px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.btn-full { width: 100%; margin-top: 8px; }
+.btn-sm { padding: 8px 14px; font-size: 0.75rem; }
+
+.btn-primary {
+  background: var(--f1-red);
+  color: #fff;
+  box-shadow: var(--shadow-red);
+}
+.btn-primary:hover {
+  background: var(--f1-red-dark);
+  box-shadow: 0 12px 40px rgba(232,0,45,0.35);
+  transform: translateY(-1px);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  background: var(--white-faint);
+  color: var(--white);
+  border: 1px solid var(--card-border);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: var(--card-border-hover); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--white-muted);
+  border: 1px solid var(--card-border);
+}
+.btn-ghost:hover { color: var(--white); border-color: var(--card-border-hover); }
+
+.btn-danger {
+  background: rgba(232,0,45,0.12);
+  color: var(--f1-red);
+  border: 1px solid rgba(232,0,45,0.3);
+}
+.btn-danger:hover { background: rgba(232,0,45,0.2); }
+
+.btn-flag { font-size: 1rem; }
+
+/* ============================================================ SUMMARY CARD */
+.card-summary { border-color: rgba(0,230,100,0.2); }
+.card-summary::before { background: linear-gradient(to right, var(--green), transparent); }
+.success-title { color: var(--green); }
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.summary-table tr { border-bottom: 1px solid var(--card-border); }
+.summary-table tr:last-child { border-bottom: none; }
+.summary-table td {
+  padding: 10px 4px;
+  font-size: 0.88rem;
+}
+.summary-table td:first-child {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  color: var(--white-muted);
+  text-transform: uppercase;
+  width: 40%;
+}
+.summary-table td:last-child { font-weight: 600; color: var(--white); }
+
+.summary-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================ TABLAS VIEW */
+.section-header { margin-bottom: 20px; }
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--f1-red);
+  font-weight: 700;
+}
+.section-title-text {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: 4px;
+}
+
+/* GP Tabs */
+.gp-tabs-wrapper {
+  overflow-x: auto;
+  margin: 0 -14px 16px;
+  padding: 0 14px;
+  scrollbar-width: none;
+}
+.gp-tabs-wrapper::-webkit-scrollbar { display: none; }
+.gp-tabs {
+  display: flex;
+  gap: 6px;
+  padding-bottom: 2px;
+  min-width: max-content;
+}
+.gp-tab {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--white-muted);
+  padding: 8px 16px;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.gp-tab:hover { border-color: var(--card-border-hover); color: var(--white); }
+.gp-tab.active {
+  background: var(--f1-red);
+  border-color: var(--f1-red);
+  color: #fff;
+}
+
+/* Leaderboard Table */
+.leaderboard-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.lb-header {
+  padding: 12px 16px;
+  background: var(--black-3);
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lb-header-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+
+.lb-table { width: 100%; border-collapse: collapse; }
+.lb-table th {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+  white-space: nowrap;
+}
+.lb-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.9rem;
+}
+.lb-table tr:last-child td { border-bottom: none; }
+.lb-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+/* Rank badges */
+.rank-pos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.75rem;
+}
+.rank-1 { background: var(--gold); color: #000; }
+.rank-2 { background: var(--silver); color: #000; }
+.rank-3 { background: var(--bronze); color: #fff; }
+.rank-other { background: var(--white-faint); color: var(--white-muted); }
+
+.player-name-cell {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.pts-cell {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--gold);
+}
+.pts-bar-cell { width: 90px; }
+.pts-bar {
+  height: 4px;
+  background: var(--white-faint);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.pts-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--f1-red), #ff6060);
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Points breakdown */
+.pts-breakdown {
+  font-size: 0.75rem;
+  color: var(--white-muted);
+}
+.pts-correct { color: var(--green); font-weight: 600; }
+.pts-partial { color: var(--gold); font-weight: 600; }
+
+/* ============================================================ ADMIN */
+.admin-login-card {
+  max-width: 380px;
+  margin: 40px auto;
+  text-align: center;
+  padding: 32px 24px;
+}
+.admin-login-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.admin-login-card .card-title { margin-bottom: 4px; }
+.admin-login-card .form-field { text-align: left; margin-top: 20px; }
+.admin-login-card .btn { width: 100%; margin-top: 12px; }
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Admin predictions list */
+.admin-pred-item {
+  background: var(--black-2);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.admin-pred-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.admin-pred-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.admin-pred-gp {
+  font-size: 0.75rem;
+  color: var(--f1-red);
+  font-weight: 600;
+}
+.admin-pred-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+}
+.admin-pred-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  gap: 8px;
+}
+.admin-pred-row span:first-child {
+  color: var(--white-muted);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.admin-pred-row span:last-child { font-weight: 600; text-align: right; }
+
+.admin-pts-badge {
+  display: inline-block;
+  background: var(--f1-red);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* ============================================================ EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--white-muted);
+}
+.empty-icon { font-size: 2.8rem; margin-bottom: 14px; opacity: 0.6; }
+.empty-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.empty-text { font-size: 0.85rem; line-height: 1.5; }
+
+/* ============================================================ TOAST */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-left: 3px solid var(--f1-red);
+  color: var(--white);
+  padding: 12px 20px;
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 9000;
+  box-shadow: var(--shadow);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  white-space: nowrap;
+  max-width: calc(100vw - 40px);
+  text-align: center;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ============================================================ SCORING POINTS LEGEND */
+.points-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.pts-legend-item {
+  background: var(--black-2);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  text-align: center;
+}
+.pts-legend-val {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--gold);
+  display: block;
+}
+.pts-legend-desc { font-size: 0.72rem; color: var(--white-muted); margin-top: 2px; }
+
+/* ============================================================ SCROLLBAR */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--black-2); }
+::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--f1-red); }
+
+/* ============================================================ UTILITIES */
+.text-red { color: var(--f1-red); }
+.text-muted { color: var(--white-muted); }
+.text-gold { color: var(--gold); }
+.text-green { color: var(--green); }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+/* ============================================================ SUMMARY INLINE */
+.card-summary {
+  border-color: rgba(0,230,100,0.25);
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(0,80,40,0.15) 100%);
+}
+.card-summary::before { background: linear-gradient(to right, var(--green), transparent); }
+.success-title { color: var(--green) !important; }
+
+.summary-header-info {
+  background: var(--black-2);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.summary-player-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--white);
+}
+.summary-race-name {
+  font-size: 0.85rem;
+  color: var(--f1-red);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.summary-timestamp {
+  font-size: 0.75rem;
+  color: var(--white-muted);
+  margin-top: 4px;
+}
+
+.summary-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 12px;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-row:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+.summary-row-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  flex-shrink: 0;
+}
+.summary-row-val {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--white);
+  text-align: right;
+}
+
+.summary-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================ ADMIN ENHANCED */
+.admin-gp-block {
+  margin-bottom: 24px;
+}
+
+.admin-gp-title {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--f1-red);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.status-chip {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.status-chip.scored { background: rgba(0,230,100,0.15); color: var(--green); border: 1px solid rgba(0,230,100,0.3); }
+.status-chip.open { background: rgba(255,209,0,0.1); color: var(--gold); border: 1px solid rgba(255,209,0,0.3); }
+
+.admin-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+.admin-rank.rank-1 { background: var(--gold); color: #000; }
+.admin-rank.rank-2 { background: var(--silver); color: #000; }
+.admin-rank.rank-3 { background: var(--bronze); color: #fff; }
+.admin-rank.rank-other { background: var(--white-faint); color: var(--white-muted); }
+
+.admin-pts-badge-empty {
+  font-size: 0.72rem;
+  color: var(--white-muted);
+  font-style: italic;
+}
+
+/* Comparison table */
+.pred-comparison-table {
+  margin-top: 12px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.pred-comp-header {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--black-3);
+  border-bottom: 1px solid var(--card-border);
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+
+.pred-comp-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
+  gap: 4px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.8rem;
+  align-items: center;
+  transition: background var(--transition);
+}
+.pred-comp-row:last-child { border-bottom: none; }
+
+.pred-comp-row.comp-correct { background: rgba(0,230,100,0.06); }
+.pred-comp-row.comp-wrong { background: rgba(232,0,45,0.05); }
+.pred-comp-row.comp-bonus { background: rgba(255,209,0,0.07); }
+
+.comp-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+.comp-correct .comp-label { color: rgba(0,230,100,0.8); }
+.comp-wrong .comp-label { color: rgba(232,0,45,0.8); }
+
+.comp-pred { font-weight: 600; color: var(--white); font-size: 0.82rem; }
+.comp-correct .comp-pred { color: var(--green); }
+.comp-wrong .comp-pred { color: rgba(255,100,100,0.9); text-decoration: line-through; text-decoration-color: rgba(232,0,45,0.5); }
+
+.comp-result { font-weight: 600; color: var(--white-muted); font-size: 0.82rem; }
+.comp-correct .comp-result { color: var(--green); }
+
+.comp-pts {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: var(--white-muted);
+  text-align: right;
+}
+.comp-correct .comp-pts { color: var(--green); }
+.comp-wrong .comp-pts { color: rgba(255,100,100,0.6); }
+
+.pred-comp-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--black-3);
+  border-top: 1px solid var(--card-border);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: var(--gold);
+}
+
+/* Mobile: stack comparison columns */
+@media (max-width: 480px) {
+  .pred-comp-header { grid-template-columns: 2fr 1.5fr 1.5fr 0.8fr; gap: 2px; font-size: 0.52rem; padding: 6px 10px; }
+  .pred-comp-row { grid-template-columns: 2fr 1.5fr 1.5fr 0.8fr; gap: 2px; padding: 8px 10px; font-size: 0.75rem; }
+  .comp-label { font-size: 0.64rem; }
+}
+
+/* ============================================================ POINTS TAG ON LABELS */
+.pts-tag {
+  display: inline-block;
+  background: rgba(232, 0, 45, 0.15);
+  color: var(--f1-red);
+  border: 1px solid rgba(232, 0, 45, 0.3);
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* ============================================================ SPRINT SECTION */
+.sprint-divider span { color: #9B5FE0; }
+.sprint-divider::before, .sprint-divider::after { background: rgba(155,95,224,0.3); }
+
+.sprint-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(123,47,190,0.12), rgba(123,47,190,0.05));
+  border: 1px solid rgba(123,47,190,0.3);
+  border-left: 3px solid #7B2FBE;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.sprint-banner-icon { font-size: 1.6rem; flex-shrink: 0; }
+.sprint-banner-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #B47FFF;
+  text-transform: uppercase;
+}
+.sprint-banner-sub {
+  font-size: 0.78rem;
+  color: var(--white-muted);
+  margin-top: 2px;
+}
+
+/* ── CONNECTION STATUS BAR ─────────────────────────────────── */
+.conn-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  padding: 10px 20px;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  transition: opacity 0.4s;
+}
+.conn-loading { background: #1a1a2e; color: #aaa; }
+.conn-ok      { background: rgba(0,180,80,0.9); color: #fff; }
+.conn-warn    { background: rgba(255,160,0,0.95); color: #000; }
+.conn-error   { background: rgba(200,0,40,0.95); color: #fff; }
+
+/* ── SPINNER ───────────────────────────────────────────────── */
+.btn-spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+</style>
+</head>
+<body>
+
+<!-- CINEMATIC LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-flag">
+      <div class="loader-stripe white"></div>
+      <div class="loader-stripe black"></div>
+      <div class="loader-stripe white"></div>
+      <div class="loader-stripe black"></div>
+    </div>
+    <div class="loader-title">F1 PRODE</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="header-content">
+    <div class="header-logo">
+      <div class="logo-flag-icon">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="logo-text-block">
+        <span class="logo-main">F1 PRODE</span>
+        <span class="logo-season">TEMPORADA 2026</span>
+      </div>
+    </div>
+
+    <nav class="main-nav" id="main-nav">
+      <button class="nav-btn active" data-view="pronostico">
+        <span class="nav-icon">🏁</span>
+        <span class="nav-label">Pronóstico</span>
+      </button>
+      <button class="nav-btn" data-view="tablas">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Tablas</span>
+      </button>
+      <button class="nav-btn" data-view="admin">
+        <span class="nav-icon">🔐</span>
+        <span class="nav-label">Admin</span>
+      </button>
+    </nav>
+
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- RACE BANNER -->
+<div class="race-banner" id="race-banner">
+  <div class="race-banner-content">
+    <div class="race-round-badge">RONDA <span id="banner-round">—</span></div>
+    <div class="race-banner-name" id="banner-name">Cargando GP...</div>
+    <div class="race-banner-meta">
+      <span id="banner-flag">🏴</span>
+      <span id="banner-date">—</span>
+    </div>
+  </div>
+  <div class="race-banner-stripe"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="app-main">
+
+  <!-- ===================== VIEW: PRONÓSTICO ===================== -->
+  <section class="view active" id="view-pronostico">
+    <div class="container">
+
+      <!-- Single unified form card — GP select INSIDE the form -->
+      <div class="card" id="form-card">
+        <div class="card-header">
+          <div class="card-title">TU PRONÓSTICO</div>
+          <div class="card-subtitle">Completá todos los campos y enviá</div>
+        </div>
+
+        <form id="prediction-form" novalidate>
+
+          <!-- GP selector (inside form) -->
+          <div class="form-field">
+            <label class="field-label required">🏁 GRAN PREMIO</label>
+            <select id="f-gp" class="field-select">
+              <option value="">— Seleccioná el GP —</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label required">👤 NOMBRE DE JUGADOR</label>
+            <input type="text" id="f-player" class="field-input" placeholder="Tu nombre..." maxlength="24" autocomplete="off" spellcheck="false">
+          </div>
+
+          <div class="form-divider"><span>CLASIFICACIÓN & CARRERA</span></div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label class="field-label required"><span class="label-icon">⚡</span> POLE POSITION <span class="pts-tag">+5 pts</span></label>
+              <select id="f-pole" class="field-select"><option value="">— Piloto —</option></select>
+            </div>
+            <div class="form-field">
+              <label class="field-label required"><span class="label-icon">🏆</span> GANADOR DEL GP <span class="pts-tag">+10 pts</span></label>
+              <select id="f-winner" class="field-select"><option value="">— Piloto —</option></select>
+            </div>
+          </div>
+
+          <div class="form-divider"><span>PODIO COMPLETO</span></div>
+          <div class="podio-note">⚠️ Los tres pilotos deben ser distintos entre sí · Podio exacto completo: <strong>+20 pts bonus</strong> · Cada posición exacta: <strong>+5 pts</strong></div>
+
+          <div class="podio-grid">
+            <div class="form-field podio-field">
+              <label class="field-label required"><span class="medal gold">1°</span><span class="pts-tag">+5</span></label>
+              <select id="f-p1" class="field-select podio-select"><option value="">— Piloto —</option></select>
+            </div>
+            <div class="form-field podio-field">
+              <label class="field-label required"><span class="medal silver">2°</span><span class="pts-tag">+5</span></label>
+              <select id="f-p2" class="field-select podio-select"><option value="">— Piloto —</option></select>
+            </div>
+            <div class="form-field podio-field">
+              <label class="field-label required"><span class="medal bronze">3°</span><span class="pts-tag">+5</span></label>
+              <select id="f-p3" class="field-select podio-select"><option value="">— Piloto —</option></select>
+            </div>
+          </div>
+
+          <div class="form-divider"><span>DETALLES DE CARRERA</span></div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label class="field-label required"><span class="label-icon">⏱</span> VUELTA RÁPIDA <span class="pts-tag">+5 pts</span></label>
+              <select id="f-fl" class="field-select"><option value="">— Piloto —</option></select>
+            </div>
+            <div class="form-field">
+              <label class="field-label required"><span class="label-icon">⭐</span> PILOTO DEL DÍA <span class="pts-tag">+5 pts</span></label>
+              <select id="f-dotd" class="field-select"><option value="">— Piloto —</option></select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label class="field-label required"><span class="label-icon">🔧</span> PIT STOP MÁS RÁPIDO <span class="pts-tag">+5 pts</span></label>
+              <select id="f-pit" class="field-select"><option value="">— Equipo —</option></select>
+            </div>
+            <div class="form-field">
+              <label class="field-label required"><span class="label-icon">💥</span> DNF <span class="pts-tag">+5 pts</span></label>
+              <select id="f-dnf" class="field-select"><option value="">— Piloto / Sin DNF —</option></select>
+            </div>
+          </div>
+
+          <div id="form-error" class="form-error" style="display:none;"></div>
+
+          <!-- SPRINT SECTION — shown only for sprint GPs -->
+          <div id="sprint-section" style="display:none;">
+            <div class="form-divider sprint-divider"><span>⚡ CARRERA SPRINT</span></div>
+            <div class="sprint-banner">
+              <span class="sprint-banner-icon">🟣</span>
+              <div>
+                <div class="sprint-banner-title">FIN DE SEMANA CON SPRINT</div>
+                <div class="sprint-banner-sub">Este GP incluye una carrera Sprint. Pronosticá los resultados adicionales.</div>
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label class="field-label required"><span class="label-icon">🟣</span> POLE DE LA SPRINT <span class="pts-tag">+3 pts</span></label>
+                <select id="f-sprint-pole" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label required"><span class="label-icon">🏎</span> GANADOR DE LA SPRINT <span class="pts-tag">+5 pts</span></label>
+                <select id="f-sprint-winner" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-full">
+            <span class="btn-flag">🏁</span>
+            ENVIAR PRONÓSTICO
+          </button>
+
+        </form>
+      </div>
+
+      <!-- Summary Card — visible inline right below the form -->
+      <div class="card card-summary" id="summary-card" style="display:none;">
+        <div class="card-header">
+          <div class="card-title success-title">✅ PRONÓSTICO REGISTRADO</div>
+          <div class="card-subtitle">Guardado correctamente. Compartilo con el grupo.</div>
+        </div>
+        <div id="summary-content"></div>
+        <div class="summary-actions">
+          <button class="btn btn-primary" onclick="copySummary()">
+            📋 COPIAR AL PORTAPAPELES
+          </button>
+          <button class="btn btn-ghost" onclick="newPrediction()">
+            ➕ NUEVO PRONÓSTICO
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== VIEW: TABLAS ===================== -->
+  <section class="view" id="view-tablas">
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-label">CLASIFICACIÓN</div>
+        <div class="section-title-text">TABLA DE PUNTOS</div>
+      </div>
+
+      <!-- GP Tabs -->
+      <div class="gp-tabs-wrapper">
+        <div class="gp-tabs" id="gp-tabs">
+          <button class="gp-tab active" data-tab="general">GENERAL</button>
+        </div>
+      </div>
+
+      <!-- Tab Content -->
+      <div id="tabla-content">
+        <div class="empty-state">
+          <div class="empty-icon">🏆</div>
+          <div class="empty-title">Sin datos aún</div>
+          <div class="empty-text">Los puntos aparecerán cuando el admin cargue los resultados</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== VIEW: ADMIN ===================== -->
+  <section class="view" id="view-admin">
+    <div class="container">
+
+      <!-- Admin Login -->
+      <div id="admin-login" class="card admin-login-card">
+        <div class="admin-login-icon">🔐</div>
+        <div class="card-title">PANEL ADMIN</div>
+        <div class="card-subtitle">Acceso restringido</div>
+        <div class="form-field">
+          <input type="password" id="admin-password" class="field-input" placeholder="Contraseña..." onkeydown="if(event.key==='Enter')adminLogin()">
+        </div>
+        <button class="btn btn-primary" onclick="adminLogin()">INGRESAR</button>
+        <div id="login-error" class="form-error" style="display:none;">Contraseña incorrecta</div>
+      </div>
+
+      <!-- Admin Panel -->
+      <div id="admin-panel" style="display:none;">
+
+        <div class="admin-header">
+          <div class="section-title-text">PANEL ADMIN</div>
+          <div style="display:flex;gap:8px;">
+            <button id="btn-refresh" class="btn btn-ghost btn-sm" onclick="adminRefresh()">🔄 Actualizar</button>
+            <button class="btn btn-ghost btn-sm" onclick="adminLogout()">Salir</button>
+          </div>
+        </div>
+
+        <!-- GP Config -->
+        <div class="card">
+          <div class="card-label">CONFIGURACIÓN DE FECHA</div>
+          <div class="form-field">
+            <label class="field-label">GP ACTIVO</label>
+            <select id="admin-active-gp" class="field-select" onchange="saveActiveGP()">
+              <option value="">— Seleccionar GP —</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="field-label">CONTRASEÑA ADMIN</label>
+            <div style="display:flex;gap:8px;">
+              <input type="password" id="admin-new-password" class="field-input" placeholder="Nueva contraseña...">
+              <button class="btn btn-secondary btn-sm" onclick="changePassword()">Cambiar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- All Predictions -->
+        <div class="card">
+          <div class="card-label">PRONÓSTICOS RECIBIDOS</div>
+          <div id="admin-predictions-list"></div>
+        </div>
+
+        <!-- Results Entry -->
+        <div class="card">
+          <div class="card-label">RESULTADOS OFICIALES</div>
+          <div class="form-field">
+            <label class="field-label">GP</label>
+            <select id="result-gp-select" class="field-select" onchange="loadResultForm()">
+              <option value="">— Seleccionar GP —</option>
+            </select>
+          </div>
+          <div id="result-form" style="display:none;">
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label class="field-label">⚡ POLE POSITION</label>
+                <select id="res-pole" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">🏆 GANADOR</label>
+                <select id="res-winner" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+            </div>
+            <div class="podio-grid">
+              <div class="form-field podio-field">
+                <label class="field-label"><span class="medal gold">1°</span></label>
+                <select id="res-p1" class="field-select podio-select"><option value="">— Piloto —</option></select>
+              </div>
+              <div class="form-field podio-field">
+                <label class="field-label"><span class="medal silver">2°</span></label>
+                <select id="res-p2" class="field-select podio-select"><option value="">— Piloto —</option></select>
+              </div>
+              <div class="form-field podio-field">
+                <label class="field-label"><span class="medal bronze">3°</span></label>
+                <select id="res-p3" class="field-select podio-select"><option value="">— Piloto —</option></select>
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label class="field-label">⏱ VUELTA RÁPIDA</label>
+                <select id="res-fl" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">⭐ PILOTO DEL DÍA</label>
+                <select id="res-dotd" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label class="field-label">🔧 PIT STOP MÁS RÁPIDO</label>
+                <select id="res-pit" class="field-select"><option value="">— Equipo —</option></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">💥 DNF</label>
+                <select id="res-dnf" class="field-select"><option value="">—</option></select>
+              </div>
+            </div>
+            <div id="admin-sprint-section" style="display:none;">
+              <div class="form-divider sprint-divider"><span>⚡ CARRERA SPRINT</span></div>
+              <div class="form-grid-2">
+                <div class="form-field">
+                  <label class="field-label">🟣 POLE DE LA SPRINT</label>
+                  <select id="res-sprint-pole" class="field-select"><option value="">— Piloto —</option></select>
+                </div>
+                <div class="form-field">
+                  <label class="field-label">🏎 GANADOR DE LA SPRINT</label>
+                  <select id="res-sprint-winner" class="field-select"><option value="">— Piloto —</option></select>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="saveResults()">💾 GUARDAR & CALCULAR PUNTOS</button>
+              <button class="btn btn-danger" onclick="resetRace()">🗑 RESETEAR FECHA</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Points Summary per GP -->
+        <div class="card">
+          <div class="card-label">PUNTOS POR GP</div>
+          <div id="admin-points-summary"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script type="module">
+// ============================================================
+// F1 PRODE — DATA 2025
+// ============================================================
+
+const DRIVERS_2025 = [
+  'Lando Norris',
+  'Oscar Piastri',
+  'George Russell',
+  'Kimi Antonelli',
+  'Max Verstappen',
+  'Isack Hadjar',
+  'Charles Leclerc',
+  'Lewis Hamilton',
+  'Alexander Albon',
+  'Carlos Sainz',
+  'Liam Lawson',
+  'Arvid Lindblad',
+  'Fernando Alonso',
+  'Lance Stroll',
+  'Esteban Ocon',
+  'Oliver Bearman',
+  'Nico Hülkenberg',
+  'Gabriel Bortoleto',
+  'Pierre Gasly',
+  'Franco Colapinto',
+  'Sergio Pérez',
+  'Valtteri Bottas',
+];
+
+const TEAMS_2025 = [
+  'McLaren',
+  'Mercedes',
+  'Red Bull',
+  'Ferrari',
+  'Williams',
+  'Racing Bulls',
+  'Aston Martin',
+  'Haas',
+  'Audi',
+  'Alpine',
+  'Cadillac',
+];
+
+const NO_DNF_OPTION = 'Sin abandonos';
+
+const RACES_2025 = [
+  { id: 'aus26',  round: 1,  name: 'Gran Premio de Australia',       short: 'Australia',      flag: '🇦🇺', date: '08 Mar 2026', circuit: 'Albert Park' },
+  { id: 'chn26',  round: 2,  name: 'Gran Premio de China',           short: 'China',          flag: '🇨🇳', date: '15 Mar 2026', circuit: 'Shanghai International', sprint: true },
+  { id: 'jpn26',  round: 3,  name: 'Gran Premio de Japón',           short: 'Japón',          flag: '🇯🇵', date: '29 Mar 2026', circuit: 'Suzuka' },
+  { id: 'bhr26',  round: 4,  name: 'Gran Premio de Baréin',          short: 'Baréin',         flag: '🇧🇭', date: '12 Abr 2026', circuit: 'Sakhir' },
+  { id: 'sau26',  round: 5,  name: 'Gran Premio de Arabia Saudita',  short: 'Arabia Saudita', flag: '🇸🇦', date: '19 Abr 2026', circuit: 'Jeddah Corniche' },
+  { id: 'mia26',  round: 6,  name: 'Gran Premio de Miami',           short: 'Miami',          flag: '🇺🇸', date: '03 May 2026', circuit: 'Miami International', sprint: true },
+  { id: 'can26',  round: 7,  name: 'Gran Premio de Canadá',          short: 'Canadá',         flag: '🇨🇦', date: '24 May 2026', circuit: 'Gilles Villeneuve', sprint: true },
+  { id: 'mon26',  round: 8,  name: 'Gran Premio de Mónaco',          short: 'Mónaco',         flag: '🇲🇨', date: '07 Jun 2026', circuit: 'Circuit de Monaco' },
+  { id: 'esp26',  round: 9,  name: 'Gran Premio de España',          short: 'España',         flag: '🇪🇸', date: '14 Jun 2026', circuit: 'Circuit de Barcelona-Catalunya' },
+  { id: 'aut26',  round: 10, name: 'Gran Premio de Austria',         short: 'Austria',        flag: '🇦🇹', date: '28 Jun 2026', circuit: 'Red Bull Ring' },
+  { id: 'gbr26',  round: 11, name: 'Gran Premio de Gran Bretaña',    short: 'Gran Bretaña',   flag: '🇬🇧', date: '05 Jul 2026', circuit: 'Silverstone', sprint: true },
+  { id: 'bel26',  round: 12, name: 'Gran Premio de Bélgica',         short: 'Bélgica',        flag: '🇧🇪', date: '19 Jul 2026', circuit: 'Spa-Francorchamps' },
+  { id: 'hun26',  round: 13, name: 'Gran Premio de Hungría',         short: 'Hungría',        flag: '🇭🇺', date: '26 Jul 2026', circuit: 'Hungaroring' },
+  { id: 'ned26',  round: 14, name: 'Gran Premio de Países Bajos',    short: 'Países Bajos',   flag: '🇳🇱', date: '23 Ago 2026', circuit: 'Zandvoort', sprint: true },
+  { id: 'ita26',  round: 15, name: 'Gran Premio de Italia',          short: 'Italia',         flag: '🇮🇹', date: '06 Sep 2026', circuit: 'Monza' },
+  { id: 'mad26',  round: 16, name: 'Gran Premio de España (Madrid)', short: 'Madrid',         flag: '🇪🇸', date: '13 Sep 2026', circuit: 'Madring (Madrid)' },
+  { id: 'aze26',  round: 17, name: 'Gran Premio de Azerbaiyán',      short: 'Azerbaiyán',     flag: '🇦🇿', date: '26 Sep 2026', circuit: 'Baku City Circuit' },
+  { id: 'sgp26',  round: 18, name: 'Gran Premio de Singapur',        short: 'Singapur',       flag: '🇸🇬', date: '11 Oct 2026', circuit: 'Marina Bay', sprint: true },
+  { id: 'usa26',  round: 19, name: 'Gran Premio de EE.UU.',          short: 'EE.UU.',         flag: '🇺🇸', date: '25 Oct 2026', circuit: 'Circuit of the Americas' },
+  { id: 'mex26',  round: 20, name: 'Gran Premio de México',          short: 'México',         flag: '🇲🇽', date: '01 Nov 2026', circuit: 'Hermanos Rodríguez' },
+  { id: 'bra26',  round: 21, name: 'Gran Premio de Brasil',          short: 'Brasil',         flag: '🇧🇷', date: '08 Nov 2026', circuit: 'Interlagos' },
+  { id: 'lv26',   round: 22, name: 'Gran Premio de Las Vegas',       short: 'Las Vegas',      flag: '🇺🇸', date: '21 Nov 2026', circuit: 'Las Vegas Strip' },
+  { id: 'qat26',  round: 23, name: 'Gran Premio de Catar',           short: 'Catar',          flag: '🇶🇦', date: '29 Nov 2026', circuit: 'Losail' },
+  { id: 'abud26', round: 24, name: 'Gran Premio de Abu Dabi',        short: 'Abu Dabi',       flag: '🇦🇪', date: '06 Dic 2026', circuit: 'Yas Marina' },
+];
+
+// Scoring system
+const POINTS_SYSTEM = {
+  pole:           5,
+  winner:         10,
+  podio_exact:    20,   // all 3 exact (in addition to individual)
+  p1_exact:       5,
+  p2_exact:       5,
+  p3_exact:       5,
+  fastest_lap:    5,
+  dotd:           5,
+  pit_stop:       5,
+  dnf:            5,
+  sprint_pole:    3,
+  sprint_winner:  5,
+};
+
+const ADMIN_PASSWORD_KEY = 'f1prode_admin_pwd';
+const DEFAULT_ADMIN_PASSWORD = 'f1prode';
+
+
+// ============================================================
+// F1 PRODE 2026 — App con backend Google Sheets
+// ============================================================
+
+// ⚠️  REEMPLAZÁ esta URL con la de tu Google Apps Script
+// ⚠️  PASO 4: Reemplazá '' con tu URL del Apps Script
+// Ejemplo: const API_URL = 'https://script.google.com/macros/s/ABC123.../exec';
+const API_URL ='https://script.google.com/macros/s/AKfycbww3pUvG38u6K5-qvTJwABg7JNgdh4LggV4wMZzBj-agX14drz8QvJAEKVZG7sDPvs/exec';
+
+// ─── ESTADO ──────────────────────────────────────────────────
+let appState = {
+  activeGP:    null,
+  predictions: [],
+  results:     {},
+  points:      {},
+};
+let isAdminLoggedIn   = false;
+let adminPassword     = 'f1prode';
+let currentSummaryText = '';
+let isSending         = false;
+
+// ─── PUNTOS (cálculo local) ──────────────────────────────────
+function calculatePointsForGP(gpId) {
+  const result = appState.results[gpId];
+  if (!result) return;
+  if (!appState.points[gpId]) appState.points[gpId] = {};
+  appState.predictions.filter(p => p.gpId === gpId).forEach(pred => {
+    const bd = {}; let total = 0;
+    const hit = (val, res, key, pts) => { if (val && val === res) { bd[key] = pts; total += pts; } };
+    hit(pred.pole,       result.pole,       'pole',       POINTS_SYSTEM.pole);
+    hit(pred.winner,     result.winner,     'winner',     POINTS_SYSTEM.winner);
+    hit(pred.p1,         result.p1,         'p1',         POINTS_SYSTEM.p1_exact);
+    hit(pred.p2,         result.p2,         'p2',         POINTS_SYSTEM.p2_exact);
+    hit(pred.p3,         result.p3,         'p3',         POINTS_SYSTEM.p3_exact);
+    hit(pred.fastestLap, result.fastestLap, 'fastestLap', POINTS_SYSTEM.fastest_lap);
+    hit(pred.dotd,       result.dotd,       'dotd',       POINTS_SYSTEM.dotd);
+    hit(pred.pitStop,    result.pitStop,    'pitStop',    POINTS_SYSTEM.pit_stop);
+    hit(pred.dnf,        result.dnf,        'dnf',        POINTS_SYSTEM.dnf);
+    if (pred.p1 === result.p1 && pred.p2 === result.p2 && pred.p3 === result.p3) {
+      bd.podio_exact = POINTS_SYSTEM.podio_exact; total += POINTS_SYSTEM.podio_exact;
+    }
+    if (result.sprintPole != null && result.sprintPole !== '') {
+      hit(pred.sprintPole,   result.sprintPole,   'sprintPole',   POINTS_SYSTEM.sprint_pole);
+      hit(pred.sprintWinner, result.sprintWinner, 'sprintWinner', POINTS_SYSTEM.sprint_winner);
+    }
+    appState.points[gpId][pred.player] = { total, breakdown: bd };
+  });
+}
+
+function recalcAllPoints() {
+  appState.points = {};
+  RACES_2025.forEach(r => { if (appState.results[r.id]) calculatePointsForGP(r.id); });
+}
+
+// ─── API ─────────────────────────────────────────────────────
+async function apiGet(params) {
+  if (!API_URL) throw new Error('NO_API');
+  const res  = await fetch(API_URL + '?' + new URLSearchParams(params));
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+async function apiPost(body) {
+  if (!API_URL) throw new Error('NO_API');
+  const res  = await fetch(API_URL, { method: 'POST', body: JSON.stringify(body) });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+// ─── CARGAR DATOS ────────────────────────────────────────────
+async function loadFromSheets() {
+  showConnectionStatus('loading');
+  try {
+    const data = await apiGet({ action: 'getAll' });
+    appState.predictions = Array.isArray(data.predictions) ? data.predictions : [];
+    appState.results     = data.results  || {};
+    appState.activeGP    = data.config?.activeGP || null;
+    adminPassword        = data.config?.adminPassword || 'f1prode';
+    recalcAllPoints();
+    showConnectionStatus('ok');
+    return true;
+  } catch(e) {
+    if (e.message === 'NO_API') {
+      showConnectionStatus('no-api');
+    } else {
+      showConnectionStatus('error', e.message);
+    }
+    return false;
+  }
+}
+
+function showConnectionStatus(state, msg) {
+  let bar = document.getElementById('conn-bar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'conn-bar';
+    document.body.prepend(bar);
+  }
+  const states = {
+    loading:  { cls: 'conn-loading', text: '⏳ Conectando con la base de datos...' },
+    ok:       { cls: 'conn-ok',      text: '✅ Conectado — datos compartidos activos', hide: 3000 },
+    'no-api': { cls: 'conn-warn',    text: '⚠️ Sin API configurada. Pegá la URL del script en el HTML.' },
+    error:    { cls: 'conn-error',   text: '❌ Error de conexión: ' + (msg||'') },
+  };
+  const s = states[state] || states.error;
+  bar.className = 'conn-bar ' + s.cls;
+  bar.textContent = s.text;
+  bar.style.display = 'block';
+  if (s.hide) setTimeout(() => bar.style.display = 'none', s.hide);
+}
+
+// ─── TOAST ───────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, duration = 3500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ─── LOADER ──────────────────────────────────────────────────
+function hideLoader() {
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1400);
+}
+
+// ─── NAV ─────────────────────────────────────────────────────
+function initNav() {
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      showView(btn.dataset.view);
+      document.getElementById('main-nav').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
+  document.getElementById('hamburger').addEventListener('click', function() {
+    this.classList.toggle('open');
+    document.getElementById('main-nav').classList.toggle('open');
+  });
+}
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + name)?.classList.add('active');
+  document.querySelector(`[data-view="${name}"]`)?.classList.add('active');
+  if (name === 'tablas') renderTablas();
+  if (name === 'admin')  renderAdminPanel();
+}
+
+// ─── BANNER ──────────────────────────────────────────────────
+function updateBanner() {
+  const race = RACES_2025.find(r => r.id === appState.activeGP) || RACES_2025[0];
+  document.getElementById('banner-round').textContent = race.round;
+  document.getElementById('banner-name').textContent  = race.name;
+  document.getElementById('banner-flag').textContent  = race.flag;
+  document.getElementById('banner-date').textContent  = race.date;
+}
+
+// ─── SELECTS ─────────────────────────────────────────────────
+function driverOptions(sel = '') {
+  return DRIVERS_2025.map(d => `<option value="${d}" ${d===sel?'selected':''}>${d}</option>`).join('');
+}
+function teamOptions(sel = '') {
+  return TEAMS_2025.map(t => `<option value="${t}" ${t===sel?'selected':''}>${t}</option>`).join('');
+}
+function populateGPSelect(id, sel = '') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '<option value="">— Seleccioná el GP —</option>' +
+    RACES_2025.map(r =>
+      `<option value="${r.id}" ${r.id===sel?'selected':''}>${r.flag} R${r.round} — ${r.short} (${r.date})${r.sprint?' ⚡ SPRINT':''}</option>`
+    ).join('');
+}
+
+function populateFormSelects() {
+  ['f-pole','f-winner','f-p1','f-p2','f-p3','f-fl','f-dotd','f-sprint-pole','f-sprint-winner',
+   'res-pole','res-winner','res-p1','res-p2','res-p3','res-fl','res-dotd','res-sprint-pole','res-sprint-winner']
+    .forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = '<option value="">— Piloto —</option>' + driverOptions();
+    });
+  const dnf = document.getElementById('f-dnf');
+  if (dnf) dnf.innerHTML = `<option value="">— Piloto / Sin DNF —</option><option value="${NO_DNF_OPTION}">${NO_DNF_OPTION}</option>` + driverOptions();
+  const pit = document.getElementById('f-pit');
+  if (pit) pit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions();
+  const rpit = document.getElementById('res-pit');
+  if (rpit) rpit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions();
+  const rdnf = document.getElementById('res-dnf');
+  if (rdnf) rdnf.innerHTML = `<option value="">—</option><option value="${NO_DNF_OPTION}">${NO_DNF_OPTION}</option>` + driverOptions();
+
+  populateGPSelect('f-gp', appState.activeGP || '');
+  const fgp = document.getElementById('f-gp');
+  if (fgp) fgp.addEventListener('change', () => {
+    if (fgp.value) { appState.activeGP = fgp.value; updateBanner(); }
+    updateSprintFields();
+  });
+  updateSprintFields();
+}
+
+function updateSprintFields() {
+  const gpId = document.getElementById('f-gp')?.value;
+  const race  = RACES_2025.find(r => r.id === gpId);
+  const sec   = document.getElementById('sprint-section');
+  if (!sec) return;
+  if (race?.sprint) {
+    sec.style.display = 'block';
+  } else {
+    sec.style.display = 'none';
+    ['f-sprint-pole','f-sprint-winner'].forEach(id => { const e = document.getElementById(id); if(e) e.value=''; });
+  }
+}
+
+// ─── VALIDACIÓN ──────────────────────────────────────────────
+function validateForm() {
+  document.querySelectorAll('#prediction-form .field-input, #prediction-form .field-select')
+    .forEach(el => el.classList.remove('error'));
+  const errEl = document.getElementById('form-error');
+  errEl.style.display = 'none';
+
+  const gpId = document.getElementById('f-gp')?.value;
+  const race  = RACES_2025.find(r => r.id === gpId);
+  const checks = [
+    { id:'f-gp',     label:'Gran Premio' },
+    { id:'f-player', label:'Tu nombre' },
+    { id:'f-pole',   label:'Pole position' },
+    { id:'f-winner', label:'Ganador' },
+    { id:'f-p1',     label:'1° lugar' },
+    { id:'f-p2',     label:'2° lugar' },
+    { id:'f-p3',     label:'3° lugar' },
+    { id:'f-fl',     label:'Vuelta rápida' },
+    { id:'f-dotd',   label:'Piloto del día' },
+    { id:'f-pit',    label:'Pit stop' },
+    { id:'f-dnf',    label:'DNF' },
+  ];
+  if (race?.sprint) {
+    checks.push({ id:'f-sprint-pole',   label:'Pole Sprint' });
+    checks.push({ id:'f-sprint-winner', label:'Ganador Sprint' });
+  }
+  const missing = checks.filter(({ id }) => {
+    const el = document.getElementById(id);
+    const ok = el?.value?.trim();
+    if (!ok) el?.classList.add('error');
+    return !ok;
+  }).map(c => c.label);
+
+  if (missing.length) {
+    errEl.innerHTML = `⚠️ Falta completar: <strong>${missing.join(', ')}</strong>`;
+    errEl.style.display = 'block';
+    document.querySelector('#prediction-form .error')?.scrollIntoView({ behavior:'smooth', block:'center' });
+    return false;
+  }
+  const podio = ['f-p1','f-p2','f-p3'].map(id => document.getElementById(id).value);
+  if (new Set(podio).size < 3) {
+    ['f-p1','f-p2','f-p3'].forEach(id => document.getElementById(id).classList.add('error'));
+    errEl.textContent = '⚠️ El podio no puede tener pilotos repetidos.';
+    errEl.style.display = 'block';
+    return false;
+  }
+  return true;
+}
+
+// ─── ENVIAR PRONÓSTICO ───────────────────────────────────────
+function initPredictionForm() {
+  const form = document.getElementById('prediction-form');
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (isSending || !validateForm()) return;
+
+    const gpId = document.getElementById('f-gp').value;
+    const race  = RACES_2025.find(r => r.id === gpId);
+    const pred  = {
+      id:           Date.now(),
+      timestamp:    new Date().toISOString(),
+      player:       document.getElementById('f-player').value.trim(),
+      gpId,
+      pole:         document.getElementById('f-pole').value,
+      winner:       document.getElementById('f-winner').value,
+      p1:           document.getElementById('f-p1').value,
+      p2:           document.getElementById('f-p2').value,
+      p3:           document.getElementById('f-p3').value,
+      fastestLap:   document.getElementById('f-fl').value,
+      dotd:         document.getElementById('f-dotd').value,
+      pitStop:      document.getElementById('f-pit').value,
+      dnf:          document.getElementById('f-dnf').value,
+      sprintPole:   race?.sprint ? document.getElementById('f-sprint-pole').value : '',
+      sprintWinner: race?.sprint ? document.getElementById('f-sprint-winner').value : '',
+    };
+
+    // UI loading
+    isSending = true;
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spinner"></span> Enviando...';
+
+    try {
+      if (API_URL) {
+        await apiPost({ action: 'savePrediction', data: pred });
+      }
+      // Update local cache regardless
+      appState.predictions = appState.predictions.filter(
+        p => !(p.player === pred.player && p.gpId === pred.gpId)
+      );
+      appState.predictions.push(pred);
+      if (appState.results[gpId]) calculatePointsForGP(gpId);
+
+      showSummary(pred);
+      showToast('✅ ¡Pronóstico enviado!');
+    } catch(err) {
+      showToast('❌ Error al enviar: ' + err.message);
+    } finally {
+      isSending = false;
+      btn.disabled = false;
+      btn.innerHTML = '<span class="btn-flag">🏁</span> ENVIAR PRONÓSTICO';
+    }
+  });
+}
+
+// ─── RESUMEN ─────────────────────────────────────────────────
+function showSummary(pred) {
+  const race = RACES_2025.find(r => r.id === pred.gpId);
+  const rows = [
+    { icon:'⚡', label:'Pole Position',      val: pred.pole },
+    { icon:'🏆', label:'Ganador del GP',      val: pred.winner },
+    { icon:'🥇', label:'1° Lugar',            val: pred.p1 },
+    { icon:'🥈', label:'2° Lugar',            val: pred.p2 },
+    { icon:'🥉', label:'3° Lugar',            val: pred.p3 },
+    { icon:'⏱',  label:'Vuelta Rápida',       val: pred.fastestLap },
+    { icon:'⭐', label:'Piloto del Día',       val: pred.dotd },
+    { icon:'🔧', label:'Pit Stop más Rápido', val: pred.pitStop },
+    { icon:'💥', label:'DNF',                 val: pred.dnf },
+  ];
+  if (race?.sprint && pred.sprintPole) {
+    rows.push({ icon:'🟣', label:'Pole Sprint',    val: pred.sprintPole });
+    rows.push({ icon:'🏎',  label:'Ganador Sprint', val: pred.sprintWinner });
+  }
+  const time = new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+  const spBadge = race?.sprint
+    ? ' <span style="background:#7B2FBE;color:#fff;font-size:0.6rem;padding:2px 7px;border-radius:3px;font-weight:800;vertical-align:middle;">SPRINT</span>' : '';
+
+  document.getElementById('summary-content').innerHTML = `
+    <div class="summary-header-info">
+      <div class="summary-player-name">${pred.player}</div>
+      <div class="summary-race-name">${race.flag} ${race.name}${spBadge}</div>
+      <div class="summary-timestamp">✅ Enviado a las ${time} · ${race.date}</div>
+    </div>
+    <div class="summary-rows">
+      ${rows.map(r=>`<div class="summary-row">
+        <span class="summary-row-label">${r.icon} ${r.label}</span>
+        <span class="summary-row-val">${r.val}</span>
+      </div>`).join('')}
+    </div>`;
+
+  currentSummaryText =
+    `🏁 F1 PRODE 2026\n━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `👤 ${pred.player}\n🏎️ ${race.name} (${race.date})${race?.sprint?' ⚡ SPRINT':''}\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━\n` +
+    rows.map(r=>`${r.icon} ${r.label}: ${r.val}`).join('\n') +
+    `\n━━━━━━━━━━━━━━━━━━━━━━`;
+
+  const card = document.getElementById('summary-card');
+  card.style.display = 'block';
+  setTimeout(() => card.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
+}
+
+function copySummary() {
+  const copy = txt => {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(txt);
+    const ta = Object.assign(document.createElement('textarea'), { value: txt });
+    Object.assign(ta.style, { position:'fixed', opacity:'0' });
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    return Promise.resolve();
+  };
+  copy(currentSummaryText)
+    .then(()  => showToast('📋 ¡Copiado! Pegalo en el grupo'))
+    .catch(() => showToast('No se pudo copiar'));
+}
+
+function newPrediction() {
+  document.getElementById('summary-card').style.display = 'none';
+  document.getElementById('prediction-form').reset();
+  if (appState.activeGP) document.getElementById('f-gp').value = appState.activeGP;
+  updateSprintFields();
+  document.getElementById('form-card').scrollIntoView({ behavior:'smooth' });
+}
+
+// ─── TABLAS ──────────────────────────────────────────────────
+function renderTablas() {
+  const scored = RACES_2025.filter(r => appState.results[r.id]);
+  const tabs   = [{ id:'general', label:'GENERAL' }, ...scored.map(r=>({ id:r.id, label:`R${r.round} ${r.short}` }))];
+  const cont   = document.getElementById('gp-tabs');
+  cont.innerHTML = tabs.map(t =>
+    `<button class="gp-tab${t.id==='general'?' active':''}" data-tab="${t.id}">${t.label}</button>`
+  ).join('');
+  cont.querySelectorAll('.gp-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      cont.querySelectorAll('.gp-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTable(btn.dataset.tab);
+    });
+  });
+  renderTable('general');
+}
+
+function renderTable(tabId) {
+  const el = document.getElementById('tabla-content');
+  if (tabId === 'general') {
+    const totals = {};
+    Object.entries(appState.points).forEach(([gpId, gp]) => {
+      Object.entries(gp).forEach(([player, d]) => {
+        if (!totals[player]) totals[player] = { total:0, races:0 };
+        totals[player].total += d.total; totals[player].races++;
+      });
+    });
+    const board = Object.entries(totals).map(([name,d])=>({name,...d})).sort((a,b)=>b.total-a.total);
+    if (!board.length) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-title">Sin puntos aún</div><div class="empty-text">Los puntos aparecen cuando el admin cargue los resultados oficiales</div></div>`;
+      return;
+    }
+    el.innerHTML = renderLeaderboard(board, 'Tabla General', true);
+  } else {
+    const race  = RACES_2025.find(r => r.id === tabId);
+    const board = Object.entries(appState.points[tabId]||{})
+      .map(([name,d])=>({name,total:d.total,breakdown:d.breakdown}))
+      .sort((a,b)=>b.total-a.total);
+    if (!board.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">Sin datos</div></div>`; return; }
+    el.innerHTML = renderLeaderboard(board, `${race.flag} ${race.name}`, false, tabId);
+  }
+}
+
+function renderLeaderboard(board, title, showRaces, gpId) {
+  const max = board[0]?.total || 1;
+  const medals = ['🥇','🥈','🥉'];
+  let html = `<div class="leaderboard-card">
+    <div class="lb-header"><div class="lb-header-title">${title}</div></div>
+    <table class="lb-table"><thead><tr>
+      <th>POS</th><th>JUGADOR</th>${showRaces?'<th>FECHAS</th>':''}<th>PTS</th><th>${gpId?'ACIERTOS':'PROGRESO'}</th>
+    </tr></thead><tbody>`;
+
+  board.forEach((p,i) => {
+    const pct = Math.round((p.total/max)*100);
+    const bd  = p.breakdown || {};
+    let right = '';
+    if (gpId) {
+      const parts = [];
+      if (bd.pole)        parts.push(`Pole +${bd.pole}`);
+      if (bd.winner)      parts.push(`Gan. +${bd.winner}`);
+      if (bd.podio_exact) parts.push(`🎯Podio +${bd.podio_exact}`);
+      if (bd.p1)          parts.push(`P1 +${bd.p1}`);
+      if (bd.p2)          parts.push(`P2 +${bd.p2}`);
+      if (bd.p3)          parts.push(`P3 +${bd.p3}`);
+      if (bd.fastestLap)  parts.push(`VR +${bd.fastestLap}`);
+      if (bd.dotd)        parts.push(`PdD +${bd.dotd}`);
+      if (bd.pitStop)     parts.push(`Pit +${bd.pitStop}`);
+      if (bd.dnf)         parts.push(`DNF +${bd.dnf}`);
+      if (bd.sprintPole)   parts.push(`SpPole +${bd.sprintPole}`);
+      if (bd.sprintWinner) parts.push(`SpWin +${bd.sprintWinner}`);
+      right = `<td class="pts-breakdown">${parts.join(' · ')||'—'}</td>`;
+    } else {
+      right = `<td><div class="pts-bar"><div class="pts-bar-fill" style="width:${pct}%"></div></div></td>`;
+    }
+    html += `<tr>
+      <td><span class="rank-pos rank-${i<3?i+1:'other'}">${medals[i]||i+1}</span></td>
+      <td class="player-name-cell">${p.name}</td>
+      ${showRaces?`<td class="text-muted">${p.races}</td>`:''}
+      <td class="pts-cell">${p.total}</td>${right}
+    </tr>`;
+  });
+
+  html += `</tbody></table></div>
+    <div class="card" style="margin-top:0"><div class="card-label">PUNTOS POR CATEGORÍA</div>
+    <div class="points-legend">
+      <div class="pts-legend-item"><span class="pts-legend-val">10</span><div class="pts-legend-desc">Ganador GP</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">20</span><div class="pts-legend-desc">Podio exacto</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">Posición podio</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">Pole position</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">Vuelta rápida</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">Piloto del día</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">Pit stop</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">DNF</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">Ganador Sprint</div></div>
+      <div class="pts-legend-item"><span class="pts-legend-val">3</span><div class="pts-legend-desc">Pole Sprint</div></div>
+    </div></div>`;
+  return html;
+}
+
+// ─── ADMIN LOGIN ─────────────────────────────────────────────
+function adminLogin() {
+  const pwd = document.getElementById('admin-password').value;
+  if (pwd === adminPassword) {
+    isAdminLoggedIn = true;
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    document.getElementById('login-error').style.display = 'none';
+    renderAdminPanel();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('admin-password').classList.add('error');
+    setTimeout(() => document.getElementById('admin-password').classList.remove('error'), 400);
+  }
+}
+
+function adminLogout() {
+  isAdminLoggedIn = false;
+  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('admin-password').value = '';
+}
+
+// ─── ADMIN PANEL ─────────────────────────────────────────────
+function renderAdminPanel() {
+  if (!isAdminLoggedIn) return;
+  populateGPSelect('admin-active-gp', appState.activeGP||'');
+  populateGPSelect('result-gp-select', '');
+  renderAdminPredictions();
+  renderAdminPointsSummary();
+}
+
+async function adminRefresh() {
+  const btn = document.getElementById('btn-refresh');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Actualizando...'; }
+  await loadFromSheets();
+  renderAdminPredictions();
+  renderAdminPointsSummary();
+  if (btn) { btn.disabled = false; btn.textContent = '🔄 Actualizar datos'; }
+  showToast('🔄 Datos actualizados desde Google Sheets');
+}
+
+async function saveActiveGP() {
+  const gpId = document.getElementById('admin-active-gp').value || null;
+  appState.activeGP = gpId;
+  updateBanner();
+  if (gpId) { const fgp = document.getElementById('f-gp'); if(fgp) fgp.value = gpId; }
+  try {
+    if (API_URL) await apiPost({ action:'setActiveGP', gpId: gpId||'', password: adminPassword });
+    showToast('✅ GP activo guardado');
+  } catch(e) { showToast('❌ Error: ' + e.message); }
+}
+
+function renderAdminPredictions() {
+  const el = document.getElementById('admin-predictions-list');
+  if (!appState.predictions.length) {
+    el.innerHTML = `<div class="empty-state" style="padding:24px 0"><div class="empty-text">Sin pronósticos aún</div></div>`;
+    return;
+  }
+  const grouped = {};
+  appState.predictions.forEach(p => { if (!grouped[p.gpId]) grouped[p.gpId]=[]; grouped[p.gpId].push(p); });
+
+  let html = '';
+  RACES_2025.forEach(race => {
+    if (!grouped[race.id]) return;
+    const result  = appState.results[race.id]||null;
+    const hasRes  = !!result;
+    const preds   = [...grouped[race.id]];
+    if (hasRes) preds.sort((a,b)=>(appState.points[race.id]?.[b.player]?.total||0)-(appState.points[race.id]?.[a.player]?.total||0));
+
+    html += `<div class="admin-gp-block">
+      <div class="admin-gp-title">
+        ${race.flag} R${race.round} — ${race.name}
+        ${race.sprint?'<span class="status-chip" style="background:rgba(123,47,190,.2);color:#B47FFF;border-color:rgba(123,47,190,.4)">⚡ SPRINT</span>':''}
+        ${hasRes?'<span class="status-chip scored">✅ Puntuado</span>':'<span class="status-chip open">⏳ Pendiente</span>'}
+      </div>`;
+
+    preds.forEach((pred, idx) => {
+      const pts  = appState.points[race.id]?.[pred.player];
+      const rank = hasRes ? idx+1 : null;
+      const fields = [
+        { label:'⚡ Pole',     pred:pred.pole,         res:result?.pole,         pts:pts?.breakdown?.pole },
+        { label:'🏆 Ganador',  pred:pred.winner,       res:result?.winner,       pts:pts?.breakdown?.winner },
+        { label:'🥇 1°',       pred:pred.p1,           res:result?.p1,           pts:pts?.breakdown?.p1 },
+        { label:'🥈 2°',       pred:pred.p2,           res:result?.p2,           pts:pts?.breakdown?.p2 },
+        { label:'🥉 3°',       pred:pred.p3,           res:result?.p3,           pts:pts?.breakdown?.p3 },
+        { label:'⏱ VR',        pred:pred.fastestLap,   res:result?.fastestLap,   pts:pts?.breakdown?.fastestLap },
+        { label:'⭐ PdD',       pred:pred.dotd,         res:result?.dotd,         pts:pts?.breakdown?.dotd },
+        { label:'🔧 Pit',      pred:pred.pitStop,      res:result?.pitStop,      pts:pts?.breakdown?.pitStop },
+        { label:'💥 DNF',      pred:pred.dnf,          res:result?.dnf,          pts:pts?.breakdown?.dnf },
+      ];
+      if (race.sprint) {
+        fields.push({ label:'🟣 Sp.Pole',  pred:pred.sprintPole,   res:result?.sprintPole,   pts:pts?.breakdown?.sprintPole });
+        fields.push({ label:'🏎 Sp.Win',   pred:pred.sprintWinner, res:result?.sprintWinner, pts:pts?.breakdown?.sprintWinner });
+      }
+
+      html += `<div class="admin-pred-item${hasRes?' has-result':''}">
+        <div class="admin-pred-header">
+          <div style="display:flex;align-items:center;gap:10px">
+            ${rank?`<span class="admin-rank rank-${rank<=3?rank:'other'}">${rank}</span>`:''}
+            <span class="admin-pred-name">${pred.player}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+            ${pts?`<span class="admin-pts-badge">${pts.total} pts</span>`:'<span class="admin-pts-badge-empty">Sin puntuar</span>'}
+            <button class="btn btn-ghost btn-sm" onclick="deletePred(${pred.id})" title="Eliminar">🗑</button>
+          </div>
+        </div>`;
+
+      if (hasRes) {
+        html += `<div class="pred-comparison-table">
+          <div class="pred-comp-header"><span>CATEGORÍA</span><span>PRONÓSTICO</span><span>OFICIAL</span><span>PTS</span></div>`;
+        fields.forEach(f => {
+          const ok  = f.pred && f.pred === f.res;
+          const bad = f.res  && f.pred !== f.res;
+          const cls = ok?'comp-correct':bad?'comp-wrong':'comp-pending';
+          html += `<div class="pred-comp-row ${cls}">
+            <span class="comp-label">${f.label}</span>
+            <span class="comp-pred">${f.pred||'—'}</span>
+            <span class="comp-result">${f.res||'—'}</span>
+            <span class="comp-pts">${ok?'✅':bad?'❌':'—'} ${f.pts?'+'+f.pts:''}</span>
+          </div>`;
+        });
+        if (pts?.breakdown?.podio_exact) {
+          html += `<div class="pred-comp-row comp-correct comp-bonus">
+            <span class="comp-label" style="color:var(--gold)">🎯 BONUS Podio Exacto</span>
+            <span class="comp-pred">—</span><span class="comp-result">—</span>
+            <span class="comp-pts" style="color:var(--gold)">✅ +${pts.breakdown.podio_exact}</span>
+          </div>`;
+        }
+        html += `<div class="pred-comp-total"><span>TOTAL</span><span>${pts?.total||0} puntos</span></div></div>`;
+      } else {
+        html += `<div class="admin-pred-grid">${fields.map(f =>
+          `<div class="admin-pred-row"><span>${f.label}</span><span>${f.pred||'—'}</span></div>`
+        ).join('')}</div>`;
+      }
+      html += `</div>`;
+    });
+    html += `</div>`;
+  });
+  el.innerHTML = html;
+}
+
+async function deletePred(id) {
+  if (!confirm('¿Eliminar este pronóstico?')) return;
+  try {
+    if (API_URL) await apiPost({ action:'deletePrediction', id, password: adminPassword });
+    const pred = appState.predictions.find(p => p.id == id);
+    appState.predictions = appState.predictions.filter(p => p.id != id);
+    if (pred && appState.points[pred.gpId]) delete appState.points[pred.gpId][pred.player];
+    renderAdminPredictions();
+    renderAdminPointsSummary();
+    showToast('Pronóstico eliminado');
+  } catch(e) { showToast('❌ Error: ' + e.message); }
+}
+
+function loadResultForm() {
+  const gpId   = document.getElementById('result-gp-select').value;
+  const formEl = document.getElementById('result-form');
+  const spSec  = document.getElementById('admin-sprint-section');
+  if (!gpId) { formEl.style.display='none'; return; }
+  const race = RACES_2025.find(r=>r.id===gpId);
+  const ex   = appState.results[gpId]||{};
+  formEl.style.display = 'block';
+
+  const fm = {'res-pole':'pole','res-winner':'winner','res-p1':'p1','res-p2':'p2','res-p3':'p3','res-fl':'fastestLap','res-dotd':'dotd'};
+  Object.entries(fm).forEach(([id,k]) => {
+    const el = document.getElementById(id); if(el) el.innerHTML = '<option value="">— Piloto —</option>' + driverOptions(ex[k]||'');
+  });
+  const rpit = document.getElementById('res-pit'); if(rpit) rpit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions(ex.pitStop||'');
+  const rdnf = document.getElementById('res-dnf'); if(rdnf) rdnf.innerHTML = `<option value="">—</option><option value="${NO_DNF_OPTION}" ${ex.dnf===NO_DNF_OPTION?'selected':''}>${NO_DNF_OPTION}</option>` + driverOptions(ex.dnf||'');
+
+  if (spSec) {
+    spSec.style.display = race?.sprint ? 'block' : 'none';
+    if (race?.sprint) {
+      const rsp = document.getElementById('res-sprint-pole');   if(rsp) rsp.innerHTML = '<option value="">— Piloto —</option>' + driverOptions(ex.sprintPole||'');
+      const rsw = document.getElementById('res-sprint-winner'); if(rsw) rsw.innerHTML = '<option value="">— Piloto —</option>' + driverOptions(ex.sprintWinner||'');
+    }
+  }
+}
+
+async function saveResults() {
+  const gpId = document.getElementById('result-gp-select').value;
+  if (!gpId) { showToast('Seleccioná un GP'); return; }
+  const race = RACES_2025.find(r=>r.id===gpId);
+  const result = {
+    gpId,
+    pole:         document.getElementById('res-pole').value,
+    winner:       document.getElementById('res-winner').value,
+    p1:           document.getElementById('res-p1').value,
+    p2:           document.getElementById('res-p2').value,
+    p3:           document.getElementById('res-p3').value,
+    fastestLap:   document.getElementById('res-fl').value,
+    dotd:         document.getElementById('res-dotd').value,
+    pitStop:      document.getElementById('res-pit').value,
+    dnf:          document.getElementById('res-dnf').value,
+    sprintPole:   race?.sprint ? (document.getElementById('res-sprint-pole')?.value||'') : '',
+    sprintWinner: race?.sprint ? (document.getElementById('res-sprint-winner')?.value||'') : '',
+  };
+  if (!result.winner || !result.p1) { showToast('Completá al menos ganador y podio'); return; }
+
+  const btn = document.querySelector('#result-form .btn-primary');
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Guardando...'; }
+  try {
+    if (API_URL) await apiPost({ action:'saveResults', data: result, password: adminPassword });
+    appState.results[gpId] = result;
+    calculatePointsForGP(gpId);
+    renderAdminPredictions();
+    renderAdminPointsSummary();
+    showToast('✅ Resultados guardados y puntos calculados');
+  } catch(e) { showToast('❌ Error: ' + e.message); }
+  finally { if(btn) { btn.disabled=false; btn.textContent='💾 GUARDAR & CALCULAR PUNTOS'; } }
+}
+
+function renderAdminPointsSummary() {
+  const el     = document.getElementById('admin-points-summary');
+  const scored = RACES_2025.filter(r => appState.results[r.id] && appState.points[r.id]);
+  if (!scored.length) { el.innerHTML = `<div style="color:var(--white-muted);font-size:.85rem;padding:8px 0">Sin GP puntuados aún</div>`; return; }
+  el.innerHTML = scored.map(race => {
+    const entries = Object.entries(appState.points[race.id]).sort((a,b)=>b[1].total-a[1].total);
+    return `<div style="margin-bottom:16px">
+      <div style="font-family:var(--font-display);font-size:.7rem;letter-spacing:2px;color:var(--f1-red);margin-bottom:8px;text-transform:uppercase">${race.flag} R${race.round} — ${race.short}</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        ${entries.map(([player,d])=>`
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--black-2);border-radius:var(--radius);border:1px solid var(--card-border)">
+            <span style="font-weight:600">${player}</span>
+            <span class="admin-pts-badge">${d.total} pts</span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function resetRace() {
+  const gpId = document.getElementById('result-gp-select').value;
+  if (!gpId) { showToast('Seleccioná un GP'); return; }
+  const race = RACES_2025.find(r=>r.id===gpId);
+  if (!confirm(`¿Resetear TODOS los datos de ${race.name}?\nSe eliminarán pronósticos, resultados y puntos.`)) return;
+  try {
+    if (API_URL) await apiPost({ action:'resetRace', gpId, password: adminPassword });
+    appState.predictions = appState.predictions.filter(p=>p.gpId!==gpId);
+    delete appState.results[gpId];
+    delete appState.points[gpId];
+    document.getElementById('result-form').style.display='none';
+    document.getElementById('result-gp-select').value='';
+    renderAdminPredictions();
+    renderAdminPointsSummary();
+    showToast(`✅ ${race.short} reseteado`);
+  } catch(e) { showToast('❌ Error: ' + e.message); }
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  hideLoader();
+  initNav();
+  populateFormSelects();
+  populateGPSelect('admin-active-gp', '');
+  populateGPSelect('result-gp-select', '');
+  initPredictionForm();
+  updateBanner();
+  const ok = await loadFromSheets();
+  if (ok && appState.activeGP) {
+    const fgp = document.getElementById('f-gp');
+    if (fgp) { fgp.value = appState.activeGP; updateSprintFields(); }
+    populateGPSelect('admin-active-gp', appState.activeGP);
+    updateBanner();
+  }
+});
+
+
+// Expose functions to global scope (needed for onclick handlers with type="module")
+window.adminLogin      = adminLogin;
+window.adminLogout     = adminLogout;
+window.adminRefresh    = adminRefresh;
+window.changePassword  = changePassword;
+window.copySummary     = copySummary;
+window.deletePred      = deletePred;
+window.loadResultForm  = loadResultForm;
+window.newPrediction   = newPrediction;
+window.resetRace       = resetRace;
+window.saveActiveGP    = saveActiveGP;
+window.saveResults     = saveResults;
+</script>
+</body>
+</html>
