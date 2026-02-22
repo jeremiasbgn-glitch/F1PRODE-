@@ -1738,8 +1738,8 @@ async function loadFromSheets() {
     const data = await Promise.race([apiGet({ action: 'getAll' }), timeout]);
     appState.predictions = Array.isArray(data.predictions) ? data.predictions : [];
     appState.results     = data.results  || {};
-    appState.activeGP    = data.config?.activeGP || null;
-    adminPassword        = data.config?.adminPassword || 'f1prode';
+    appState.activeGP    = (data.config && data.config.activeGP) || null;
+    adminPassword        = (data.config && data.config.adminPassword) || 'f1prode';
     recalcAllPoints();
     showConnectionStatus('ok');
     return true;
@@ -1889,11 +1889,11 @@ function lockGPSelector() {
 }
 
 function updateSprintFields() {
-  const gpId = document.getElementById('f-gp')?.value;
+  const gpId = (document.getElementById('f-gp') ? document.getElementById('f-gp').value : '');
   const race  = RACES_2025.find(r => r.id === gpId);
   const sec   = document.getElementById('sprint-section');
   if (!sec) return;
-  if (race?.sprint) {
+  if ((race && race.sprint)) {
     sec.style.display = 'block';
   } else {
     sec.style.display = 'none';
@@ -1908,7 +1908,7 @@ function validateForm() {
   const errEl = document.getElementById('form-error');
   errEl.style.display = 'none';
 
-  const gpId = document.getElementById('f-gp')?.value;
+  const gpId = (document.getElementById('f-gp') ? document.getElementById('f-gp').value : '');
   const race  = RACES_2025.find(r => r.id === gpId);
   const checks = [
     { id:'f-gp',     label:'Gran Premio' },
@@ -1923,21 +1923,21 @@ function validateForm() {
     { id:'f-pit',    label:'Pit stop' },
     { id:'f-dnf',    label:'DNF' },
   ];
-  if (race?.sprint) {
+  if ((race && race.sprint)) {
     checks.push({ id:'f-sprint-pole',   label:'Pole Sprint' });
     checks.push({ id:'f-sprint-winner', label:'Ganador Sprint' });
   }
   const missing = checks.filter(({ id }) => {
     const el = document.getElementById(id);
-    const ok = el?.value?.trim();
-    if (!ok) el?.classList.add('error');
+    const ok = (el && el.value && el.value.trim());
+    if (!ok) (el && el.classList.add('error'));
     return !ok;
   }).map(c => c.label);
 
   if (missing.length) {
     errEl.innerHTML = `⚠️ Falta completar: <strong>${missing.join(', ')}</strong>`;
     errEl.style.display = 'block';
-    document.querySelector('#prediction-form .error')?.scrollIntoView({ behavior:'smooth', block:'center' });
+    (function(){var e=document.querySelector('#prediction-form .error');if(e)e.scrollIntoView({behavior:'smooth',block:'center'});})();
     return false;
   }
   const podio = ['f-p1','f-p2','f-p3'].map(id => document.getElementById(id).value);
@@ -1974,8 +1974,8 @@ function initPredictionForm() {
       dotd:         document.getElementById('f-dotd').value,
       pitStop:      document.getElementById('f-pit').value,
       dnf:          document.getElementById('f-dnf').value,
-      sprintPole:   race?.sprint ? document.getElementById('f-sprint-pole').value : '',
-      sprintWinner: race?.sprint ? document.getElementById('f-sprint-winner').value : '',
+      sprintPole:   (race && race.sprint) ? document.getElementById('f-sprint-pole').value : '',
+      sprintWinner: (race && race.sprint) ? document.getElementById('f-sprint-winner').value : '',
     };
 
     // UI loading
@@ -2021,12 +2021,12 @@ function showSummary(pred) {
     { icon:'🔧', label:'Pit Stop más Rápido', val: pred.pitStop },
     { icon:'💥', label:'DNF',                 val: pred.dnf },
   ];
-  if (race?.sprint && pred.sprintPole) {
+  if ((race && race.sprint) && pred.sprintPole) {
     rows.push({ icon:'🟣', label:'Pole Sprint',    val: pred.sprintPole });
     rows.push({ icon:'🏎',  label:'Ganador Sprint', val: pred.sprintWinner });
   }
   const time = new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
-  const spBadge = race?.sprint
+  const spBadge = (race && race.sprint)
     ? ' <span style="background:#7B2FBE;color:#fff;font-size:0.6rem;padding:2px 7px;border-radius:3px;font-weight:800;vertical-align:middle;">SPRINT</span>' : '';
 
   document.getElementById('summary-content').innerHTML = `
@@ -2044,7 +2044,7 @@ function showSummary(pred) {
 
   currentSummaryText =
     `🏁 F1 PRODE 2026\n━━━━━━━━━━━━━━━━━━━━━━\n` +
-    `👤 ${pred.player}\n🏎️ ${race.name} (${race.date})${race?.sprint?' ⚡ SPRINT':''}\n` +
+    `👤 ${pred.player}\n🏎️ ${race.name} (${race.date})${(race && race.sprint)?' ⚡ SPRINT':''}\n` +
     `━━━━━━━━━━━━━━━━━━━━━━\n` +
     rows.map(r=>`${r.icon} ${r.label}: ${r.val}`).join('\n') +
     `\n━━━━━━━━━━━━━━━━━━━━━━`;
@@ -2126,7 +2126,7 @@ function renderTable(tabId) {
 }
 
 function renderLeaderboard(board, title, showRaces, gpId) {
-  const max = board[0]?.total || 1;
+  const max = (board[0] && board[0].total) || 1;
   const medals = ['🥇','🥈','🥉'];
   let html = `<div class="leaderboard-card">
     <div class="lb-header"><div class="lb-header-title">${title}</div></div>
@@ -2234,7 +2234,7 @@ async function adminRefresh() {
   showToast('🔄 Datos actualizados desde Google Sheets');
 }
 
-async async function saveActiveGP() {
+async function saveActiveGP() {
   const gpId = document.getElementById('admin-active-gp').value || null;
   appState.activeGP = gpId;
   lockGPSelector();
@@ -2261,7 +2261,7 @@ function renderAdminPredictions() {
     const result  = appState.results[race.id]||null;
     const hasRes  = !!result;
     const preds   = [...grouped[race.id]];
-    if (hasRes) preds.sort((a,b)=>(appState.points[race.id]?.[b.player]?.total||0)-(appState.points[race.id]?.[a.player]?.total||0));
+    if (hasRes) preds.sort((a,b)=>((appState.points[race.id] && appState.points[race.id][b.player] && appState.points[race.id][b.player].total)||0)-((appState.points[race.id] && appState.points[race.id][a.player] && appState.points[race.id][a.player].total)||0));
 
     html += `<div class="admin-gp-block">
       <div class="admin-gp-title">
@@ -2271,22 +2271,22 @@ function renderAdminPredictions() {
       </div>`;
 
     preds.forEach((pred, idx) => {
-      const pts  = appState.points[race.id]?.[pred.player];
+      const pts  = (appState.points[race.id] && appState.points[race.id][pred.player]);
       const rank = hasRes ? idx+1 : null;
       const fields = [
-        { label:'⚡ Pole',     pred:pred.pole,         res:result?.pole,         pts:pts?.breakdown?.pole },
-        { label:'🏆 Ganador',  pred:pred.winner,       res:result?.winner,       pts:pts?.breakdown?.winner },
-        { label:'🥇 1°',       pred:pred.p1,           res:result?.p1,           pts:pts?.breakdown?.p1 },
-        { label:'🥈 2°',       pred:pred.p2,           res:result?.p2,           pts:pts?.breakdown?.p2 },
-        { label:'🥉 3°',       pred:pred.p3,           res:result?.p3,           pts:pts?.breakdown?.p3 },
-        { label:'⏱ VR',        pred:pred.fastestLap,   res:result?.fastestLap,   pts:pts?.breakdown?.fastestLap },
-        { label:'⭐ PdD',       pred:pred.dotd,         res:result?.dotd,         pts:pts?.breakdown?.dotd },
-        { label:'🔧 Pit',      pred:pred.pitStop,      res:result?.pitStop,      pts:pts?.breakdown?.pitStop },
-        { label:'💥 DNF',      pred:pred.dnf,          res:result?.dnf,          pts:pts?.breakdown?.dnf },
+        { label:'⚡ Pole',     pred:pred.pole,         res:(result && result.pole),         pts:(pts && pts.breakdown && pts.breakdown.pole) },
+        { label:'🏆 Ganador',  pred:pred.winner,       res:(result && result.winner),       pts:(pts && pts.breakdown && pts.breakdown.winner) },
+        { label:'🥇 1°',       pred:pred.p1,           res:(result && result.p1),           pts:(pts && pts.breakdown && pts.breakdown.p1) },
+        { label:'🥈 2°',       pred:pred.p2,           res:(result && result.p2),           pts:(pts && pts.breakdown && pts.breakdown.p2) },
+        { label:'🥉 3°',       pred:pred.p3,           res:(result && result.p3),           pts:(pts && pts.breakdown && pts.breakdown.p3) },
+        { label:'⏱ VR',        pred:pred.fastestLap,   res:(result && result.fastestLap),   pts:(pts && pts.breakdown && pts.breakdown.fastestLap) },
+        { label:'⭐ PdD',       pred:pred.dotd,         res:(result && result.dotd),         pts:(pts && pts.breakdown && pts.breakdown.dotd) },
+        { label:'🔧 Pit',      pred:pred.pitStop,      res:(result && result.pitStop),      pts:(pts && pts.breakdown && pts.breakdown.pitStop) },
+        { label:'💥 DNF',      pred:pred.dnf,          res:(result && result.dnf),          pts:(pts && pts.breakdown && pts.breakdown.dnf) },
       ];
       if (race.sprint) {
-        fields.push({ label:'🟣 Sp.Pole',  pred:pred.sprintPole,   res:result?.sprintPole,   pts:pts?.breakdown?.sprintPole });
-        fields.push({ label:'🏎 Sp.Win',   pred:pred.sprintWinner, res:result?.sprintWinner, pts:pts?.breakdown?.sprintWinner });
+        fields.push({ label:'🟣 Sp.Pole',  pred:pred.sprintPole,   res:(result && result.sprintPole),   pts:(pts && pts.breakdown && pts.breakdown.sprintPole) });
+        fields.push({ label:'🏎 Sp.Win',   pred:pred.sprintWinner, res:(result && result.sprintWinner), pts:(pts && pts.breakdown && pts.breakdown.sprintWinner) });
       }
 
       html += `<div class="admin-pred-item${hasRes?' has-result':''}">
@@ -2315,14 +2315,14 @@ function renderAdminPredictions() {
             <span class="comp-pts">${ok?'✅':bad?'❌':'—'} ${f.pts?'+'+f.pts:''}</span>
           </div>`;
         });
-        if (pts?.breakdown?.podio_exact) {
+        if ((pts && pts.breakdown && pts.breakdown.podio_exact)) {
           html += `<div class="pred-comp-row comp-correct comp-bonus">
             <span class="comp-label" style="color:var(--gold)">🎯 BONUS Podio Exacto</span>
             <span class="comp-pred">—</span><span class="comp-result">—</span>
             <span class="comp-pts" style="color:var(--gold)">✅ +${pts.breakdown.podio_exact}</span>
           </div>`;
         }
-        html += `<div class="pred-comp-total"><span>TOTAL</span><span>${pts?.total||0} puntos</span></div></div>`;
+        html += `<div class="pred-comp-total"><span>TOTAL</span><span>${(pts && pts.total)||0} puntos</span></div></div>`;
       } else {
         html += `<div class="admin-pred-grid">${fields.map(f =>
           `<div class="admin-pred-row"><span>${f.label}</span><span>${f.pred||'—'}</span></div>`
@@ -2365,8 +2365,8 @@ function loadResultForm() {
   const rdnf = document.getElementById('res-dnf'); if(rdnf) rdnf.innerHTML = `<option value="">—</option><option value="${NO_DNF_OPTION}" ${ex.dnf===NO_DNF_OPTION?'selected':''}>${NO_DNF_OPTION}</option>` + driverOptions(ex.dnf||'');
 
   if (spSec) {
-    spSec.style.display = race?.sprint ? 'block' : 'none';
-    if (race?.sprint) {
+    spSec.style.display = (race && race.sprint) ? 'block' : 'none';
+    if ((race && race.sprint)) {
       const rsp = document.getElementById('res-sprint-pole');   if(rsp) rsp.innerHTML = '<option value="">— Piloto —</option>' + driverOptions(ex.sprintPole||'');
       const rsw = document.getElementById('res-sprint-winner'); if(rsw) rsw.innerHTML = '<option value="">— Piloto —</option>' + driverOptions(ex.sprintWinner||'');
     }
@@ -2388,8 +2388,8 @@ async function saveResults() {
     dotd:         document.getElementById('res-dotd').value,
     pitStop:      document.getElementById('res-pit').value,
     dnf:          document.getElementById('res-dnf').value,
-    sprintPole:   race?.sprint ? (document.getElementById('res-sprint-pole')?.value||'') : '',
-    sprintWinner: race?.sprint ? (document.getElementById('res-sprint-winner')?.value||'') : '',
+    sprintPole:   (race && race.sprint) ? ((document.getElementById('res-sprint-pole') ? document.getElementById('res-sprint-pole').value : '')||'') : '',
+    sprintWinner: (race && race.sprint) ? ((document.getElementById('res-sprint-winner') ? document.getElementById('res-sprint-winner').value : '')||'') : '',
   };
   if (!result.winner || !result.p1) { showToast('Completá al menos ganador y podio'); return; }
 
