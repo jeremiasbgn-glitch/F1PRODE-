@@ -1247,14 +1247,13 @@ body { font-size: 16px; }
 
 /* ── COUNTDOWN ── */
 #qualy-countdown {
-  background: rgba(0,0,0,0.35);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  min-height: 44px;
+  padding: 10px 0 2px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  margin-top: 10px;
 }
 .cd-label {
   font-family: var(--font-display);
@@ -1390,6 +1389,18 @@ etTimeout(function(){var l=document.getElementById("loader");if(l){l.classList.a
     </div>
   </div>
   <div class="race-banner-stripe"></div>
+  <div id="qualy-countdown" style="display:none;">
+    <span class="cd-label">⏱ QUALY</span>
+    <div id="cd-units" class="cd-units">
+      <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-unit-label">días</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-unit-label">hs</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-unit-label">min</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-unit-label">seg</span></div>
+    </div>
+  </div>
 </div>
 
 <!-- MAIN CONTENT -->
