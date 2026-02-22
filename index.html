@@ -1244,6 +1244,77 @@ body { font-size: 16px; }
 
 /* ── CONTAINER PADDING for bottom nav ── */
 .container { padding-bottom:90px!important; }
+
+/* ── COUNTDOWN ── */
+#qualy-countdown {
+  background: rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+}
+.cd-label {
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+}
+.cd-units {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 38px;
+}
+.cd-num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.cd-unit-label {
+  font-family: var(--font-display);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-top: 2px;
+}
+.cd-sep {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--f1-red);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.cd-live {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--f1-red);
+  animation: pulse 1s infinite;
+}
+.cd-done {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 1px;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 </style>
 </head>
 <body>
@@ -1273,7 +1344,7 @@ const CIRCUIT_STATS = {
   'bra26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',  lastPodium:'Verstappen · Leclerc · Piastri',fact:'Interlagos fue el escenario de las épicas batallas Senna–Prost.' },
   'lv26':   { lastPole:'Carlos Sainz',    lastWinner:'Carlos Sainz',     lastFastest:'Lando Norris',    lastPodium:'Sainz · Norris · Leclerc',     fact:'La recta del Strip pasa frente a los casinos más famosos del mundo.' },
   'qat26':  { lastPole:'George Russell',  lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',  lastPodium:'Verstappen · Norris · Leclerc', fact:'Losail es el único circuito de MotoGP reconvertido para F1.' },
-  'auh26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Carlos Sainz',    lastPodium:'Norris · Leclerc · Sainz',     fact:'Yas Marina cierra la temporada — se corre de noche desde 2009.' },
+  'abud26': { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Carlos Sainz',    lastPodium:'Norris · Leclerc · Sainz',     fact:'Yas Marina cierra la temporada — se corre de noche desde 2009.' },
 };
 
 etTimeout(function(){var l=document.getElementById("loader");if(l){l.classList.add("hidden");l.style.display="none";}},3000);</script>
@@ -1661,30 +1732,30 @@ const TEAMS_2025 = [
 const NO_DNF_OPTION = 'Sin abandonos';
 
 const RACES_2025 = [
-  { id: 'aus26',  round: 1,  name: 'Gran Premio de Australia',       short: 'Australia',      flag: '🇦🇺', date: '6–8 Mar', circuit: 'Albert Park' },
-  { id: 'chn26',  round: 2,  name: 'Gran Premio de China',           short: 'China',          flag: '🇨🇳', date: '13–15 Mar', circuit: 'Shanghai International', sprint: true },
-  { id: 'jpn26',  round: 3,  name: 'Gran Premio de Japón',           short: 'Japón',          flag: '🇯🇵', date: '27–29 Mar', circuit: 'Suzuka' },
-  { id: 'bhr26',  round: 4,  name: 'Gran Premio de Baréin',          short: 'Baréin',         flag: '🇧🇭', date: '10–12 Abr', circuit: 'Sakhir' },
-  { id: 'sau26',  round: 5,  name: 'Gran Premio de Arabia Saudita',  short: 'Arabia Saudita', flag: '🇸🇦', date: '17–19 Abr', circuit: 'Jeddah Corniche' },
-  { id: 'mia26',  round: 6,  name: 'Gran Premio de Miami',           short: 'Miami',          flag: '🇺🇸', date: '1–3 May', circuit: 'Miami International', sprint: true },
-  { id: 'can26',  round: 7,  name: 'Gran Premio de Canadá',          short: 'Canadá',         flag: '🇨🇦', date: '22–24 May', circuit: 'Gilles Villeneuve', sprint: true },
-  { id: 'mon26',  round: 8,  name: 'Gran Premio de Mónaco',          short: 'Mónaco',         flag: '🇲🇨', date: '5–7 Jun', circuit: 'Circuit de Monaco' },
-  { id: 'esp26',  round: 9,  name: 'Gran Premio de España',          short: 'España',         flag: '🇪🇸', date: '12–14 Jun', circuit: 'Circuit de Barcelona-Catalunya' },
-  { id: 'aut26',  round: 10, name: 'Gran Premio de Austria',         short: 'Austria',        flag: '🇦🇹', date: '26–28 Jun', circuit: 'Red Bull Ring' },
-  { id: 'gbr26',  round: 11, name: 'Gran Premio de Gran Bretaña',    short: 'Gran Bretaña',   flag: '🇬🇧', date: '3–5 Jul', circuit: 'Silverstone', sprint: true },
-  { id: 'bel26',  round: 12, name: 'Gran Premio de Bélgica',         short: 'Bélgica',        flag: '🇧🇪', date: '17–19 Jul', circuit: 'Spa-Francorchamps' },
-  { id: 'hun26',  round: 13, name: 'Gran Premio de Hungría',         short: 'Hungría',        flag: '🇭🇺', date: '24–26 Jul', circuit: 'Hungaroring' },
-  { id: 'ned26',  round: 14, name: 'Gran Premio de Países Bajos',    short: 'Países Bajos',   flag: '🇳🇱', date: '21–23 Ago', circuit: 'Zandvoort', sprint: true },
-  { id: 'ita26',  round: 15, name: 'Gran Premio de Italia',          short: 'Italia',         flag: '🇮🇹', date: '4–6 Sep', circuit: 'Monza' },
-  { id: 'mad26',  round: 16, name: 'Gran Premio de España (Madrid)', short: 'Madrid',         flag: '🇪🇸', date: '11–13 Sep', circuit: 'Madring (Madrid)' },
-  { id: 'aze26',  round: 17, name: 'Gran Premio de Azerbaiyán',      short: 'Azerbaiyán',     flag: '🇦🇿', date: '24–26 Sep', circuit: 'Baku City Circuit' },
-  { id: 'sgp26',  round: 18, name: 'Gran Premio de Singapur',        short: 'Singapur',       flag: '🇸🇬', date: '9–11 Oct', circuit: 'Marina Bay', sprint: true },
-  { id: 'usa26',  round: 19, name: 'Gran Premio de EE.UU.',          short: 'EE.UU.',         flag: '🇺🇸', date: '23–25 Oct', circuit: 'Circuit of the Americas' },
-  { id: 'mex26',  round: 20, name: 'Gran Premio de México',          short: 'México',         flag: '🇲🇽', date: '30 Oct–1 Nov', circuit: 'Hermanos Rodríguez' },
-  { id: 'bra26',  round: 21, name: 'Gran Premio de Brasil',          short: 'Brasil',         flag: '🇧🇷', date: '6–8 Nov', circuit: 'Interlagos' },
-  { id: 'lv26',   round: 22, name: 'Gran Premio de Las Vegas',       short: 'Las Vegas',      flag: '🇺🇸', date: '19–21 Nov', circuit: 'Las Vegas Strip' },
-  { id: 'qat26',  round: 23, name: 'Gran Premio de Catar',           short: 'Catar',          flag: '🇶🇦', date: '27–29 Nov', circuit: 'Losail' },
-  { id: 'abud26', round: 24, name: 'Gran Premio de Abu Dabi',        short: 'Abu Dabi',       flag: '🇦🇪', date: '4–6 Dic', circuit: 'Yas Marina' },
+  { id: 'aus26',  round: 1,  name: 'Gran Premio de Australia',       short: 'Australia',      flag: '🇦🇺', date: '6–8 Mar', circuit: 'Albert Park' , qualy: '2026-03-07T04:00:00Z'},
+  { id: 'chn26',  round: 2,  name: 'Gran Premio de China',           short: 'China',          flag: '🇨🇳', date: '13–15 Mar', circuit: 'Shanghai International', sprint: true , qualy: '2026-03-14T07:00:00Z'},
+  { id: 'jpn26',  round: 3,  name: 'Gran Premio de Japón',           short: 'Japón',          flag: '🇯🇵', date: '27–29 Mar', circuit: 'Suzuka' , qualy: '2026-03-28T06:00:00Z'},
+  { id: 'bhr26',  round: 4,  name: 'Gran Premio de Baréin',          short: 'Baréin',         flag: '🇧🇭', date: '10–12 Abr', circuit: 'Sakhir' , qualy: '2026-04-11T12:00:00Z'},
+  { id: 'sau26',  round: 5,  name: 'Gran Premio de Arabia Saudita',  short: 'Arabia Saudita', flag: '🇸🇦', date: '17–19 Abr', circuit: 'Jeddah Corniche' , qualy: '2026-04-18T12:00:00Z'},
+  { id: 'mia26',  round: 6,  name: 'Gran Premio de Miami',           short: 'Miami',          flag: '🇺🇸', date: '1–3 May', circuit: 'Miami International', sprint: true , qualy: '2026-05-02T19:00:00Z'},
+  { id: 'can26',  round: 7,  name: 'Gran Premio de Canadá',          short: 'Canadá',         flag: '🇨🇦', date: '22–24 May', circuit: 'Gilles Villeneuve', sprint: true , qualy: '2026-05-23T19:00:00Z'},
+  { id: 'mon26',  round: 8,  name: 'Gran Premio de Mónaco',          short: 'Mónaco',         flag: '🇲🇨', date: '5–7 Jun', circuit: 'Circuit de Monaco' , qualy: '2026-06-06T13:00:00Z'},
+  { id: 'esp26',  round: 9,  name: 'Gran Premio de España',          short: 'España',         flag: '🇪🇸', date: '12–14 Jun', circuit: 'Circuit de Barcelona-Catalunya' , qualy: '2026-06-13T13:00:00Z'},
+  { id: 'aut26',  round: 10, name: 'Gran Premio de Austria',         short: 'Austria',        flag: '🇦🇹', date: '26–28 Jun', circuit: 'Red Bull Ring' , qualy: '2026-06-27T13:00:00Z'},
+  { id: 'gbr26',  round: 11, name: 'Gran Premio de Gran Bretaña',    short: 'Gran Bretaña',   flag: '🇬🇧', date: '3–5 Jul', circuit: 'Silverstone', sprint: true , qualy: '2026-07-04T14:00:00Z'},
+  { id: 'bel26',  round: 12, name: 'Gran Premio de Bélgica',         short: 'Bélgica',        flag: '🇧🇪', date: '17–19 Jul', circuit: 'Spa-Francorchamps' , qualy: '2026-07-18T13:00:00Z'},
+  { id: 'hun26',  round: 13, name: 'Gran Premio de Hungría',         short: 'Hungría',        flag: '🇭🇺', date: '24–26 Jul', circuit: 'Hungaroring' , qualy: '2026-07-25T13:00:00Z'},
+  { id: 'ned26',  round: 14, name: 'Gran Premio de Países Bajos',    short: 'Países Bajos',   flag: '🇳🇱', date: '21–23 Ago', circuit: 'Zandvoort', sprint: true , qualy: '2026-08-22T13:00:00Z'},
+  { id: 'ita26',  round: 15, name: 'Gran Premio de Italia',          short: 'Italia',         flag: '🇮🇹', date: '4–6 Sep', circuit: 'Monza' , qualy: '2026-09-05T13:00:00Z'},
+  { id: 'mad26',  round: 16, name: 'Gran Premio de España (Madrid)', short: 'Madrid',         flag: '🇪🇸', date: '11–13 Sep', circuit: 'Madring (Madrid)' , qualy: '2026-09-12T13:00:00Z'},
+  { id: 'aze26',  round: 17, name: 'Gran Premio de Azerbaiyán',      short: 'Azerbaiyán',     flag: '🇦🇿', date: '24–26 Sep', circuit: 'Baku City Circuit' , qualy: '2026-09-26T11:00:00Z'},
+  { id: 'sgp26',  round: 18, name: 'Gran Premio de Singapur',        short: 'Singapur',       flag: '🇸🇬', date: '9–11 Oct', circuit: 'Marina Bay', sprint: true , qualy: '2026-10-10T07:00:00Z'},
+  { id: 'usa26',  round: 19, name: 'Gran Premio de EE.UU.',          short: 'EE.UU.',         flag: '🇺🇸', date: '23–25 Oct', circuit: 'Circuit of the Americas' , qualy: '2026-10-24T20:00:00Z'},
+  { id: 'mex26',  round: 20, name: 'Gran Premio de México',          short: 'México',         flag: '🇲🇽', date: '30 Oct–1 Nov', circuit: 'Hermanos Rodríguez' , qualy: '2026-10-31T20:00:00Z'},
+  { id: 'bra26',  round: 21, name: 'Gran Premio de Brasil',          short: 'Brasil',         flag: '🇧🇷', date: '6–8 Nov', circuit: 'Interlagos' , qualy: '2026-11-07T18:00:00Z'},
+  { id: 'lv26',   round: 22, name: 'Gran Premio de Las Vegas',       short: 'Las Vegas',      flag: '🇺🇸', date: '19–21 Nov', circuit: 'Las Vegas Strip' , qualy: '2026-11-21T06:00:00Z'},
+  { id: 'qat26',  round: 23, name: 'Gran Premio de Catar',           short: 'Catar',          flag: '🇶🇦', date: '27–29 Nov', circuit: 'Losail' , qualy: '2026-11-28T12:00:00Z'},
+  { id: 'abud26', round: 24, name: 'Gran Premio de Abu Dabi',        short: 'Abu Dabi',       flag: '🇦🇪', date: '4–6 Dic', circuit: 'Yas Marina' , qualy: '2026-12-05T11:00:00Z'},
 ];
 
 // Scoring system
@@ -1854,6 +1925,51 @@ function showView(name) {
 
 // ─── BANNER ──────────────────────────────────────────────────
 
+
+var _cdInterval = null;
+function startCountdown(qualyUtc) {
+  if (_cdInterval) clearInterval(_cdInterval);
+  var wrap = document.getElementById('qualy-countdown');
+  var units = document.getElementById('cd-units');
+  if (!wrap) return;
+
+  if (!qualyUtc) {
+    wrap.style.display = 'none';
+    return;
+  }
+  wrap.style.display = 'flex';
+
+  function tick() {
+    var now  = Date.now();
+    var target = new Date(qualyUtc).getTime();
+    var diff = target - now;
+
+    if (diff <= 0 && diff > -7200000) {
+      // within 2 hours after qualy start = LIVE
+      units.innerHTML = '<span class="cd-live">⚡ QUALY EN VIVO</span>';
+      return;
+    }
+    if (diff <= -7200000) {
+      // qualy passed
+      units.innerHTML = '<span class="cd-done">QUALY FINALIZADA</span>';
+      clearInterval(_cdInterval);
+      return;
+    }
+    var days  = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var mins  = Math.floor((diff % 3600000)  / 60000);
+    var secs  = Math.floor((diff % 60000)    / 1000);
+
+    function pad(n){ return n < 10 ? '0'+n : ''+n; }
+    document.getElementById('cd-days').textContent  = days;
+    document.getElementById('cd-hours').textContent = pad(hours);
+    document.getElementById('cd-mins').textContent  = pad(mins);
+    document.getElementById('cd-secs').textContent  = pad(secs);
+  }
+  tick();
+  _cdInterval = setInterval(tick, 1000);
+}
+
 function renderCircuitStats(gpId) {
   var wrap  = document.getElementById('circuit-stats-wrap');
   if (!wrap) return;
@@ -1955,6 +2071,8 @@ function lockGPSelector() {
   updateBanner();
   updateSprintFields();
   renderCircuitStats(appState.activeGP || '');
+  var _race = RACES_2025.find(function(r){ return r.id === appState.activeGP; });
+  startCountdown(_race ? _race.qualy : null);
 }
 
 function updatePodioDuplicates() {
