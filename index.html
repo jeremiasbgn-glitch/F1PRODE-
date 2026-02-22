@@ -1229,7 +1229,10 @@ body::before {
 <body>
 
 <!-- CINEMATIC LOADER -->
-<script>window.addEventListener("load",function(){var l=document.getElementById("loader");if(l)l.classList.add("hidden");});</script>
+<script>
+// Force hide loader after 2s no matter what
+setTimeout(function(){var l=document.getElementById('loader');if(l){l.classList.add('hidden');l.style.display='none';}},2000);
+</script>
 <div id="loader">
   <div class="loader-inner">
     <div class="loader-flag">
@@ -1781,7 +1784,8 @@ function showToast(msg, duration = 3500) {
 
 // ─── LOADER ──────────────────────────────────────────────────
 function hideLoader() {
-  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1400);
+  var l = document.getElementById('loader');
+  if (l) { l.classList.add('hidden'); l.style.display = 'none'; }
 }
 
 // ─── NAV ─────────────────────────────────────────────────────
@@ -2436,13 +2440,20 @@ async function resetRace() {
 
 // ─── INIT ────────────────────────────────────────────────────
 function appInit() {
-  hideLoader();
-  initNav();
-  populateFormSelects();
-  populateGPSelect('admin-active-gp', '');
-  populateGPSelect('result-gp-select', '');
-  initPredictionForm();
-  updateBanner();
+  try {
+    hideLoader();
+    initNav();
+    populateFormSelects();
+    populateGPSelect('admin-active-gp', '');
+    populateGPSelect('result-gp-select', '');
+    initPredictionForm();
+    updateBanner();
+    lockGPSelector();
+  } catch(e) {
+    console.error('appInit error:', e);
+    hideLoader();
+  }
+  // Load from Sheets in background - app works without it
   loadFromSheets().then(function() {
     lockGPSelector();
     if (appState.activeGP) {
@@ -2451,7 +2462,7 @@ function appInit() {
       if (rgs) { rgs.value = appState.activeGP; loadResultForm(); }
     }
   }).catch(function(e) {
-    console.error('loadFromSheets error:', e);
+    console.error('Sheets no disponible:', e);
     lockGPSelector();
   });
 }
