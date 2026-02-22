@@ -1734,7 +1734,8 @@ async function apiPost(body) {
 async function loadFromSheets() {
   showConnectionStatus('loading');
   try {
-    const data = await apiGet({ action: 'getAll' });
+    const timeout = new Promise((_, rej) => setTimeout(() => rej(new Error('TIMEOUT')), 8000));
+    const data = await Promise.race([apiGet({ action: 'getAll' }), timeout]);
     appState.predictions = Array.isArray(data.predictions) ? data.predictions : [];
     appState.results     = data.results  || {};
     appState.activeGP    = data.config?.activeGP || null;
@@ -1745,6 +1746,8 @@ async function loadFromSheets() {
   } catch(e) {
     if (e.message === 'NO_API') {
       showConnectionStatus('no-api');
+    } else if (e.message === 'TIMEOUT') {
+      showConnectionStatus('error', 'tiempo de espera agotado');
     } else {
       showConnectionStatus('error', e.message);
     }
@@ -1798,10 +1801,12 @@ function initNav() {
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('view-' + name)?.classList.add('active');
-  document.querySelector(`[data-view="${name}"]`)?.classList.add('active');
-  if (name === 'tablas') renderTablas();
-  if (name === 'admin')  renderAdminPanel();
+  var viewEl = document.getElementById('view-' + name);
+  if (viewEl) viewEl.classList.add('active');
+  var btnEl = document.querySelector('[data-view="' + name + '"]');
+  if (btnEl) btnEl.classList.add('active');
+  try { if (name === 'tablas') renderTablas(); } catch(e) { console.error('renderTablas:', e); }
+  try { if (name === 'admin')  renderAdminPanel(); } catch(e) { console.error('renderAdminPanel:', e); }
 }
 
 // ─── BANNER ──────────────────────────────────────────────────
