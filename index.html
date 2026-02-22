@@ -187,82 +187,31 @@ body::before {
   font-weight: 700;
 }
 
-/* NAV */
-.main-nav {
-  display: none;
-  gap: 4px;
+/* BOTTOM NAV */
+#main-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  display: flex; background: rgba(10,10,16,0.97);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.6);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-.main-nav.open { display: flex; }
-
-@media (min-width: 640px) {
-  .main-nav { display: flex; }
-  .hamburger { display: none !important; }
-}
-
-/* Mobile nav dropdown */
-@media (max-width: 639px) {
-  .main-nav {
-    position: absolute;
-    top: 58px;
-    left: 0; right: 0;
-    background: rgba(8,8,13,0.98);
-    border-bottom: 1px solid var(--card-border);
-    flex-direction: column;
-    padding: 8px;
-    gap: 4px;
-    z-index: 199;
-  }
-}
-
 .nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--white-muted);
-  padding: 8px 14px;
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: var(--radius);
-  transition: all var(--transition);
-  white-space: nowrap;
+  flex: 1; background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 10px 4px 14px; color: rgba(255,255,255,0.3);
+  transition: color 0.18s; position: relative; -webkit-tap-highlight-color: transparent;
 }
-.nav-btn:hover { color: var(--white); border-color: var(--card-border); }
-.nav-btn.active {
-  background: var(--f1-red);
-  border-color: var(--f1-red);
-  color: #fff;
-  box-shadow: var(--shadow-red);
+.nav-btn::after {
+  content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 2px;
+  background: var(--f1-red); border-radius: 0 0 3px 3px; transform: scaleX(0);
+  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
 }
-.nav-icon { font-size: 1rem; }
-.nav-label { }
-
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-}
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--white);
-  border-radius: 2px;
-  transition: all var(--transition);
-}
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
+.nav-btn.active::after { transform: scaleX(1); }
+.nav-btn:active { background: rgba(255,255,255,0.06); }
+.nav-icon { font-size: 1.3rem; line-height: 1; }
+.nav-label { font-family: var(--font-display); font-size: 0.58rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+.nav-btn.active { color: var(--f1-red); }
 /* ============================================================ RACE BANNER */
 .race-banner {
   background: linear-gradient(135deg, var(--black-3) 0%, #1a0308 60%, var(--black-3) 100%);
@@ -1235,6 +1184,46 @@ body::before {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+
+#main-nav { position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;background:rgba(10,10,16,0.97);border-top:1px solid rgba(255,255,255,0.07);box-shadow:0 -4px 30px rgba(0,0,0,0.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding-bottom:env(safe-area-inset-bottom,0px); }
+.gp-locked-banner { background:linear-gradient(135deg,rgba(232,0,45,0.07),rgba(232,0,45,0.02));border:1px solid rgba(232,0,45,0.18);border-left:3px solid var(--f1-red);border-radius:10px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:14px; }
+.gp-locked-icon { font-size:1.9rem;flex-shrink:0; }
+.gp-locked-label { font-family:var(--font-display);font-size:0.58rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--f1-red);margin-bottom:4px;display:flex;align-items:center;gap:4px; }
+.gp-locked-name { font-size:0.98rem;font-weight:700;color:#fff;line-height:1.2; }
+.gp-locked-date { font-size:0.76rem;color:rgba(255,255,255,0.4);margin-top:3px; }
+.no-gp-banner { background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.1);border-radius:12px;padding:36px 20px;text-align:center;margin-bottom:16px; }
+.no-gp-icon { font-size:2.5rem;margin-bottom:10px; }
+.no-gp-title { font-family:var(--font-display);font-size:1.1rem;font-weight:800;letter-spacing:1px;color:rgba(255,255,255,0.3);margin-bottom:8px; }
+.no-gp-sub { font-size:0.83rem;color:rgba(255,255,255,0.2);line-height:1.6; }
+.podio-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px; }
+@media(max-width:400px){.podio-grid{grid-template-columns:1fr;}}
+.podio-card { border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.07); }
+.podio-rank-bar { display:flex;align-items:center;gap:5px;padding:7px 9px 6px; }
+.podio-trophy { font-size:1rem;line-height:1;flex-shrink:0; }
+.podio-rank-label { font-family:var(--font-display);font-size:0.55rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;flex:1; }
+.podio-pts-badge { font-family:var(--font-display);font-size:0.55rem;font-weight:800;opacity:0.65;white-space:nowrap; }
+.podio-select { width:100%;border-radius:0 0 9px 9px!important;border:none!important;border-top:1px solid rgba(255,255,255,0.07)!important;font-size:0.8rem!important;padding:9px 10px!important;background-image:none!important; }
+.podio-gold { background:linear-gradient(160deg,rgba(255,215,0,0.11),rgba(255,215,0,0.03));border-color:rgba(255,215,0,0.18)!important; }
+.podio-gold .podio-rank-label { color:#FFD700; } .podio-gold .podio-pts-badge { color:rgba(255,215,0,0.65); }
+.podio-select-gold { background-color:rgba(255,215,0,0.04)!important; }
+.podio-silver { background:linear-gradient(160deg,rgba(192,192,192,0.09),rgba(192,192,192,0.02));border-color:rgba(192,192,192,0.15)!important; }
+.podio-silver .podio-rank-label { color:#C8C8C8; } .podio-silver .podio-pts-badge { color:rgba(200,200,200,0.55); }
+.podio-select-silver { background-color:rgba(192,192,192,0.03)!important; }
+.podio-bronze { background:linear-gradient(160deg,rgba(205,127,50,0.1),rgba(205,127,50,0.02));border-color:rgba(205,127,50,0.15)!important; }
+.podio-bronze .podio-rank-label { color:#CD7F32; } .podio-bronze .podio-pts-badge { color:rgba(205,127,50,0.6); }
+.podio-select-bronze { background-color:rgba(205,127,50,0.03)!important; }
+.pts-legend-section { margin-top:12px; }
+.pts-legend-title { font-family:var(--font-display);font-size:0.6rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:8px; }
+.pts-legend-grid { display:flex;flex-direction:column;gap:1px; }
+.pts-legend-row { display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px; }
+.pts-legend-icon { font-size:0.95rem;width:20px;text-align:center;flex-shrink:0; }
+.pts-legend-cat { flex:1;font-size:0.83rem;color:rgba(255,255,255,0.5); }
+.pts-legend-num { font-family:var(--font-display);font-size:0.88rem;font-weight:900;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.05);border-radius:5px;padding:2px 9px;min-width:44px;text-align:center; }
+.pts-legend-highlight .pts-legend-cat { color:rgba(255,255,255,0.75);font-weight:600; }
+.pts-legend-highlight .pts-legend-num { color:var(--f1-red);background:rgba(232,0,45,0.1);border:1px solid rgba(232,0,45,0.2); }
+.pts-legend-sprint .pts-legend-cat { color:rgba(167,139,250,0.65); }
+.pts-legend-sprint .pts-legend-num { color:#A78BFA;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2); }
+.container { padding-bottom:90px!important; }
 </style>
 </head>
 <body>
@@ -1265,25 +1254,6 @@ body::before {
         <span class="logo-season">TEMPORADA 2026</span>
       </div>
     </div>
-
-    <nav class="main-nav" id="main-nav">
-      <button class="nav-btn active" data-view="pronostico">
-        <span class="nav-icon">🏁</span>
-        <span class="nav-label">Pronóstico</span>
-      </button>
-      <button class="nav-btn" data-view="tablas">
-        <span class="nav-icon">📊</span>
-        <span class="nav-label">Tablas</span>
-      </button>
-      <button class="nav-btn" data-view="admin">
-        <span class="nav-icon">🔐</span>
-        <span class="nav-label">Admin</span>
-      </button>
-    </nav>
-
-    <button class="hamburger" id="hamburger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </header>
 
@@ -1294,7 +1264,8 @@ body::before {
     <div class="race-banner-name" id="banner-name">Cargando GP...</div>
     <div class="race-banner-meta">
       <span id="banner-flag">🏴</span>
-      <span id="banner-date">—</span>
+      <span id="banner-circuit" style="color:rgba(255,255,255,0.45);font-size:0.82rem;margin:0 4px;"></span>
+      <span id="banner-date" style="background:rgba(232,0,45,0.12);border:1px solid rgba(232,0,45,0.25);color:#E8002D;font-family:var(--font-display);font-weight:700;font-size:0.7rem;letter-spacing:1px;padding:2px 8px;border-radius:4px;">—</span>
     </div>
   </div>
   <div class="race-banner-stripe"></div>
@@ -1316,14 +1287,10 @@ body::before {
 
         <form id="prediction-form" novalidate>
 
-          <!-- GP selector (inside form) -->
-          <div class="form-field">
-            <label class="field-label required">🏁 GRAN PREMIO</label>
-            <select id="f-gp" class="field-select">
-              <option value="">— Seleccioná el GP —</option>
-            </select>
-          </div>
+          <div id="gp-display-wrap"></div>
+          <input type="hidden" id="f-gp" value="">
 
+<div id="form-fields-wrap">
           <div class="form-field">
             <label class="field-label required">👤 NOMBRE DE JUGADOR</label>
             <input type="text" id="f-player" class="field-input" placeholder="Tu nombre..." maxlength="24" autocomplete="off" spellcheck="false">
@@ -1346,18 +1313,9 @@ body::before {
           <div class="podio-note">⚠️ Los tres pilotos deben ser distintos entre sí · Podio exacto completo: <strong>+20 pts bonus</strong> · Cada posición exacta: <strong>+5 pts</strong></div>
 
           <div class="podio-grid">
-            <div class="form-field podio-field">
-              <label class="field-label required"><span class="medal gold">1°</span><span class="pts-tag">+5</span></label>
-              <select id="f-p1" class="field-select podio-select"><option value="">— Piloto —</option></select>
-            </div>
-            <div class="form-field podio-field">
-              <label class="field-label required"><span class="medal silver">2°</span><span class="pts-tag">+5</span></label>
-              <select id="f-p2" class="field-select podio-select"><option value="">— Piloto —</option></select>
-            </div>
-            <div class="form-field podio-field">
-              <label class="field-label required"><span class="medal bronze">3°</span><span class="pts-tag">+5</span></label>
-              <select id="f-p3" class="field-select podio-select"><option value="">— Piloto —</option></select>
-            </div>
+            <div class="podio-card podio-gold"><div class="podio-rank-bar"><span class="podio-trophy">🥇</span><span class="podio-rank-label">1° LUGAR</span><span class="podio-pts-badge">+5 pts</span></div><select id="f-p1" class="field-select podio-select podio-select-gold"><option value="">— Piloto —</option></select></div>
+            <div class="podio-card podio-silver"><div class="podio-rank-bar"><span class="podio-trophy">🥈</span><span class="podio-rank-label">2° LUGAR</span><span class="podio-pts-badge">+5 pts</span></div><select id="f-p2" class="field-select podio-select podio-select-silver"><option value="">— Piloto —</option></select></div>
+            <div class="podio-card podio-bronze"><div class="podio-rank-bar"><span class="podio-trophy">🥉</span><span class="podio-rank-label">3° LUGAR</span><span class="podio-pts-badge">+5 pts</span></div><select id="f-p3" class="field-select podio-select podio-select-bronze"><option value="">— Piloto —</option></select></div>
           </div>
 
           <div class="form-divider"><span>DETALLES DE CARRERA</span></div>
@@ -1408,6 +1366,7 @@ body::before {
             </div>
           </div>
 
+          </div>
           <button type="submit" id="submit-btn" class="btn btn-primary btn-full">
             <span class="btn-flag">🏁</span>
             ENVIAR PRONÓSTICO
@@ -1427,9 +1386,7 @@ body::before {
           <button class="btn btn-primary" onclick="copySummary()">
             📋 COPIAR AL PORTAPAPELES
           </button>
-          <button class="btn btn-ghost" onclick="newPrediction()">
-            ➕ NUEVO PRONÓSTICO
-          </button>
+          <p style="text-align:center;font-size:0.76rem;color:rgba(255,255,255,0.25);margin-top:8px;font-style:italic;">¿Querés modificar? Contactá al administrador.</p>
         </div>
       </div>
 
@@ -1652,30 +1609,30 @@ const TEAMS_2025 = [
 const NO_DNF_OPTION = 'Sin abandonos';
 
 const RACES_2025 = [
-  { id: 'aus26',  round: 1,  name: 'Gran Premio de Australia',       short: 'Australia',      flag: '🇦🇺', date: '08 Mar 2026', circuit: 'Albert Park' },
-  { id: 'chn26',  round: 2,  name: 'Gran Premio de China',           short: 'China',          flag: '🇨🇳', date: '15 Mar 2026', circuit: 'Shanghai International', sprint: true },
-  { id: 'jpn26',  round: 3,  name: 'Gran Premio de Japón',           short: 'Japón',          flag: '🇯🇵', date: '29 Mar 2026', circuit: 'Suzuka' },
-  { id: 'bhr26',  round: 4,  name: 'Gran Premio de Baréin',          short: 'Baréin',         flag: '🇧🇭', date: '12 Abr 2026', circuit: 'Sakhir' },
-  { id: 'sau26',  round: 5,  name: 'Gran Premio de Arabia Saudita',  short: 'Arabia Saudita', flag: '🇸🇦', date: '19 Abr 2026', circuit: 'Jeddah Corniche' },
-  { id: 'mia26',  round: 6,  name: 'Gran Premio de Miami',           short: 'Miami',          flag: '🇺🇸', date: '03 May 2026', circuit: 'Miami International', sprint: true },
-  { id: 'can26',  round: 7,  name: 'Gran Premio de Canadá',          short: 'Canadá',         flag: '🇨🇦', date: '24 May 2026', circuit: 'Gilles Villeneuve', sprint: true },
-  { id: 'mon26',  round: 8,  name: 'Gran Premio de Mónaco',          short: 'Mónaco',         flag: '🇲🇨', date: '07 Jun 2026', circuit: 'Circuit de Monaco' },
-  { id: 'esp26',  round: 9,  name: 'Gran Premio de España',          short: 'España',         flag: '🇪🇸', date: '14 Jun 2026', circuit: 'Circuit de Barcelona-Catalunya' },
-  { id: 'aut26',  round: 10, name: 'Gran Premio de Austria',         short: 'Austria',        flag: '🇦🇹', date: '28 Jun 2026', circuit: 'Red Bull Ring' },
-  { id: 'gbr26',  round: 11, name: 'Gran Premio de Gran Bretaña',    short: 'Gran Bretaña',   flag: '🇬🇧', date: '05 Jul 2026', circuit: 'Silverstone', sprint: true },
-  { id: 'bel26',  round: 12, name: 'Gran Premio de Bélgica',         short: 'Bélgica',        flag: '🇧🇪', date: '19 Jul 2026', circuit: 'Spa-Francorchamps' },
-  { id: 'hun26',  round: 13, name: 'Gran Premio de Hungría',         short: 'Hungría',        flag: '🇭🇺', date: '26 Jul 2026', circuit: 'Hungaroring' },
-  { id: 'ned26',  round: 14, name: 'Gran Premio de Países Bajos',    short: 'Países Bajos',   flag: '🇳🇱', date: '23 Ago 2026', circuit: 'Zandvoort', sprint: true },
-  { id: 'ita26',  round: 15, name: 'Gran Premio de Italia',          short: 'Italia',         flag: '🇮🇹', date: '06 Sep 2026', circuit: 'Monza' },
-  { id: 'mad26',  round: 16, name: 'Gran Premio de España (Madrid)', short: 'Madrid',         flag: '🇪🇸', date: '13 Sep 2026', circuit: 'Madring (Madrid)' },
-  { id: 'aze26',  round: 17, name: 'Gran Premio de Azerbaiyán',      short: 'Azerbaiyán',     flag: '🇦🇿', date: '26 Sep 2026', circuit: 'Baku City Circuit' },
-  { id: 'sgp26',  round: 18, name: 'Gran Premio de Singapur',        short: 'Singapur',       flag: '🇸🇬', date: '11 Oct 2026', circuit: 'Marina Bay', sprint: true },
-  { id: 'usa26',  round: 19, name: 'Gran Premio de EE.UU.',          short: 'EE.UU.',         flag: '🇺🇸', date: '25 Oct 2026', circuit: 'Circuit of the Americas' },
-  { id: 'mex26',  round: 20, name: 'Gran Premio de México',          short: 'México',         flag: '🇲🇽', date: '01 Nov 2026', circuit: 'Hermanos Rodríguez' },
-  { id: 'bra26',  round: 21, name: 'Gran Premio de Brasil',          short: 'Brasil',         flag: '🇧🇷', date: '08 Nov 2026', circuit: 'Interlagos' },
-  { id: 'lv26',   round: 22, name: 'Gran Premio de Las Vegas',       short: 'Las Vegas',      flag: '🇺🇸', date: '21 Nov 2026', circuit: 'Las Vegas Strip' },
-  { id: 'qat26',  round: 23, name: 'Gran Premio de Catar',           short: 'Catar',          flag: '🇶🇦', date: '29 Nov 2026', circuit: 'Losail' },
-  { id: 'abud26', round: 24, name: 'Gran Premio de Abu Dabi',        short: 'Abu Dabi',       flag: '🇦🇪', date: '06 Dic 2026', circuit: 'Yas Marina' },
+  { id: 'aus26',  round: 1,  name: 'Gran Premio de Australia',       short: 'Australia',      flag: '🇦🇺', date: '6–8 Mar', circuit: 'Albert Park' },
+  { id: 'chn26',  round: 2,  name: 'Gran Premio de China',           short: 'China',          flag: '🇨🇳', date: '13–15 Mar', circuit: 'Shanghai International', sprint: true },
+  { id: 'jpn26',  round: 3,  name: 'Gran Premio de Japón',           short: 'Japón',          flag: '🇯🇵', date: '27–29 Mar', circuit: 'Suzuka' },
+  { id: 'bhr26',  round: 4,  name: 'Gran Premio de Baréin',          short: 'Baréin',         flag: '🇧🇭', date: '10–12 Abr', circuit: 'Sakhir' },
+  { id: 'sau26',  round: 5,  name: 'Gran Premio de Arabia Saudita',  short: 'Arabia Saudita', flag: '🇸🇦', date: '17–19 Abr', circuit: 'Jeddah Corniche' },
+  { id: 'mia26',  round: 6,  name: 'Gran Premio de Miami',           short: 'Miami',          flag: '🇺🇸', date: '1–3 May', circuit: 'Miami International', sprint: true },
+  { id: 'can26',  round: 7,  name: 'Gran Premio de Canadá',          short: 'Canadá',         flag: '🇨🇦', date: '22–24 May', circuit: 'Gilles Villeneuve', sprint: true },
+  { id: 'mon26',  round: 8,  name: 'Gran Premio de Mónaco',          short: 'Mónaco',         flag: '🇲🇨', date: '5–7 Jun', circuit: 'Circuit de Monaco' },
+  { id: 'esp26',  round: 9,  name: 'Gran Premio de España',          short: 'España',         flag: '🇪🇸', date: '12–14 Jun', circuit: 'Circuit de Barcelona-Catalunya' },
+  { id: 'aut26',  round: 10, name: 'Gran Premio de Austria',         short: 'Austria',        flag: '🇦🇹', date: '26–28 Jun', circuit: 'Red Bull Ring' },
+  { id: 'gbr26',  round: 11, name: 'Gran Premio de Gran Bretaña',    short: 'Gran Bretaña',   flag: '🇬🇧', date: '3–5 Jul', circuit: 'Silverstone', sprint: true },
+  { id: 'bel26',  round: 12, name: 'Gran Premio de Bélgica',         short: 'Bélgica',        flag: '🇧🇪', date: '17–19 Jul', circuit: 'Spa-Francorchamps' },
+  { id: 'hun26',  round: 13, name: 'Gran Premio de Hungría',         short: 'Hungría',        flag: '🇭🇺', date: '24–26 Jul', circuit: 'Hungaroring' },
+  { id: 'ned26',  round: 14, name: 'Gran Premio de Países Bajos',    short: 'Países Bajos',   flag: '🇳🇱', date: '21–23 Ago', circuit: 'Zandvoort', sprint: true },
+  { id: 'ita26',  round: 15, name: 'Gran Premio de Italia',          short: 'Italia',         flag: '🇮🇹', date: '4–6 Sep', circuit: 'Monza' },
+  { id: 'mad26',  round: 16, name: 'Gran Premio de España (Madrid)', short: 'Madrid',         flag: '🇪🇸', date: '11–13 Sep', circuit: 'Madring (Madrid)' },
+  { id: 'aze26',  round: 17, name: 'Gran Premio de Azerbaiyán',      short: 'Azerbaiyán',     flag: '🇦🇿', date: '24–26 Sep', circuit: 'Baku City Circuit' },
+  { id: 'sgp26',  round: 18, name: 'Gran Premio de Singapur',        short: 'Singapur',       flag: '🇸🇬', date: '9–11 Oct', circuit: 'Marina Bay', sprint: true },
+  { id: 'usa26',  round: 19, name: 'Gran Premio de EE.UU.',          short: 'EE.UU.',         flag: '🇺🇸', date: '23–25 Oct', circuit: 'Circuit of the Americas' },
+  { id: 'mex26',  round: 20, name: 'Gran Premio de México',          short: 'México',         flag: '🇲🇽', date: '30 Oct–1 Nov', circuit: 'Hermanos Rodríguez' },
+  { id: 'bra26',  round: 21, name: 'Gran Premio de Brasil',          short: 'Brasil',         flag: '🇧🇷', date: '6–8 Nov', circuit: 'Interlagos' },
+  { id: 'lv26',   round: 22, name: 'Gran Premio de Las Vegas',       short: 'Las Vegas',      flag: '🇺🇸', date: '19–21 Nov', circuit: 'Las Vegas Strip' },
+  { id: 'qat26',  round: 23, name: 'Gran Premio de Catar',           short: 'Catar',          flag: '🇶🇦', date: '27–29 Nov', circuit: 'Losail' },
+  { id: 'abud26', round: 24, name: 'Gran Premio de Abu Dabi',        short: 'Abu Dabi',       flag: '🇦🇪', date: '4–6 Dic', circuit: 'Yas Marina' },
 ];
 
 // Scoring system
@@ -1829,15 +1786,7 @@ function hideLoader() {
 // ─── NAV ─────────────────────────────────────────────────────
 function initNav() {
   document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      showView(btn.dataset.view);
-      document.getElementById('main-nav').classList.remove('open');
-      document.getElementById('hamburger').classList.remove('open');
-    });
-  });
-  document.getElementById('hamburger').addEventListener('click', function() {
-    this.classList.toggle('open');
-    document.getElementById('main-nav').classList.toggle('open');
+    btn.addEventListener('click', () => { showView(btn.dataset.view); });
   });
 }
 
@@ -1852,11 +1801,21 @@ function showView(name) {
 
 // ─── BANNER ──────────────────────────────────────────────────
 function updateBanner() {
-  const race = RACES_2025.find(r => r.id === appState.activeGP) || RACES_2025[0];
-  document.getElementById('banner-round').textContent = race.round;
-  document.getElementById('banner-name').textContent  = race.name;
-  document.getElementById('banner-flag').textContent  = race.flag;
-  document.getElementById('banner-date').textContent  = race.date;
+  const race = RACES_2025.find(r => r.id === appState.activeGP);
+  const el = id => document.getElementById(id);
+  if (!race) {
+    if(el('banner-round')) el('banner-round').textContent='—';
+    if(el('banner-name'))  el('banner-name').textContent='Sin GP activo';
+    if(el('banner-flag'))  el('banner-flag').textContent='🏁';
+    if(el('banner-circuit')) el('banner-circuit').textContent='';
+    if(el('banner-date'))  el('banner-date').textContent='';
+    return;
+  }
+  if(el('banner-round'))   el('banner-round').textContent=race.round;
+  if(el('banner-name'))    el('banner-name').textContent=race.name;
+  if(el('banner-flag'))    el('banner-flag').textContent=race.flag;
+  if(el('banner-circuit')) el('banner-circuit').textContent=race.circuit+' ·';
+  if(el('banner-date'))    el('banner-date').textContent=race.date;
 }
 
 // ─── SELECTS ─────────────────────────────────────────────────
@@ -1898,6 +1857,25 @@ function populateFormSelects() {
     updateSprintFields();
   });
   updateSprintFields();
+}
+
+function lockGPSelector() {
+  const hidden = document.getElementById('f-gp');
+  const wrap   = document.getElementById('gp-display-wrap');
+  const fields = document.getElementById('form-fields-wrap');
+  if (!wrap) return;
+  const race = RACES_2025.find(r => r.id === appState.activeGP);
+  if (race) {
+    const sprint = race.sprint ? '<span style="background:#8B5CF6;color:#fff;font-size:0.58rem;font-family:var(--font-display);font-weight:800;letter-spacing:1px;padding:2px 7px;border-radius:3px;margin-left:6px;text-transform:uppercase;">⚡ SPRINT</span>' : '';
+    wrap.innerHTML = '<div class="gp-locked-banner"><div class="gp-locked-icon">' + race.flag + '</div><div><div class="gp-locked-label">GP ACTIVO ' + sprint + '</div><div class="gp-locked-name">' + race.name + '</div><div class="gp-locked-date">📅 ' + race.date + ' · ' + race.circuit + '</div></div></div>';
+    if (hidden) hidden.value = race.id;
+    if (fields) fields.style.display = 'block';
+  } else {
+    wrap.innerHTML = '<div class="no-gp-banner"><div class="no-gp-icon">🏁</div><div class="no-gp-title">Sin GP activo</div><div class="no-gp-sub">El admin todavía no activó ningún GP.<br>Volvé cuando se acerque la fecha de carrera.</div></div>';
+    if (hidden) hidden.value = '';
+    if (fields) fields.style.display = 'none';
+  }
+  updateBanner(); updateSprintFields();
 }
 
 function updateSprintFields() {
@@ -2067,16 +2045,22 @@ function showSummary(pred) {
 }
 
 function copySummary() {
-  const copy = txt => {
-    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(txt);
-    const ta = Object.assign(document.createElement('textarea'), { value: txt });
-    Object.assign(ta.style, { position:'fixed', opacity:'0' });
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-    return Promise.resolve();
-  };
-  copy(currentSummaryText)
-    .then(()  => showToast('📋 ¡Copiado! Pegalo en el grupo'))
-    .catch(() => showToast('No se pudo copiar'));
+  const txt = currentSummaryText;
+  if (!txt) { showToast('No hay pronóstico para copiar'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(() => showToast('📋 ¡Copiado! Pegalo en el grupo')).catch(() => fallbackCopy(txt));
+  } else { fallbackCopy(txt); }
+}
+function fallbackCopy(txt) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;';
+    document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0,99999);
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast(ok ? '📋 ¡Copiado! Pegalo en el grupo' : 'No se pudo copiar automáticamente');
+  } catch(e) { showToast('No se pudo copiar automáticamente'); }
 }
 
 function newPrediction() {
@@ -2171,9 +2155,20 @@ function renderLeaderboard(board, title, showRaces, gpId) {
   });
 
   html += `</tbody></table></div>
-    <div class="card" style="margin-top:0"><div class="card-label">PUNTOS POR CATEGORÍA</div>
-    <div class="points-legend">
-      <div class="pts-legend-item"><span class="pts-legend-val">10</span><div class="pts-legend-desc">Ganador GP</div></div>
+   <div class="pts-legend-section">
+      <div class="pts-legend-title">Sistema de puntos</div>
+      <div class="pts-legend-grid">
+        <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🏆</span><span class="pts-legend-cat">Ganador del GP</span><span class="pts-legend-num">+10</span></div>
+        <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🎯</span><span class="pts-legend-cat">Podio exacto (bonus)</span><span class="pts-legend-num">+20</span></div>
+        <div class="pts-legend-row"><span class="pts-legend-icon">🥇</span><span class="pts-legend-cat">Posición podio (c/u)</span><span class="pts-legend-num">+5</span></div>
+        <div class="pts-legend-row"><span class="pts-legend-icon">⚡</span><span class="pts-legend-cat">Pole position</span><span class="pts-legend-num">+5</span></div>
+        <div class="pts-legend-row"><span class="pts-legend-icon">⏱</span><span class="pts-legend-cat">Vuelta rápida</span><span class="pts-legend-num">+5</span></div>
+        <div class="pts-legend-row"><span class="pts-legend-icon">⭐</span><span class="pts-legend-cat">Piloto del día</span><span class="pts-legend-num">+5</span></div>
+        <div class="pts-legend-row"><span class="pts-legend-icon">🔧</span><span class="pts-legend-cat">Pit stop</span><span class="pts-legend-num">+5</span></div>
+        <div class="pts-legend-row"><span class="pts-legend-icon">💥</span><span class="pts-legend-cat">DNF</span><span class="pts-legend-num">+5</span></div>
+        <div class="pts-legend-row pts-legend-sprint"><span class="pts-legend-icon">🏎</span><span class="pts-legend-cat">Ganador Sprint</span><span class="pts-legend-num">+5</span></div>
+        <div class="pts-legend-row pts-legend-sprint"><span class="pts-legend-icon">🟣</span><span class="pts-legend-cat">Pole Sprint</span><span class="pts-legend-num">+3</span></div>
+      </div></div>
       <div class="pts-legend-item"><span class="pts-legend-val">20</span><div class="pts-legend-desc">Podio exacto</div></div>
       <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">Posición podio</div></div>
       <div class="pts-legend-item"><span class="pts-legend-val">5</span><div class="pts-legend-desc">Pole position</div></div>
@@ -2229,11 +2224,12 @@ async function adminRefresh() {
   showToast('🔄 Datos actualizados desde Google Sheets');
 }
 
-async function saveActiveGP() {
+async async function saveActiveGP() {
   const gpId = document.getElementById('admin-active-gp').value || null;
   appState.activeGP = gpId;
-  updateBanner();
-  if (gpId) { const fgp = document.getElementById('f-gp'); if(fgp) fgp.value = gpId; }
+  lockGPSelector();
+  const rgs = document.getElementById('result-gp-select');
+  if (rgs && gpId) { rgs.value = gpId; loadResultForm(); }
   try {
     if (API_URL) await apiPost({ action:'setActiveGP', gpId: gpId||'', password: adminPassword });
     showToast('✅ GP activo guardado');
@@ -2447,27 +2443,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   initPredictionForm();
   updateBanner();
   const ok = await loadFromSheets();
-  if (ok && appState.activeGP) {
-    const fgp = document.getElementById('f-gp');
-    if (fgp) { fgp.value = appState.activeGP; updateSprintFields(); }
+  lockGPSelector();
+  if (appState.activeGP) {
     populateGPSelect('admin-active-gp', appState.activeGP);
-    updateBanner();
+    const rgs = document.getElementById('result-gp-select');
+    if (rgs) { rgs.value = appState.activeGP; loadResultForm(); }
   }
 });
 
 
-// Expose functions to global scope (needed for onclick handlers with type="module")
-window.adminLogin      = adminLogin;
-window.adminLogout     = adminLogout;
-window.adminRefresh    = adminRefresh;
-window.changePassword  = changePassword;
-window.copySummary     = copySummary;
-window.deletePred      = deletePred;
-window.loadResultForm  = loadResultForm;
-window.newPrediction   = newPrediction;
-window.resetRace       = resetRace;
-window.saveActiveGP    = saveActiveGP;
-window.saveResults     = saveResults;
+window.adminLogin=adminLogin; window.adminLogout=adminLogout; window.adminRefresh=adminRefresh;
+window.changePassword=changePassword; window.copySummary=copySummary; window.deletePred=deletePred;
+window.loadResultForm=loadResultForm; window.newPrediction=newPrediction; window.resetRace=resetRace;
+window.saveActiveGP=saveActiveGP; window.saveResults=saveResults;
 </script>
+<nav id="main-nav">
+  <button class="nav-btn active" data-view="pronostico"><span class="nav-icon">🏁</span><span class="nav-label">Pronóstico</span></button>
+  <button class="nav-btn" data-view="tablas"><span class="nav-icon">📊</span><span class="nav-label">Tablas</span></button>
+  <button class="nav-btn" data-view="admin"><span class="nav-icon">⚙️</span><span class="nav-label">Admin</span></button>
+</nav>
 </body>
 </html>
