@@ -188,30 +188,14 @@ body::before {
 }
 
 /* BOTTOM NAV */
-#main-nav {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-  display: flex; background: rgba(10,10,16,0.97);
-  border-top: 1px solid rgba(255,255,255,0.07);
-  box-shadow: 0 -4px 30px rgba(0,0,0,0.6);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.nav-btn {
-  flex: 1; background: none; border: none; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 4px; padding: 10px 4px 14px; color: rgba(255,255,255,0.3);
-  transition: color 0.18s; position: relative; -webkit-tap-highlight-color: transparent;
-}
-.nav-btn::after {
-  content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 2px;
-  background: var(--f1-red); border-radius: 0 0 3px 3px; transform: scaleX(0);
-  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
-}
-.nav-btn.active::after { transform: scaleX(1); }
-.nav-btn:active { background: rgba(255,255,255,0.06); }
-.nav-icon { font-size: 1.3rem; line-height: 1; }
-.nav-label { font-family: var(--font-display); font-size: 0.58rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
-.nav-btn.active { color: var(--f1-red); }
+#main-nav { position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;background:rgba(10,10,16,0.97);border-top:1px solid rgba(255,255,255,0.07);box-shadow:0 -4px 30px rgba(0,0,0,0.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding-bottom:env(safe-area-inset-bottom,0px); }
+.nav-btn { flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 4px 14px;color:rgba(255,255,255,0.3);transition:color 0.18s;position:relative;-webkit-tap-highlight-color:transparent; }
+.nav-btn::after { content:'';position:absolute;top:0;left:25%;right:25%;height:2px;background:var(--f1-red);border-radius:0 0 3px 3px;transform:scaleX(0);transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1); }
+.nav-btn.active::after { transform:scaleX(1); }
+.nav-btn:active { background:rgba(255,255,255,0.06); }
+.nav-icon { font-size:1.4rem;line-height:1; }
+.nav-label { font-family:var(--font-display);font-size:0.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase; }
+.nav-btn.active { color:var(--f1-red); }
 /* ============================================================ RACE BANNER */
 .race-banner {
   background: linear-gradient(135deg, var(--black-3) 0%, #1a0308 60%, var(--black-3) 100%);
@@ -1185,54 +1169,116 @@ body::before {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 
-#main-nav { position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;background:rgba(10,10,16,0.97);border-top:1px solid rgba(255,255,255,0.07);box-shadow:0 -4px 30px rgba(0,0,0,0.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding-bottom:env(safe-area-inset-bottom,0px); }
+/* ── TYPOGRAPHY INCREASE ── */
+body { font-size: 16px; }
+.field-input, .field-select { font-size: 1rem !important; padding: 13px 14px !important; }
+.field-label { font-size: 0.78rem !important; }
+.card-title { font-size: 1.2rem !important; }
+.card-subtitle { font-size: 0.9rem !important; }
+.pts-tag { font-size: 0.7rem !important; }
+.form-hint { font-size: 0.88rem !important; }
+.pts-legend-cat { font-size: 0.9rem !important; }
+.pts-legend-num { font-size: 0.95rem !important; }
+.gp-locked-name { font-size: 1.05rem !important; }
+.gp-locked-date { font-size: 0.82rem !important; }
+.nav-label { font-size: 0.68rem !important; }
+.race-banner-title { font-size: 1.8rem !important; }
+.summary-row-label { font-size: 0.9rem !important; }
+.summary-row-val { font-size: 0.9rem !important; }
+.board-name { font-size: 0.95rem !important; }
+.board-pts { font-size: 1rem !important; }
+
+/* ── CIRCUIT STATS CARD ── */
+.circ-card { background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:4px; }
+.circ-title { font-family:var(--font-display);font-size:0.78rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:12px; }
+.circ-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px; }
+.circ-item { background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px; }
+.circ-wide { grid-column:1/-1; }
+.circ-icon { font-size:1rem;margin-bottom:2px; }
+.circ-lbl { font-family:var(--font-display);font-size:0.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:3px; }
+.circ-val { font-size:0.88rem;font-weight:600;color:rgba(255,255,255,0.8);line-height:1.3; }
+.circ-fact { font-size:0.82rem;color:rgba(255,255,255,0.35);line-height:1.5;border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;font-style:italic; }
+
+/* ── GP LOCKED BANNER ── */
 .gp-locked-banner { background:linear-gradient(135deg,rgba(232,0,45,0.07),rgba(232,0,45,0.02));border:1px solid rgba(232,0,45,0.18);border-left:3px solid var(--f1-red);border-radius:10px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:14px; }
-.gp-locked-icon { font-size:1.9rem;flex-shrink:0; }
-.gp-locked-label { font-family:var(--font-display);font-size:0.58rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--f1-red);margin-bottom:4px;display:flex;align-items:center;gap:4px; }
-.gp-locked-name { font-size:0.98rem;font-weight:700;color:#fff;line-height:1.2; }
-.gp-locked-date { font-size:0.76rem;color:rgba(255,255,255,0.4);margin-top:3px; }
+.gp-locked-icon { font-size:2rem;flex-shrink:0; }
+.gp-locked-label { font-family:var(--font-display);font-size:0.62rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--f1-red);margin-bottom:4px;display:flex;align-items:center;gap:4px; }
+.gp-locked-name { font-size:1.05rem;font-weight:700;color:#fff;line-height:1.2; }
+.gp-locked-date { font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:3px; }
 .no-gp-banner { background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.1);border-radius:12px;padding:36px 20px;text-align:center;margin-bottom:16px; }
 .no-gp-icon { font-size:2.5rem;margin-bottom:10px; }
-.no-gp-title { font-family:var(--font-display);font-size:1.1rem;font-weight:800;letter-spacing:1px;color:rgba(255,255,255,0.3);margin-bottom:8px; }
-.no-gp-sub { font-size:0.83rem;color:rgba(255,255,255,0.2);line-height:1.6; }
+.no-gp-title { font-family:var(--font-display);font-size:1.15rem;font-weight:800;letter-spacing:1px;color:rgba(255,255,255,0.3);margin-bottom:8px; }
+.no-gp-sub { font-size:0.88rem;color:rgba(255,255,255,0.2);line-height:1.6; }
+
+/* ── PODIO CARDS ── */
 .podio-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px; }
 @media(max-width:400px){.podio-grid{grid-template-columns:1fr;}}
 .podio-card { border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.07); }
-.podio-rank-bar { display:flex;align-items:center;gap:5px;padding:7px 9px 6px; }
-.podio-trophy { font-size:1rem;line-height:1;flex-shrink:0; }
-.podio-rank-label { font-family:var(--font-display);font-size:0.55rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;flex:1; }
-.podio-pts-badge { font-family:var(--font-display);font-size:0.55rem;font-weight:800;opacity:0.65;white-space:nowrap; }
-.podio-select { width:100%;border-radius:0 0 9px 9px!important;border:none!important;border-top:1px solid rgba(255,255,255,0.07)!important;font-size:0.8rem!important;padding:9px 10px!important;background-image:none!important; }
+.podio-rank-bar { display:flex;align-items:center;gap:5px;padding:8px 10px 7px; }
+.podio-trophy { font-size:1.1rem;line-height:1;flex-shrink:0; }
+.podio-rank-label { font-family:var(--font-display);font-size:0.6rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;flex:1; }
+.podio-pts-badge { font-family:var(--font-display);font-size:0.6rem;font-weight:800;opacity:0.65;white-space:nowrap; }
+.podio-select { width:100%;border-radius:0 0 9px 9px!important;border:none!important;border-top:1px solid rgba(255,255,255,0.07)!important;font-size:0.88rem!important;padding:10px!important;background-image:none!important; }
 .podio-gold { background:linear-gradient(160deg,rgba(255,215,0,0.11),rgba(255,215,0,0.03));border-color:rgba(255,215,0,0.18)!important; }
-.podio-gold .podio-rank-label { color:#FFD700; } .podio-gold .podio-pts-badge { color:rgba(255,215,0,0.65); }
+.podio-gold .podio-rank-label { color:#FFD700; }.podio-gold .podio-pts-badge { color:rgba(255,215,0,0.65); }
 .podio-select-gold { background-color:rgba(255,215,0,0.04)!important; }
 .podio-silver { background:linear-gradient(160deg,rgba(192,192,192,0.09),rgba(192,192,192,0.02));border-color:rgba(192,192,192,0.15)!important; }
-.podio-silver .podio-rank-label { color:#C8C8C8; } .podio-silver .podio-pts-badge { color:rgba(200,200,200,0.55); }
+.podio-silver .podio-rank-label { color:#C8C8C8; }.podio-silver .podio-pts-badge { color:rgba(200,200,200,0.55); }
 .podio-select-silver { background-color:rgba(192,192,192,0.03)!important; }
 .podio-bronze { background:linear-gradient(160deg,rgba(205,127,50,0.1),rgba(205,127,50,0.02));border-color:rgba(205,127,50,0.15)!important; }
-.podio-bronze .podio-rank-label { color:#CD7F32; } .podio-bronze .podio-pts-badge { color:rgba(205,127,50,0.6); }
+.podio-bronze .podio-rank-label { color:#CD7F32; }.podio-bronze .podio-pts-badge { color:rgba(205,127,50,0.6); }
 .podio-select-bronze { background-color:rgba(205,127,50,0.03)!important; }
+
+/* ── POINTS LEGEND ── */
 .pts-legend-section { margin-top:12px; }
-.pts-legend-title { font-family:var(--font-display);font-size:0.6rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:8px; }
+.pts-legend-title { font-family:var(--font-display);font-size:0.65rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:8px; }
 .pts-legend-grid { display:flex;flex-direction:column;gap:1px; }
-.pts-legend-row { display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px; }
-.pts-legend-icon { font-size:0.95rem;width:20px;text-align:center;flex-shrink:0; }
-.pts-legend-cat { flex:1;font-size:0.83rem;color:rgba(255,255,255,0.5); }
-.pts-legend-num { font-family:var(--font-display);font-size:0.88rem;font-weight:900;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.05);border-radius:5px;padding:2px 9px;min-width:44px;text-align:center; }
-.pts-legend-highlight .pts-legend-cat { color:rgba(255,255,255,0.75);font-weight:600; }
+.pts-legend-row { display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px; }
+.pts-legend-icon { font-size:1rem;width:22px;text-align:center;flex-shrink:0; }
+.pts-legend-cat { flex:1;font-size:0.9rem;color:rgba(255,255,255,0.5); }
+.pts-legend-num { font-family:var(--font-display);font-size:0.95rem;font-weight:900;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.05);border-radius:5px;padding:3px 10px;min-width:44px;text-align:center; }
+.pts-legend-highlight .pts-legend-cat { color:rgba(255,255,255,0.8);font-weight:600; }
 .pts-legend-highlight .pts-legend-num { color:var(--f1-red);background:rgba(232,0,45,0.1);border:1px solid rgba(232,0,45,0.2); }
-.pts-legend-sprint .pts-legend-cat { color:rgba(167,139,250,0.65); }
+.pts-legend-sprint .pts-legend-cat { color:rgba(167,139,250,0.7); }
 .pts-legend-sprint .pts-legend-num { color:#A78BFA;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2); }
+
+/* ── CONTAINER PADDING for bottom nav ── */
 .container { padding-bottom:90px!important; }
 </style>
 </head>
 <body>
 
+<script>s
+const CIRCUIT_STATS = {
+  'aus26':  { lastPole:'Max Verstappen',  lastWinner:'Carlos Sainz',     lastFastest:'Carlos Sainz',    lastPodium:'Sainz · Leclerc · Norris',    fact:'Único circuito con muro de boxes permanente en el calendario.' },
+  'chn26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',  lastPodium:'Verstappen · Norris · Sainz',  fact:'Volvió al calendario en 2024 tras 5 años de ausencia.' },
+  'jpn26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',  lastPodium:'Verstappen · Perez · Sainz',   fact:'Suzuka es el único circuito con forma de figura 8 en F1.' },
+  'bhr26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'George Russell',  lastPodium:'Verstappen · Sainz · Leclerc', fact:'El único circuito nocturno permanente del calendario.' },
+  'sau26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',  lastPodium:'Verstappen · Perez · Alonso',  fact:'La recta de Corniche es una de las más largas de la F1.' },
+  'mia26':  { lastPole:'Max Verstappen',  lastWinner:'Lando Norris',     lastFastest:'Max Verstappen',  lastPodium:'Norris · Verstappen · Leclerc',fact:'Circuito urbano construido alrededor del estadio Hard Rock.' },
+  'can26':  { lastPole:'George Russell',  lastWinner:'Max Verstappen',   lastFastest:'Lando Norris',    lastPodium:'Verstappen · Norris · Alonso', fact:'El Muro de los Campeones en la chicane final cobra víctimas cada año.' },
+  'mon26':  { lastPole:'Charles Leclerc', lastWinner:'Charles Leclerc',  lastFastest:'Oscar Piastri',   lastPodium:'Leclerc · Piastri · Sainz',    fact:'Leclerc ganó en Monaco por primera vez en casa en 2024.' },
+  'esp26':  { lastPole:'Lando Norris',    lastWinner:'Max Verstappen',   lastFastest:'Lando Norris',    lastPodium:'Verstappen · Norris · Russell', fact:'El GP de España regresa al calendario con nuevo trazado.' },
+  'aut26':  { lastPole:'Max Verstappen',  lastWinner:'George Russell',   lastFastest:'Lando Norris',    lastPodium:'Russell · Norris · Leclerc',   fact:'El Red Bull Ring es el circuito más corto del campeonato.' },
+  'gbr26':  { lastPole:'Lando Norris',    lastWinner:'Lewis Hamilton',   lastFastest:'Lando Norris',    lastPodium:'Hamilton · Norris · Piastri',  fact:'Silverstone albergó el primer GP de F1 de la historia en 1950.' },
+  'bel26':  { lastPole:'Max Verstappen',  lastWinner:'Lewis Hamilton',   lastFastest:'Lando Norris',    lastPodium:'Hamilton · Norris · Russell',  fact:'Spa-Francorchamps es el circuito más largo del calendario.' },
+  'hun26':  { lastPole:'George Russell',  lastWinner:'Oscar Piastri',    lastFastest:'Lewis Hamilton',  lastPodium:'Piastri · Norris · Russell',   fact:'Hamilton ganó en Hungría 8 veces — su circuito más victorioso.' },
+  'ned26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Max Verstappen',  lastPodium:'Norris · Piastri · Leclerc',   fact:'Zandvoort tiene la banked curva 3 — única en la Fórmula 1.' },
+  'ita26':  { lastPole:'Charles Leclerc', lastWinner:'Charles Leclerc',  lastFastest:'Charles Leclerc', lastPodium:'Leclerc · Piastri · Norris',   fact:'Monza es el Templo de la Velocidad — el más rápido del año.' },
+  'mad26':  { lastPole:'—',               lastWinner:'—',                lastFastest:'—',               lastPodium:'—',                            fact:'Nuevo GP de Madrid — debuta en 2026 en el recinto de IFEMA.' },
+  'aze26':  { lastPole:'Charles Leclerc', lastWinner:'Oscar Piastri',    lastFastest:'Charles Leclerc', lastPodium:'Piastri · Leclerc · Norris',   fact:'El boulevard de Bakú tiene la segunda recta más larga del campeonato.' },
+  'sgp26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Lando Norris',    lastPodium:'Norris · Russell · Piastri',   fact:'Singapur es el GP nocturno más físicamente exigente del año.' },
+  'usa26':  { lastPole:'Carlos Sainz',    lastWinner:'Carlos Sainz',     lastFastest:'Charles Leclerc', lastPodium:'Sainz · Norris · Piastri',     fact:'COTA tiene una subida pronunciada antes de la curva 1 única en F1.' },
+  'mex26':  { lastPole:'Carlos Sainz',    lastWinner:'Carlos Sainz',     lastFastest:'Lando Norris',    lastPodium:'Sainz · Norris · Leclerc',     fact:'Ciudad de México está a 2.285 metros de altitud sobre el mar.' },
+  'bra26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',  lastPodium:'Verstappen · Leclerc · Piastri',fact:'Interlagos fue el escenario de las épicas batallas Senna–Prost.' },
+  'lv26':   { lastPole:'Carlos Sainz',    lastWinner:'Carlos Sainz',     lastFastest:'Lando Norris',    lastPodium:'Sainz · Norris · Leclerc',     fact:'La recta del Strip pasa frente a los casinos más famosos del mundo.' },
+  'qat26':  { lastPole:'George Russell',  lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',  lastPodium:'Verstappen · Norris · Leclerc', fact:'Losail es el único circuito de MotoGP reconvertido para F1.' },
+  'auh26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Carlos Sainz',    lastPodium:'Norris · Leclerc · Sainz',     fact:'Yas Marina cierra la temporada — se corre de noche desde 2009.' },
+};
+
+etTimeout(function(){var l=document.getElementById("loader");if(l){l.classList.add("hidden");l.style.display="none";}},3000);</script>
+<script>setTimeout(function(){var l=document.getElementById("loader");if(l){l.classList.add("hidden");l.style.display="none";}},3000);</script>
 <!-- CINEMATIC LOADER -->
-<script>
-// Force hide loader after 2s no matter what
-setTimeout(function(){var l=document.getElementById('loader');if(l){l.classList.add('hidden');l.style.display='none';}},2000);
-</script>
 <div id="loader">
   <div class="loader-inner">
     <div class="loader-flag">
@@ -1268,8 +1314,8 @@ setTimeout(function(){var l=document.getElementById('loader');if(l){l.classList.
     <div class="race-banner-name" id="banner-name">Cargando GP...</div>
     <div class="race-banner-meta">
       <span id="banner-flag">🏴</span>
-      <span id="banner-circuit" style="color:rgba(255,255,255,0.45);font-size:0.82rem;margin:0 4px;"></span>
-      <span id="banner-date" style="background:rgba(232,0,45,0.12);border:1px solid rgba(232,0,45,0.25);color:#E8002D;font-family:var(--font-display);font-weight:700;font-size:0.7rem;letter-spacing:1px;padding:2px 8px;border-radius:4px;">—</span>
+      <span id="banner-circuit" style="color:rgba(255,255,255,0.45);font-size:0.9rem;margin:0 4px;"></span>
+      <span id="banner-date" style="background:rgba(232,0,45,0.12);border:1px solid rgba(232,0,45,0.25);color:#E8002D;font-family:var(--font-display);font-weight:700;font-size:0.75rem;letter-spacing:1px;padding:3px 9px;border-radius:4px;">—</span>
     </div>
   </div>
   <div class="race-banner-stripe"></div>
@@ -1281,6 +1327,8 @@ setTimeout(function(){var l=document.getElementById('loader');if(l){l.classList.
   <!-- ===================== VIEW: PRONÓSTICO ===================== -->
   <section class="view active" id="view-pronostico">
     <div class="container">
+
+      <div id="circuit-stats-wrap" style="display:none;margin-bottom:12px;"></div>
 
       <!-- Single unified form card — GP select INSIDE the form -->
       <div class="card" id="form-card">
@@ -1390,7 +1438,7 @@ setTimeout(function(){var l=document.getElementById('loader');if(l){l.classList.
           <button class="btn btn-primary" onclick="copySummary()">
             📋 COPIAR AL PORTAPAPELES
           </button>
-          <p style="text-align:center;font-size:0.76rem;color:rgba(255,255,255,0.25);margin-top:8px;font-style:italic;">¿Querés modificar? Contactá al administrador.</p>
+          <p style="text-align:center;font-size:0.82rem;color:rgba(255,255,255,0.25);margin-top:8px;font-style:italic;">¿Querés modificar? Contactá al administrador.</p>
         </div>
       </div>
 
@@ -1572,28 +1620,28 @@ setTimeout(function(){var l=document.getElementById('loader');if(l){l.classList.
 // ============================================================
 
 const DRIVERS_2025 = [
-  'Lando Norris',
-  'Oscar Piastri',
-  'George Russell',
-  'Kimi Antonelli',
-  'Max Verstappen',
-  'Isack Hadjar',
-  'Charles Leclerc',
-  'Lewis Hamilton',
-  'Alexander Albon',
-  'Carlos Sainz',
-  'Liam Lawson',
-  'Arvid Lindblad',
-  'Fernando Alonso',
-  'Lance Stroll',
-  'Esteban Ocon',
-  'Oliver Bearman',
-  'Nico Hülkenberg',
-  'Gabriel Bortoleto',
-  'Pierre Gasly',
-  'Franco Colapinto',
-  'Sergio Pérez',
-  'Valtteri Bottas',
+  { name: 'Lando Norris',       flag: '🇬🇧' },
+  { name: 'Oscar Piastri',      flag: '🇦🇺' },
+  { name: 'George Russell',     flag: '🇬🇧' },
+  { name: 'Kimi Antonelli',     flag: '🇮🇹' },
+  { name: 'Max Verstappen',     flag: '🇳🇱' },
+  { name: 'Isack Hadjar',       flag: '🇫🇷' },
+  { name: 'Charles Leclerc',    flag: '🇲🇨' },
+  { name: 'Lewis Hamilton',     flag: '🇬🇧' },
+  { name: 'Alexander Albon',    flag: '🇹🇭' },
+  { name: 'Carlos Sainz',       flag: '🇪🇸' },
+  { name: 'Liam Lawson',        flag: '🇳🇿' },
+  { name: 'Arvid Lindblad',     flag: '🇸🇪' },
+  { name: 'Fernando Alonso',    flag: '🇪🇸' },
+  { name: 'Lance Stroll',       flag: '🇨🇦' },
+  { name: 'Esteban Ocon',       flag: '🇫🇷' },
+  { name: 'Oliver Bearman',     flag: '🇬🇧' },
+  { name: 'Nico Hülkenberg',    flag: '🇩🇪' },
+  { name: 'Gabriel Bortoleto',  flag: '🇧🇷' },
+  { name: 'Pierre Gasly',       flag: '🇫🇷' },
+  { name: 'Jack Doohan',        flag: '🇦🇺' },
+  { name: 'Yuki Tsunoda',       flag: '🇯🇵' },
+  { name: 'Franco Colapinto',   flag: '🇦🇷' },
 ];
 
 const TEAMS_2025 = [
@@ -1734,8 +1782,7 @@ async function apiPost(body) {
 async function loadFromSheets() {
   showConnectionStatus('loading');
   try {
-    const timeout = new Promise((_, rej) => setTimeout(() => rej(new Error('TIMEOUT')), 8000));
-    const data = await Promise.race([apiGet({ action: 'getAll' }), timeout]);
+    const data = await apiGet({ action: 'getAll' });
     appState.predictions = Array.isArray(data.predictions) ? data.predictions : [];
     appState.results     = data.results  || {};
     appState.activeGP    = (data.config && data.config.activeGP) || null;
@@ -1746,8 +1793,6 @@ async function loadFromSheets() {
   } catch(e) {
     if (e.message === 'NO_API') {
       showConnectionStatus('no-api');
-    } else if (e.message === 'TIMEOUT') {
-      showConnectionStatus('error', 'tiempo de espera agotado');
     } else {
       showConnectionStatus('error', e.message);
     }
@@ -1788,31 +1833,50 @@ function showToast(msg, duration = 3500) {
 // ─── LOADER ──────────────────────────────────────────────────
 function hideLoader() {
   var l = document.getElementById('loader');
-  if (l) { l.classList.add('hidden'); l.style.display = 'none'; }
+  if (l) { l.classList.add('hidden'); l.style.display='none'; }
 }
 
 // ─── NAV ─────────────────────────────────────────────────────
 function initNav() {
-  document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => { showView(btn.dataset.view); });
+  document.querySelectorAll('.nav-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { showView(btn.dataset.view); });
   });
 }
 
 function showView(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  var viewEl = document.getElementById('view-' + name);
-  if (viewEl) viewEl.classList.add('active');
-  var btnEl = document.querySelector('[data-view="' + name + '"]');
-  if (btnEl) btnEl.classList.add('active');
-  try { if (name === 'tablas') renderTablas(); } catch(e) { console.error('renderTablas:', e); }
-  try { if (name === 'admin')  renderAdminPanel(); } catch(e) { console.error('renderAdminPanel:', e); }
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
+  var vEl=document.getElementById('view-'+name); if(vEl) vEl.classList.add('active');
+  var bEl=document.querySelector('[data-view="'+name+'"]'); if(bEl) bEl.classList.add('active');
+  try { if (name==='tablas') renderTablas(); } catch(e){}
+  try { if (name==='admin')  renderAdminPanel(); } catch(e){}
 }
 
 // ─── BANNER ──────────────────────────────────────────────────
+
+function renderCircuitStats(gpId) {
+  var wrap  = document.getElementById('circuit-stats-wrap');
+  if (!wrap) return;
+  var stats = CIRCUIT_STATS[gpId];
+  var race  = RACES_2025.find(function(r){ return r.id === gpId; });
+  if (!stats || !race) { wrap.innerHTML=''; wrap.style.display='none'; return; }
+  wrap.style.display = 'block';
+  wrap.innerHTML =
+    '<div class="circ-card">' +
+      '<div class="circ-title">' + race.flag + ' Estadísticas · ' + race.circuit + '</div>' +
+      '<div class="circ-grid">' +
+        '<div class="circ-item"><div class="circ-icon">⚡</div><div class="circ-lbl">Última Pole</div><div class="circ-val">' + stats.lastPole + '</div></div>' +
+        '<div class="circ-item"><div class="circ-icon">🏆</div><div class="circ-lbl">Último Ganador</div><div class="circ-val">' + stats.lastWinner + '</div></div>' +
+        '<div class="circ-item"><div class="circ-icon">⏱</div><div class="circ-lbl">Vuelta Rápida</div><div class="circ-val">' + stats.lastFastest + '</div></div>' +
+        '<div class="circ-item circ-wide"><div class="circ-icon">🥇</div><div class="circ-lbl">Último Podio</div><div class="circ-val">' + stats.lastPodium + '</div></div>' +
+      '</div>' +
+      '<div class="circ-fact">💡 ' + stats.fact + '</div>' +
+    '</div>';
+}
+
 function updateBanner() {
-  const race = RACES_2025.find(r => r.id === appState.activeGP);
-  const el = id => document.getElementById(id);
+  var race = RACES_2025.find(function(r) { return r.id === appState.activeGP; });
+  var el = function(id) { return document.getElementById(id); };
   if (!race) {
     if(el('banner-round')) el('banner-round').textContent='—';
     if(el('banner-name'))  el('banner-name').textContent='Sin GP activo';
@@ -1829,8 +1893,11 @@ function updateBanner() {
 }
 
 // ─── SELECTS ─────────────────────────────────────────────────
-function driverOptions(sel = '') {
-  return DRIVERS_2025.map(d => `<option value="${d}" ${d===sel?'selected':''}>${d}</option>`).join('');
+function driverOptions(sel) {
+  sel = sel || '';
+  return DRIVERS_2025.map(function(d){
+    return '<option value="'+d.name+'"'+(d.name===sel?' selected':'')+'>'+d.flag+' '+d.name+'</option>';
+  }).join('');
 }
 function teamOptions(sel = '') {
   return TEAMS_2025.map(t => `<option value="${t}" ${t===sel?'selected':''}>${t}</option>`).join('');
@@ -1870,14 +1937,14 @@ function populateFormSelects() {
 }
 
 function lockGPSelector() {
-  const hidden = document.getElementById('f-gp');
-  const wrap   = document.getElementById('gp-display-wrap');
-  const fields = document.getElementById('form-fields-wrap');
+  var hidden = document.getElementById('f-gp');
+  var wrap   = document.getElementById('gp-display-wrap');
+  var fields = document.getElementById('form-fields-wrap');
   if (!wrap) return;
-  const race = RACES_2025.find(r => r.id === appState.activeGP);
+  var race = RACES_2025.find(function(r) { return r.id === appState.activeGP; });
   if (race) {
-    const sprint = race.sprint ? '<span style="background:#8B5CF6;color:#fff;font-size:0.58rem;font-family:var(--font-display);font-weight:800;letter-spacing:1px;padding:2px 7px;border-radius:3px;margin-left:6px;text-transform:uppercase;">⚡ SPRINT</span>' : '';
-    wrap.innerHTML = '<div class="gp-locked-banner"><div class="gp-locked-icon">' + race.flag + '</div><div><div class="gp-locked-label">GP ACTIVO ' + sprint + '</div><div class="gp-locked-name">' + race.name + '</div><div class="gp-locked-date">📅 ' + race.date + ' · ' + race.circuit + '</div></div></div>';
+    var sprint = (race && race.sprint) ? '<span style="background:#8B5CF6;color:#fff;font-size:0.6rem;font-family:var(--font-display);font-weight:800;letter-spacing:1px;padding:2px 7px;border-radius:3px;text-transform:uppercase;margin-left:6px;">⚡ SPRINT</span>' : '';
+    wrap.innerHTML = '<div class="gp-locked-banner"><div class="gp-locked-icon">' + race.flag + '</div><div><div class="gp-locked-label">GP ACTIVO' + sprint + '</div><div class="gp-locked-name">' + race.name + '</div><div class="gp-locked-date">📅 ' + race.date + ' · ' + race.circuit + '</div></div></div>';
     if (hidden) hidden.value = race.id;
     if (fields) fields.style.display = 'block';
   } else {
@@ -1885,7 +1952,22 @@ function lockGPSelector() {
     if (hidden) hidden.value = '';
     if (fields) fields.style.display = 'none';
   }
-  updateBanner(); updateSprintFields();
+  updateBanner();
+  updateSprintFields();
+  renderCircuitStats(appState.activeGP || '');
+}
+
+function updatePodioDuplicates() {
+  var ids = ['f-p1','f-p2','f-p3'];
+  var vals = ids.map(function(id){ var e=document.getElementById(id); return e?e.value:''; });
+  ids.forEach(function(id, i) {
+    var sel = document.getElementById(id); if(!sel) return;
+    var others = vals.filter(function(v,j){ return j!==i && v; });
+    Array.prototype.forEach.call(sel.options, function(opt){
+      if(!opt.value) return;
+      opt.disabled = others.indexOf(opt.value) !== -1;
+    });
+  });
 }
 
 function updateSprintFields() {
@@ -1937,7 +2019,7 @@ function validateForm() {
   if (missing.length) {
     errEl.innerHTML = `⚠️ Falta completar: <strong>${missing.join(', ')}</strong>`;
     errEl.style.display = 'block';
-    (function(){var e=document.querySelector('#prediction-form .error');if(e)e.scrollIntoView({behavior:'smooth',block:'center'});})();
+    (function(){var _e=document.querySelector('#prediction-form .error');if(_e)_e.scrollIntoView({behavior:'smooth',block:'center'});})();
     return false;
   }
   const podio = ['f-p1','f-p2','f-p3'].map(id => document.getElementById(id).value);
@@ -2005,6 +2087,9 @@ function initPredictionForm() {
       btn.innerHTML = '<span class="btn-flag">🏁</span> ENVIAR PRONÓSTICO';
     }
   });
+  ['f-p1','f-p2','f-p3'].forEach(function(id){
+    var e=document.getElementById(id); if(e) e.addEventListener('change', updatePodioDuplicates);
+  });
 }
 
 // ─── RESUMEN ─────────────────────────────────────────────────
@@ -2055,22 +2140,20 @@ function showSummary(pred) {
 }
 
 function copySummary() {
-  const txt = currentSummaryText;
+  var txt = currentSummaryText;
   if (!txt) { showToast('No hay pronóstico para copiar'); return; }
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(txt).then(() => showToast('📋 ¡Copiado! Pegalo en el grupo')).catch(() => fallbackCopy(txt));
+    navigator.clipboard.writeText(txt).then(function(){ showToast('📋 ¡Copiado! Pegalo en el grupo'); }).catch(function(){ fallbackCopy(txt); });
   } else { fallbackCopy(txt); }
 }
 function fallbackCopy(txt) {
   try {
-    const ta = document.createElement('textarea');
-    ta.value = txt;
+    var ta = document.createElement('textarea'); ta.value = txt;
     ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;';
     document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0,99999);
-    const ok = document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast(ok ? '📋 ¡Copiado! Pegalo en el grupo' : 'No se pudo copiar automáticamente');
-  } catch(e) { showToast('No se pudo copiar automáticamente'); }
+    var ok = document.execCommand('copy'); document.body.removeChild(ta);
+    showToast(ok ? '📋 ¡Copiado! Pegalo en el grupo' : 'No se pudo copiar');
+  } catch(e) { showToast('No se pudo copiar'); }
 }
 
 function newPrediction() {
@@ -2238,7 +2321,7 @@ async function saveActiveGP() {
   const gpId = document.getElementById('admin-active-gp').value || null;
   appState.activeGP = gpId;
   lockGPSelector();
-  const rgs = document.getElementById('result-gp-select');
+  var rgs = document.getElementById('result-gp-select');
   if (rgs && gpId) { rgs.value = gpId; loadResultForm(); }
   try {
     if (API_URL) await apiPost({ action:'setActiveGP', gpId: gpId||'', password: adminPassword });
@@ -2445,20 +2528,7 @@ async function resetRace() {
 
 // ─── INIT ────────────────────────────────────────────────────
 function appInit() {
-  try {
-    hideLoader();
-    initNav();
-    populateFormSelects();
-    populateGPSelect('admin-active-gp', '');
-    populateGPSelect('result-gp-select', '');
-    initPredictionForm();
-    updateBanner();
-    lockGPSelector();
-  } catch(e) {
-    console.error('appInit error:', e);
-    hideLoader();
-  }
-  // Load from Sheets in background - app works without it
+  try { hideLoader(); initNav(); populateFormSelects(); populateGPSelect('admin-active-gp',''); populateGPSelect('result-gp-select',''); initPredictionForm(); updateBanner(); lockGPSelector(); } catch(e) { console.error(e); hideLoader(); }
   loadFromSheets().then(function() {
     lockGPSelector();
     if (appState.activeGP) {
@@ -2466,16 +2536,9 @@ function appInit() {
       var rgs = document.getElementById('result-gp-select');
       if (rgs) { rgs.value = appState.activeGP; loadResultForm(); }
     }
-  }).catch(function(e) {
-    console.error('Sheets no disponible:', e);
-    lockGPSelector();
-  });
+  }).catch(function(e){ console.error(e); lockGPSelector(); });
 }
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', appInit);
-} else {
-  appInit();
-}
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', appInit); } else { appInit(); }
 
 
 window.adminLogin=adminLogin; window.adminLogout=adminLogout; window.adminRefresh=adminRefresh;
