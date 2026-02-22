@@ -1229,6 +1229,7 @@ body::before {
 <body>
 
 <!-- CINEMATIC LOADER -->
+<script>window.addEventListener("load",function(){var l=document.getElementById("loader");if(l)l.classList.add("hidden");});</script>
 <div id="loader">
   <div class="loader-inner">
     <div class="loader-flag">
@@ -1562,7 +1563,7 @@ body::before {
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<script type="module">
+<script>
 // ============================================================
 // F1 PRODE — DATA 2025
 // ============================================================
@@ -2434,7 +2435,7 @@ async function resetRace() {
 }
 
 // ─── INIT ────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', async () => {
+function appInit() {
   hideLoader();
   initNav();
   populateFormSelects();
@@ -2442,14 +2443,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   populateGPSelect('result-gp-select', '');
   initPredictionForm();
   updateBanner();
-  const ok = await loadFromSheets();
-  lockGPSelector();
-  if (appState.activeGP) {
-    populateGPSelect('admin-active-gp', appState.activeGP);
-    const rgs = document.getElementById('result-gp-select');
-    if (rgs) { rgs.value = appState.activeGP; loadResultForm(); }
-  }
-});
+  loadFromSheets().then(function() {
+    lockGPSelector();
+    if (appState.activeGP) {
+      populateGPSelect('admin-active-gp', appState.activeGP);
+      var rgs = document.getElementById('result-gp-select');
+      if (rgs) { rgs.value = appState.activeGP; loadResultForm(); }
+    }
+  }).catch(function(e) {
+    console.error('loadFromSheets error:', e);
+    lockGPSelector();
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', appInit);
+} else {
+  appInit();
+}
 
 
 window.adminLogin=adminLogin; window.adminLogout=adminLogout; window.adminRefresh=adminRefresh;
