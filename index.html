@@ -1634,14 +1634,14 @@ const DRIVERS_2025 = [
   { name: 'Arvid Lindblad',     flag: '🇸🇪' },
   { name: 'Fernando Alonso',    flag: '🇪🇸' },
   { name: 'Lance Stroll',       flag: '🇨🇦' },
+  { name: 'Pierre Gasly',       flag: '🇫🇷' },
+  { name: 'Franco Colapinto',   flag: '🇦🇷' },
   { name: 'Esteban Ocon',       flag: '🇫🇷' },
   { name: 'Oliver Bearman',     flag: '🇬🇧' },
   { name: 'Nico Hülkenberg',    flag: '🇩🇪' },
   { name: 'Gabriel Bortoleto',  flag: '🇧🇷' },
-  { name: 'Pierre Gasly',       flag: '🇫🇷' },
-  { name: 'Jack Doohan',        flag: '🇦🇺' },
-  { name: 'Yuki Tsunoda',       flag: '🇯🇵' },
-  { name: 'Franco Colapinto',   flag: '🇦🇷' },
+  { name: 'Sergio Pérez',       flag: '🇲🇽' },
+  { name: 'Valtteri Bottas',    flag: '🇫🇮' },
 ];
 
 const TEAMS_2025 = [
@@ -2429,6 +2429,19 @@ async function deletePred(id) {
     renderAdminPointsSummary();
     showToast('Pronóstico eliminado');
   } catch(e) { showToast('❌ Error: ' + e.message); }
+}
+
+function updateResultPodioDuplicates() {
+  var ids = ['res-p1','res-p2','res-p3'];
+  var vals = ids.map(function(id){ var e=document.getElementById(id); return e?e.value:''; });
+  ids.forEach(function(id, i) {
+    var sel = document.getElementById(id); if(!sel) return;
+    var others = vals.filter(function(v,j){ return j!==i && v; });
+    Array.prototype.forEach.call(sel.options, function(opt){
+      if(!opt.value) return;
+      opt.disabled = others.indexOf(opt.value) !== -1;
+    });
+  });
 }
 
 function loadResultForm() {
