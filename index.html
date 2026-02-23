@@ -981,6 +981,15 @@ body::before {
           <div id="gp-display-wrap"></div>
           <input type="hidden" id="f-gp" value="">
 
+          <!-- Banner de formulario cerrado -->
+          <div id="form-locked-banner" style="display:none; align-items:center; gap:14px; background:linear-gradient(135deg,rgba(232,0,45,0.1),rgba(232,0,45,0.04)); border:1px solid rgba(232,0,45,0.3); border-left:3px solid var(--f1-red); border-radius:10px; padding:16px; margin-bottom:16px;">
+            <span style="font-size:2rem; flex-shrink:0;">🔒</span>
+            <div>
+              <div style="font-family:var(--font-display); font-size:0.65rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--f1-red); margin-bottom:4px;">PRONÓSTICOS CERRADOS</div>
+              <div class="locked-msg" style="font-size:0.95rem; font-weight:600; color:var(--white);">⚡ Qualy en curso — pronósticos cerrados</div>
+            </div>
+          </div>
+
           <div id="form-fields-wrap">
             <div class="form-field">
               <label class="field-label required">👤 NOMBRE DE JUGADOR</label>
@@ -1523,15 +1532,27 @@ function startCountdown(qualyUtc) {
   if (!qualyUtc) { wrap.style.display = 'none'; return; }
   wrap.style.display = 'flex';
 
+  function lockForm(msg) {
+    var submitBtn = document.getElementById('submit-btn');
+    var formFields = document.getElementById('form-fields-wrap');
+    var lockedBanner = document.getElementById('form-locked-banner');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.4'; submitBtn.style.pointerEvents = 'none'; submitBtn.dataset.qualyLocked = '1'; }
+    if (formFields) { formFields.querySelectorAll('select, input, button:not(#submit-btn)').forEach(el => { el.disabled = true; }); }
+    if (lockedBanner) { lockedBanner.style.display = 'flex'; lockedBanner.dataset.qualyLocked = '1'; lockedBanner.querySelector('.locked-msg').textContent = msg; }
+  }
+
   function tick() {
     var now    = Date.now();
     var target = new Date(qualyUtc).getTime();
     var diff   = target - now;
     if (diff <= 0 && diff > -7200000) {
-      units.innerHTML = '<span class="cd-live">⚡ QUALY EN VIVO</span>'; return;
+      units.innerHTML = '<span class="cd-live">⚡ QUALY EN VIVO</span>';
+      lockForm('⚡ Qualy en curso — pronósticos cerrados');
+      return;
     }
     if (diff <= -7200000) {
       units.innerHTML = '<span class="cd-done">QUALY FINALIZADA</span>';
+      lockForm('🏁 Qualy finalizada — pronósticos cerrados');
       clearInterval(_cdInterval); return;
     }
     var days  = Math.floor(diff / 86400000);
@@ -1662,12 +1683,42 @@ function showSavedBadgeIfExists(gpId) {
   const badgeWrap = document.getElementById('saved-badge-wrap');
   const badgeDetail = document.getElementById('saved-badge-detail');
   if (saved && saved.gpId === gpId) {
-    const race = RACES_2026.find(r => r.id === gpId);
     const time = new Date(saved.timestamp).toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'});
     if (badgeDetail) badgeDetail.textContent = `${saved.player} · enviado a las ${time}`;
     if (badgeWrap) badgeWrap.style.display = 'block';
+    // Bloquear el formulario — ya hay un pronóstico enviado para este GP
+    lockFormAlreadySubmitted(saved);
   } else {
     hideSavedBadge();
+    unlockFormSubmit();
+  }
+}
+
+function lockFormAlreadySubmitted(saved) {
+  var submitBtn  = document.getElementById('submit-btn');
+  var formFields = document.getElementById('form-fields-wrap');
+  var lockedBanner = document.getElementById('form-locked-banner');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.4'; submitBtn.style.pointerEvents = 'none'; }
+  if (formFields) { formFields.querySelectorAll('select, input').forEach(el => { el.disabled = true; }); }
+  if (lockedBanner) {
+    lockedBanner.style.display = 'flex';
+    const msg = lockedBanner.querySelector('.locked-msg');
+    const time = new Date(saved.timestamp).toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'});
+    if (msg) msg.innerHTML = `✅ Ya enviaste tu pronóstico como <strong>${saved.player}</strong> a las ${time} &nbsp;<button onclick="showSummaryFromSaved()" style="background:var(--f1-red);color:#fff;border:none;border-radius:4px;padding:4px 10px;font-family:var(--font-display);font-size:0.7rem;font-weight:800;letter-spacing:1px;cursor:pointer;margin-left:6px;">VER PRONÓSTICO</button>`;
+  }
+}
+
+function unlockFormSubmit() {
+  var submitBtn = document.getElementById('submit-btn');
+  var lockedBanner = document.getElementById('form-locked-banner');
+  // Solo desbloquear si la qualy aún no empezó (el countdown no la bloqueó)
+  if (submitBtn && !submitBtn.dataset.qualyLocked) {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '';
+    submitBtn.style.pointerEvents = '';
+  }
+  if (lockedBanner && !lockedBanner.dataset.qualyLocked) {
+    lockedBanner.style.display = 'none';
   }
 }
 function hideSavedBadge() {
@@ -1894,6 +1945,11 @@ function fallbackCopy(txt) {
     document.body.removeChild(ta);
     showToast(ok ? '📋 ¡Copiado! Pegalo en el grupo' : 'No se pudo copiar');
   } catch(e) { showToast('No se pudo copiar'); }
+}
+
+function showSummaryFromSaved() {
+  const saved = loadLastPredLocal();
+  if (saved) showSummary(saved);
 }
 
 function newPrediction() {
@@ -2413,7 +2469,8 @@ window.adminLogin      = adminLogin;
 window.adminLogout     = adminLogout;
 window.adminRefresh    = adminRefresh;
 window.changePassword  = changePassword;
-window.copySummary     = copySummary;
+window.copySummary          = copySummary;
+window.showSummaryFromSaved = showSummaryFromSaved;
 window.deletePred      = deletePred;
 window.loadResultForm  = loadResultForm;
 window.newPrediction   = newPrediction;
