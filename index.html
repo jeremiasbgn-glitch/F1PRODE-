@@ -2140,19 +2140,21 @@ function renderLeaderboard(board, title, showRaces, gpId) {
 }
 
 function renderPtsLegend() {
+  const P = POINTS_SYSTEM;
   return `<div class="pts-legend-section">
     <div class="pts-legend-title">Sistema de puntos</div>
     <div class="pts-legend-grid">
-      <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🏆</span><span class="pts-legend-cat">Ganador del GP</span><span class="pts-legend-num">+10</span></div>
-      <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🎯</span><span class="pts-legend-cat">Podio exacto (bonus)</span><span class="pts-legend-num">+20</span></div>
-      <div class="pts-legend-row"><span class="pts-legend-icon">🥇</span><span class="pts-legend-cat">Posición podio (c/u)</span><span class="pts-legend-num">+5</span></div>
-      <div class="pts-legend-row"><span class="pts-legend-icon">⚡</span><span class="pts-legend-cat">Pole position</span><span class="pts-legend-num">+5</span></div>
-      <div class="pts-legend-row"><span class="pts-legend-icon">⏱</span><span class="pts-legend-cat">Vuelta rápida</span><span class="pts-legend-num">+5</span></div>
-      <div class="pts-legend-row"><span class="pts-legend-icon">⭐</span><span class="pts-legend-cat">Piloto del día</span><span class="pts-legend-num">+5</span></div>
-      <div class="pts-legend-row"><span class="pts-legend-icon">🔧</span><span class="pts-legend-cat">Pit stop</span><span class="pts-legend-num">+5</span></div>
-      <div class="pts-legend-row"><span class="pts-legend-icon">💥</span><span class="pts-legend-cat">DNF</span><span class="pts-legend-num">+5</span></div>
-      <div class="pts-legend-row pts-legend-sprint"><span class="pts-legend-icon">🏎</span><span class="pts-legend-cat">Ganador Sprint</span><span class="pts-legend-num">+5</span></div>
-      <div class="pts-legend-row pts-legend-sprint"><span class="pts-legend-icon">🟣</span><span class="pts-legend-cat">Pole Sprint</span><span class="pts-legend-num">+3</span></div>
+      <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🏆</span><span class="pts-legend-cat">Ganador del GP</span><span class="pts-legend-num">+${P.winner}</span></div>
+      <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🎯</span><span class="pts-legend-cat">Podio exacto (bonus)</span><span class="pts-legend-num">+${P.podio_exact}</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">🥇</span><span class="pts-legend-cat">Posición podio exacta (c/u)</span><span class="pts-legend-num">+${P.p1_exact}</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">🎯</span><span class="pts-legend-cat">Piloto en podio, posición incorrecta</span><span class="pts-legend-num">+${P.podio_partial}</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">⚡</span><span class="pts-legend-cat">Pole position</span><span class="pts-legend-num">+${P.pole}</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">⏱</span><span class="pts-legend-cat">Vuelta rápida</span><span class="pts-legend-num">+${P.fastest_lap}</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">⭐</span><span class="pts-legend-cat">Piloto del día</span><span class="pts-legend-num">+${P.dotd}</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">🔧</span><span class="pts-legend-cat">Pit stop</span><span class="pts-legend-num">+${P.pit_stop}</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">💥</span><span class="pts-legend-cat">DNF</span><span class="pts-legend-num">+${P.dnf}</span></div>
+      <div class="pts-legend-row pts-legend-sprint"><span class="pts-legend-icon">🏎</span><span class="pts-legend-cat">Ganador Sprint</span><span class="pts-legend-num">+${P.sprint_winner}</span></div>
+      <div class="pts-legend-row pts-legend-sprint"><span class="pts-legend-icon">🟣</span><span class="pts-legend-cat">Pole Sprint</span><span class="pts-legend-num">+${P.sprint_pole}</span></div>
     </div>
   </div>`;
 }
@@ -2345,7 +2347,26 @@ function loadResultForm() {
   const rpit = document.getElementById('res-pit');
   if (rpit) rpit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions(ex.pitStop || '');
   const rdnf = document.getElementById('res-dnf');
-  if (rdnf) rdnf.innerHTML = `<option value="">—</option><option value="${NO_DNF_OPTION}" ${ex.dnf === NO_DNF_OPTION ? 'selected' : ''}>${NO_DNF_OPTION}</option>` + driverOptions(ex.dnf || '');
+  if (rdnf) {
+    rdnf.innerHTML = `<option value="">—</option><option value="${NO_DNF_OPTION}" ${ex.dnf === NO_DNF_OPTION ? 'selected' : ''}>${NO_DNF_OPTION}</option>` + driverOptions(ex.dnf || '');
+    // Filtrar pilotos de podio del DNF cada vez que cambie p1/p2/p3
+    function updateAdminDNFFilter() {
+      const podiumDrivers = ['res-p1','res-p2','res-p3'].map(id => {
+        const el = document.getElementById(id); return el ? el.value : '';
+      }).filter(Boolean);
+      Array.from(rdnf.options).forEach(opt => {
+        if (opt.value && opt.value !== NO_DNF_OPTION) {
+          opt.disabled = podiumDrivers.includes(opt.value);
+        }
+      });
+      if (podiumDrivers.includes(rdnf.value)) rdnf.value = '';
+    }
+    ['res-p1','res-p2','res-p3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.removeEventListener('change', el._adminDNFHandler); el._adminDNFHandler = updateAdminDNFFilter; el.addEventListener('change', el._adminDNFHandler); }
+    });
+    updateAdminDNFFilter();
+  }
 
   if (spSec) {
     spSec.style.display = (race && race.sprint) ? 'block' : 'none';
@@ -2397,7 +2418,7 @@ function renderAdminPointsSummary() {
   const el     = document.getElementById('admin-points-summary');
   const scored = RACES_2026.filter(r => appState.results[r.id] && appState.points[r.id]);
   if (!scored.length) {
-    el.innerHTML = `<div style="color:var(--white-muted);font-size:.85rem;padding:8px 0">Sin GP puntuados aún</div>`;
+    el.innerHTML = `<div style="color:var(--white-muted);font-size:.85rem;padding:8px 0">Sin GP puntuados aún</div>${renderPtsLegend()}`;
     return;
   }
   el.innerHTML = scored.map(race => {
@@ -2412,7 +2433,7 @@ function renderAdminPointsSummary() {
           </div>`).join('')}
       </div>
     </div>`;
-  }).join('');
+  }).join('') + renderPtsLegend();
 }
 
 async function resetRace() {
@@ -2425,6 +2446,14 @@ async function resetRace() {
     appState.predictions = appState.predictions.filter(p => p.gpId !== gpId);
     delete appState.results[gpId];
     delete appState.points[gpId];
+    // Borrar pronóstico guardado localmente si era de este GP
+    // para que todos puedan reenviar su pronóstico
+    try {
+      const saved = loadLastPredLocal();
+      if (saved && saved.gpId === gpId) {
+        localStorage.removeItem(LS_SAVED_KEY);
+      }
+    } catch(e) {}
     document.getElementById('result-form').style.display = 'none';
     document.getElementById('result-gp-select').value = '';
     renderAdminPredictions();
