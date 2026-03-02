@@ -1152,6 +1152,11 @@ body::before {
               <button class="btn btn-secondary btn-sm" onclick="changePassword()">Cambiar</button>
             </div>
           </div>
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);">
+            <label class="field-label">🗑️ RESETEAR PRONÓSTICO LOCAL</label>
+            <p style="font-size:0.82rem;color:var(--white-muted);margin:6px 0 10px;">Borra el pronóstico guardado en <strong>este dispositivo</strong> para poder volver a enviar.</p>
+            <button class="btn btn-secondary btn-full" onclick="localStorage.removeItem('f1prode_saved_pred_2026');showToast('🗑️ Pronóstico local borrado');location.reload();">🗑️ Borrar mi pronóstico guardado</button>
+          </div>
         </div>
 
         <div class="card">
