@@ -2421,10 +2421,12 @@ function loadResultForm() {
   if (rdnfWrap) {
     const savedDnfs = ex.dnf === NO_DNF_OPTION ? [] : (ex.dnf ? ex.dnf.split(',').map(s => s.trim()).filter(Boolean) : []);
     rdnfWrap.innerHTML = DRIVERS_2026.map(d => {
-      const isChecked = savedDnfs.includes(d);
+      const name = d.name || d;
+      const flag = d.flag || '';
+      const isChecked = savedDnfs.includes(name);
       return `<label style="display:flex;align-items:center;gap:8px;padding:5px 4px;border-radius:4px;cursor:pointer;">
-        <input type="checkbox" class="res-dnf-cb" value="${d}" ${isChecked ? 'checked' : ''} onchange="syncDNFPodiumFilter();updateDNFCount()" style="accent-color:var(--f1-red);width:15px;height:15px;flex-shrink:0;">
-        <span style="font-size:0.88rem;">${d}</span>
+        <input type="checkbox" class="res-dnf-cb" value="${name}" ${isChecked ? 'checked' : ''} onchange="syncDNFPodiumFilter();updateDNFCount()" style="accent-color:var(--f1-red);width:15px;height:15px;flex-shrink:0;">
+        <span style="font-size:0.88rem;">${flag} ${name}</span>
       </label>`;
     }).join('');
     ['res-p1','res-p2','res-p3'].forEach(id => {
