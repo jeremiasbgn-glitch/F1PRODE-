@@ -1194,7 +1194,14 @@ body::before {
             </div>
             <div class="form-grid-2">
               <div class="form-field"><label class="field-label">🔧 PIT STOP MÁS RÁPIDO</label><select id="res-pit" class="field-select"><option value="">— Equipo —</option></select></div>
-              <div class="form-field"><label class="field-label">💥 DNF</label><select id="res-dnf" class="field-select"><option value="">—</option></select></div>
+              <div class="form-field">
+                <label class="field-label">💥 DNF <span style="font-size:0.65rem;font-weight:400;color:var(--white-muted);letter-spacing:0;">(seleccioná todos los que abandonaron)</span></label>
+                <div id="res-dnf-wrap" style="background:var(--black-2);border:1px solid var(--card-border);border-radius:var(--radius);padding:8px;max-height:180px;overflow-y:auto;"></div>
+                <div style="margin-top:6px;display:flex;gap:8px;">
+                  <button type="button" onclick="toggleNoDNF()" id="btn-no-dnf" class="btn btn-secondary btn-sm">✅ Sin abandonos</button>
+                  <span id="dnf-count-label" style="font-size:0.78rem;color:var(--white-muted);align-self:center;"></span>
+                </div>
+              </div>
             </div>
             <div id="admin-sprint-section" style="display:none;">
               <div class="form-divider sprint-divider"><span>⚡ CARRERA SPRINT</span></div>
@@ -1295,30 +1302,30 @@ const TEAMS_2026 = [
 const NO_DNF_OPTION = 'Sin abandonos';
 
 const RACES_2026 = [
-  { id: 'aus26',  round: 1,  name: 'Gran Premio de Australia',       short: 'Australia',      flag: '🇦🇺', date: '6–8 Mar',        circuit: 'Albert Park',                  qualy: '2026-03-07T05:00:00Z' },
+  { id: 'aus26',  round: 1,  name: 'Gran Premio de Australia',       short: 'Australia',      flag: '🇦🇺', date: '6–8 Mar',        circuit: 'Albert Park',                  qualy: '2026-03-07T04:00:00Z' },
   { id: 'chn26',  round: 2,  name: 'Gran Premio de China',           short: 'China',          flag: '🇨🇳', date: '13–15 Mar',       circuit: 'Shanghai International',        qualy: '2026-03-14T07:00:00Z', sprint: true },
   { id: 'jpn26',  round: 3,  name: 'Gran Premio de Japón',           short: 'Japón',          flag: '🇯🇵', date: '27–29 Mar',       circuit: 'Suzuka',                        qualy: '2026-03-28T06:00:00Z' },
-  { id: 'bhr26',  round: 4,  name: 'Gran Premio de Baréin',          short: 'Baréin',         flag: '🇧🇭', date: '10–12 Abr',       circuit: 'Sakhir',                        qualy: '2026-04-11T15:00:00Z' },
-  { id: 'sau26',  round: 5,  name: 'Gran Premio de Arabia Saudita',  short: 'Arabia Saudita', flag: '🇸🇦', date: '17–19 Abr',       circuit: 'Jeddah Corniche',               qualy: '2026-04-18T17:00:00Z' },
-  { id: 'mia26',  round: 6,  name: 'Gran Premio de Miami',           short: 'Miami',          flag: '🇺🇸', date: '1–3 May',         circuit: 'Miami International',           qualy: '2026-05-03T01:00:00Z', sprint: true },
-  { id: 'can26',  round: 7,  name: 'Gran Premio de Canadá',          short: 'Canadá',         flag: '🇨🇦', date: '22–24 May',       circuit: 'Gilles Villeneuve',             qualy: '2026-05-24T01:00:00Z', sprint: true },
+  { id: 'bhr26',  round: 4,  name: 'Gran Premio de Baréin',          short: 'Baréin',         flag: '🇧🇭', date: '10–12 Abr',       circuit: 'Sakhir',                        qualy: '2026-04-11T12:00:00Z' },
+  { id: 'sau26',  round: 5,  name: 'Gran Premio de Arabia Saudita',  short: 'Arabia Saudita', flag: '🇸🇦', date: '17–19 Abr',       circuit: 'Jeddah Corniche',               qualy: '2026-04-18T12:00:00Z' },
+  { id: 'mia26',  round: 6,  name: 'Gran Premio de Miami',           short: 'Miami',          flag: '🇺🇸', date: '1–3 May',         circuit: 'Miami International',           qualy: '2026-05-02T19:00:00Z', sprint: true },
+  { id: 'can26',  round: 7,  name: 'Gran Premio de Canadá',          short: 'Canadá',         flag: '🇨🇦', date: '22–24 May',       circuit: 'Gilles Villeneuve',             qualy: '2026-05-23T19:00:00Z', sprint: true },
   { id: 'mon26',  round: 8,  name: 'Gran Premio de Mónaco',          short: 'Mónaco',         flag: '🇲🇨', date: '5–7 Jun',         circuit: 'Circuit de Monaco',             qualy: '2026-06-06T13:00:00Z' },
   { id: 'esp26',  round: 9,  name: 'Gran Premio de España',          short: 'España',         flag: '🇪🇸', date: '12–14 Jun',       circuit: 'Circuit de Barcelona-Catalunya',qualy: '2026-06-13T13:00:00Z' },
   { id: 'aut26',  round: 10, name: 'Gran Premio de Austria',         short: 'Austria',        flag: '🇦🇹', date: '26–28 Jun',       circuit: 'Red Bull Ring',                 qualy: '2026-06-27T13:00:00Z' },
-  { id: 'gbr26',  round: 11, name: 'Gran Premio de Gran Bretaña',    short: 'Gran Bretaña',   flag: '🇬🇧', date: '3–5 Jul',         circuit: 'Silverstone',                   qualy: '2026-07-04T13:00:00Z', sprint: true },
+  { id: 'gbr26',  round: 11, name: 'Gran Premio de Gran Bretaña',    short: 'Gran Bretaña',   flag: '🇬🇧', date: '3–5 Jul',         circuit: 'Silverstone',                   qualy: '2026-07-04T14:00:00Z', sprint: true },
   { id: 'bel26',  round: 12, name: 'Gran Premio de Bélgica',         short: 'Bélgica',        flag: '🇧🇪', date: '17–19 Jul',       circuit: 'Spa-Francorchamps',             qualy: '2026-07-18T13:00:00Z' },
   { id: 'hun26',  round: 13, name: 'Gran Premio de Hungría',         short: 'Hungría',        flag: '🇭🇺', date: '24–26 Jul',       circuit: 'Hungaroring',                   qualy: '2026-07-25T13:00:00Z' },
   { id: 'ned26',  round: 14, name: 'Gran Premio de Países Bajos',    short: 'Países Bajos',   flag: '🇳🇱', date: '21–23 Ago',       circuit: 'Zandvoort',                     qualy: '2026-08-22T13:00:00Z', sprint: true },
   { id: 'ita26',  round: 15, name: 'Gran Premio de Italia',          short: 'Italia',         flag: '🇮🇹', date: '4–6 Sep',         circuit: 'Monza',                         qualy: '2026-09-05T13:00:00Z' },
   { id: 'mad26',  round: 16, name: 'Gran Premio de España (Madrid)', short: 'Madrid',         flag: '🇪🇸', date: '11–13 Sep',       circuit: 'Madring (Madrid)',               qualy: '2026-09-12T13:00:00Z' },
-  { id: 'aze26',  round: 17, name: 'Gran Premio de Azerbaiyán',      short: 'Azerbaiyán',     flag: '🇦🇿', date: '25–27 Sep',       circuit: 'Baku City Circuit',             qualy: '2026-09-26T11:00:00Z' },
-  { id: 'sgp26',  round: 18, name: 'Gran Premio de Singapur',        short: 'Singapur',       flag: '🇸🇬', date: '9–11 Oct',        circuit: 'Marina Bay',                    qualy: '2026-10-10T13:00:00Z', sprint: true },
-  { id: 'usa26',  round: 19, name: 'Gran Premio de EE.UU.',          short: 'EE.UU.',         flag: '🇺🇸', date: '23–25 Oct',       circuit: 'Circuit of the Americas',       qualy: '2026-10-24T21:00:00Z' },
-  { id: 'mex26',  round: 20, name: 'Gran Premio de México',          short: 'México',         flag: '🇲🇽', date: '30 Oct–1 Nov',    circuit: 'Hermanos Rodríguez',            qualy: '2026-11-01T22:00:00Z' },
+  { id: 'aze26',  round: 17, name: 'Gran Premio de Azerbaiyán',      short: 'Azerbaiyán',     flag: '🇦🇿', date: '24–26 Sep',       circuit: 'Baku City Circuit',             qualy: '2026-09-26T11:00:00Z' },
+  { id: 'sgp26',  round: 18, name: 'Gran Premio de Singapur',        short: 'Singapur',       flag: '🇸🇬', date: '9–11 Oct',        circuit: 'Marina Bay',                    qualy: '2026-10-10T07:00:00Z', sprint: true },
+  { id: 'usa26',  round: 19, name: 'Gran Premio de EE.UU.',          short: 'EE.UU.',         flag: '🇺🇸', date: '23–25 Oct',       circuit: 'Circuit of the Americas',       qualy: '2026-10-24T20:00:00Z' },
+  { id: 'mex26',  round: 20, name: 'Gran Premio de México',          short: 'México',         flag: '🇲🇽', date: '30 Oct–1 Nov',    circuit: 'Hermanos Rodríguez',            qualy: '2026-10-31T20:00:00Z' },
   { id: 'bra26',  round: 21, name: 'Gran Premio de Brasil',          short: 'Brasil',         flag: '🇧🇷', date: '6–8 Nov',         circuit: 'Interlagos',                    qualy: '2026-11-07T18:00:00Z' },
   { id: 'lv26',   round: 22, name: 'Gran Premio de Las Vegas',       short: 'Las Vegas',      flag: '🇺🇸', date: '19–21 Nov',       circuit: 'Las Vegas Strip',               qualy: '2026-11-21T06:00:00Z' },
-  { id: 'qat26',  round: 23, name: 'Gran Premio de Catar',           short: 'Catar',          flag: '🇶🇦', date: '27–29 Nov',       circuit: 'Losail',                        qualy: '2026-11-28T15:00:00Z' },
-  { id: 'abud26', round: 24, name: 'Gran Premio de Abu Dabi',        short: 'Abu Dabi',       flag: '🇦🇪', date: '4–6 Dic',         circuit: 'Yas Marina',                    qualy: '2026-12-05T13:00:00Z' },
+  { id: 'qat26',  round: 23, name: 'Gran Premio de Catar',           short: 'Catar',          flag: '🇶🇦', date: '27–29 Nov',       circuit: 'Losail',                        qualy: '2026-11-28T12:00:00Z' },
+  { id: 'abud26', round: 24, name: 'Gran Premio de Abu Dabi',        short: 'Abu Dabi',       flag: '🇦🇪', date: '4–6 Dic',         circuit: 'Yas Marina',                    qualy: '2026-12-05T11:00:00Z' },
 ];
 
 // FIX: alias para que todo el código interno use RACES_2026
@@ -1385,7 +1392,11 @@ function calculatePointsForGP(gpId) {
     hit(pred.fastestLap, result.fastestLap, 'fastestLap', POINTS_SYSTEM.fastest_lap);
     hit(pred.dotd,       result.dotd,       'dotd',       POINTS_SYSTEM.dotd);
     hit(pred.pitStop,    result.pitStop,    'pitStop',    POINTS_SYSTEM.pit_stop);
-    hit(pred.dnf,        result.dnf,        'dnf',        POINTS_SYSTEM.dnf);
+    // DNF: result.dnf puede ser lista separada por comas (múltiples abandonos)
+    if (pred.dnf && result.dnf && result.dnf !== NO_DNF_OPTION) {
+      const dnfList = result.dnf.split(',').map(s => s.trim());
+      if (dnfList.includes(pred.dnf)) { bd.dnf = POINTS_SYSTEM.dnf; total += POINTS_SYSTEM.dnf; }
+    }
     if (result.sprintPole != null && result.sprintPole !== '') {
       hit(pred.sprintPole,   result.sprintPole,   'sprintPole',   POINTS_SYSTEM.sprint_pole);
       hit(pred.sprintWinner, result.sprintWinner, 'sprintWinner', POINTS_SYSTEM.sprint_winner);
@@ -1667,8 +1678,6 @@ function lockGPSelector() {
     wrap.innerHTML = `<div class="gp-locked-banner"><div class="gp-locked-icon">${race.flag}</div><div><div class="gp-locked-label">GP ACTIVO${sprint}</div><div class="gp-locked-name">${race.name}</div><div class="gp-locked-date">📅 ${race.date} · ${race.circuit}</div></div></div>`;
     if (hidden) hidden.value = race.id;
     if (fields) fields.style.display = 'block';
-    // Limpiar cualquier lock del GP anterior antes de evaluar el nuevo
-    unlockFormSubmit();
     // Mostrar badge persistente si ya existe un pronóstico guardado
     showSavedBadgeIfExists(race.id);
   } else {
@@ -1717,20 +1726,14 @@ function lockFormAlreadySubmitted(saved) {
 
 function unlockFormSubmit() {
   var submitBtn = document.getElementById('submit-btn');
-  var formFields = document.getElementById('form-fields-wrap');
   var lockedBanner = document.getElementById('form-locked-banner');
-  // Limpiar el estado de qualy lock del GP anterior
-  if (submitBtn) {
-    delete submitBtn.dataset.qualyLocked;
+  // Solo desbloquear si la qualy aún no empezó (el countdown no la bloqueó)
+  if (submitBtn && !submitBtn.dataset.qualyLocked) {
     submitBtn.disabled = false;
     submitBtn.style.opacity = '';
     submitBtn.style.pointerEvents = '';
   }
-  if (formFields) {
-    formFields.querySelectorAll('select, input').forEach(el => { el.disabled = false; });
-  }
-  if (lockedBanner) {
-    delete lockedBanner.dataset.qualyLocked;
+  if (lockedBanner && !lockedBanner.dataset.qualyLocked) {
     lockedBanner.style.display = 'none';
   }
 }
@@ -2165,6 +2168,60 @@ function renderPtsLegend() {
   </div>`;
 }
 
+// ─── ADMIN DNF MULTI-SELECT HELPERS ──────────────────────────
+function syncDNFPodiumFilter() {
+  const podiumDrivers = ['res-p1','res-p2','res-p3'].map(id => {
+    const el = document.getElementById(id); return el ? el.value : '';
+  }).filter(Boolean);
+  document.querySelectorAll('.res-dnf-cb').forEach(cb => {
+    const label = cb.closest('label');
+    if (podiumDrivers.includes(cb.value)) {
+      cb.disabled = true; cb.checked = false;
+      if (label) { label.style.opacity = '0.3'; label.style.cursor = 'not-allowed'; }
+    } else {
+      cb.disabled = false;
+      if (label) { label.style.opacity = '1'; label.style.cursor = 'pointer'; }
+    }
+  });
+  updateDNFCount();
+}
+
+function updateDNFCount() {
+  const checked = document.querySelectorAll('.res-dnf-cb:checked');
+  const lbl = document.getElementById('dnf-count-label');
+  const btnNoDnf = document.getElementById('btn-no-dnf');
+  if (checked.length > 0 && btnNoDnf) { btnNoDnf.dataset.active = '0'; updateNoDNFButton(); }
+  if (lbl) lbl.textContent = checked.length > 0 ? `${checked.length} seleccionado${checked.length > 1 ? 's' : ''}` : '';
+}
+
+function toggleNoDNF() {
+  const btn = document.getElementById('btn-no-dnf');
+  if (!btn) return;
+  const isActive = btn.dataset.active === '1';
+  btn.dataset.active = isActive ? '0' : '1';
+  if (!isActive) {
+    // Activar "Sin abandonos" → desmarcar todos los checkboxes
+    document.querySelectorAll('.res-dnf-cb').forEach(cb => { cb.checked = false; });
+    const lbl = document.getElementById('dnf-count-label');
+    if (lbl) lbl.textContent = '';
+  }
+  updateNoDNFButton();
+}
+
+function updateNoDNFButton() {
+  const btn = document.getElementById('btn-no-dnf');
+  if (!btn) return;
+  if (btn.dataset.active === '1') {
+    btn.style.background = 'rgba(34,197,94,0.15)';
+    btn.style.borderColor = 'rgba(34,197,94,0.4)';
+    btn.style.color = '#22c55e';
+  } else {
+    btn.style.background = '';
+    btn.style.borderColor = '';
+    btn.style.color = '';
+  }
+}
+
 // ─── ADMIN ───────────────────────────────────────────────────
 function adminLogin() {
   const pwd = document.getElementById('admin-password').value;
@@ -2280,8 +2337,16 @@ function renderAdminPredictions() {
         html += `<div class="pred-comparison-table">
           <div class="pred-comp-header"><span>CATEGORÍA</span><span>PRONÓSTICO</span><span>OFICIAL</span><span>PTS</span></div>`;
         fields.forEach(f => {
-          const ok  = f.pred && f.pred === f.res;
-          const bad = f.res  && f.pred !== f.res;
+          // Para DNF: result puede ser lista separada por comas
+          let ok, bad;
+          if (f.label === '💥 DNF' && f.res && f.res !== NO_DNF_OPTION) {
+            const dnfList = f.res.split(',').map(s => s.trim());
+            ok  = f.pred && dnfList.includes(f.pred);
+            bad = f.res && !ok;
+          } else {
+            ok  = f.pred && f.pred === f.res;
+            bad = f.res  && f.pred !== f.res;
+          }
           const cls = ok ? 'comp-correct' : bad ? 'comp-wrong' : 'comp-pending';
           html += `<div class="pred-comp-row ${cls}">
             <span class="comp-label">${f.label}</span>
@@ -2352,8 +2417,26 @@ function loadResultForm() {
   });
   const rpit = document.getElementById('res-pit');
   if (rpit) rpit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions(ex.pitStop || '');
-  const rdnf = document.getElementById('res-dnf');
-  if (rdnf) rdnf.innerHTML = `<option value="">—</option><option value="${NO_DNF_OPTION}" ${ex.dnf === NO_DNF_OPTION ? 'selected' : ''}>${NO_DNF_OPTION}</option>` + driverOptions(ex.dnf || '');
+  const rdnfWrap = document.getElementById('res-dnf-wrap');
+  if (rdnfWrap) {
+    const savedDnfs = ex.dnf === NO_DNF_OPTION ? [] : (ex.dnf ? ex.dnf.split(',').map(s => s.trim()).filter(Boolean) : []);
+    rdnfWrap.innerHTML = DRIVERS_2026.map(d => {
+      const isChecked = savedDnfs.includes(d);
+      return `<label style="display:flex;align-items:center;gap:8px;padding:5px 4px;border-radius:4px;cursor:pointer;">
+        <input type="checkbox" class="res-dnf-cb" value="${d}" ${isChecked ? 'checked' : ''} onchange="syncDNFPodiumFilter();updateDNFCount()" style="accent-color:var(--f1-red);width:15px;height:15px;flex-shrink:0;">
+        <span style="font-size:0.88rem;">${d}</span>
+      </label>`;
+    }).join('');
+    ['res-p1','res-p2','res-p3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.removeEventListener('change', el._dnfSync); el._dnfSync = () => syncDNFPodiumFilter(); el.addEventListener('change', el._dnfSync); }
+    });
+    const btnNoDnf = document.getElementById('btn-no-dnf');
+    if (btnNoDnf) { btnNoDnf.dataset.active = ex.dnf === NO_DNF_OPTION ? '1' : '0'; }
+    syncDNFPodiumFilter();
+    updateDNFCount();
+    updateNoDNFButton();
+  }
 
   if (spSec) {
     spSec.style.display = (race && race.sprint) ? 'block' : 'none';
@@ -2380,7 +2463,12 @@ async function saveResults() {
     fastestLap:   document.getElementById('res-fl').value,
     dotd:         document.getElementById('res-dotd').value,
     pitStop:      document.getElementById('res-pit').value,
-    dnf:          document.getElementById('res-dnf').value,
+    dnf:          (function() {
+      const btn = document.getElementById('btn-no-dnf');
+      if (btn && btn.dataset.active === '1') return NO_DNF_OPTION;
+      const checked = Array.from(document.querySelectorAll('.res-dnf-cb:checked')).map(cb => cb.value);
+      return checked.length ? checked.join(', ') : '';
+    })(),
     sprintPole:   (race && race.sprint) ? (document.getElementById('res-sprint-pole') ? document.getElementById('res-sprint-pole').value : '') : '',
     sprintWinner: (race && race.sprint) ? (document.getElementById('res-sprint-winner') ? document.getElementById('res-sprint-winner').value : '') : '',
   };
@@ -2491,6 +2579,7 @@ window.resetRace       = resetRace;
 window.saveActiveGP    = saveActiveGP;
 window.saveResults     = saveResults;
 window.showView        = showView;
+window.toggleNoDNF     = toggleNoDNF;
 </script>
 </body>
 </html>
