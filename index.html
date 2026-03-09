@@ -1670,6 +1670,8 @@ function lockGPSelector() {
   var wrap   = document.getElementById('gp-display-wrap');
   var fields = document.getElementById('form-fields-wrap');
   if (!wrap) return;
+  // Siempre limpiar locks del GP anterior antes de evaluar el nuevo
+  unlockFormSubmit();
   var race = RACES_2026.find(r => r.id === appState.activeGP);
   if (race) {
     var sprint = race.sprint
@@ -1725,15 +1727,21 @@ function lockFormAlreadySubmitted(saved) {
 }
 
 function unlockFormSubmit() {
-  var submitBtn = document.getElementById('submit-btn');
+  var submitBtn    = document.getElementById('submit-btn');
+  var formFields   = document.getElementById('form-fields-wrap');
   var lockedBanner = document.getElementById('form-locked-banner');
-  // Solo desbloquear si la qualy aún no empezó (el countdown no la bloqueó)
-  if (submitBtn && !submitBtn.dataset.qualyLocked) {
+  // Limpiar TODOS los locks (qualy y pronóstico previo)
+  if (submitBtn) {
+    delete submitBtn.dataset.qualyLocked;
     submitBtn.disabled = false;
     submitBtn.style.opacity = '';
     submitBtn.style.pointerEvents = '';
   }
-  if (lockedBanner && !lockedBanner.dataset.qualyLocked) {
+  if (formFields) {
+    formFields.querySelectorAll('select, input').forEach(el => { el.disabled = false; });
+  }
+  if (lockedBanner) {
+    delete lockedBanner.dataset.qualyLocked;
     lockedBanner.style.display = 'none';
   }
 }
@@ -2128,6 +2136,9 @@ function renderLeaderboard(board, title, showRaces, gpId) {
       if (bd.p1)            parts.push(`P1 +${bd.p1}`);
       if (bd.p2)            parts.push(`P2 +${bd.p2}`);
       if (bd.p3)            parts.push(`P3 +${bd.p3}`);
+      if (bd.partial_p1)    parts.push(`P1≈ +${bd.partial_p1}`);
+      if (bd.partial_p2)    parts.push(`P2≈ +${bd.partial_p2}`);
+      if (bd.partial_p3)    parts.push(`P3≈ +${bd.partial_p3}`);
       if (bd.fastestLap)    parts.push(`VR +${bd.fastestLap}`);
       if (bd.dotd)          parts.push(`PdD +${bd.dotd}`);
       if (bd.pitStop)       parts.push(`Pit +${bd.pitStop}`);
@@ -2266,6 +2277,8 @@ async function adminRefresh() {
 async function saveActiveGP() {
   const gpId = document.getElementById('admin-active-gp').value || null;
   appState.activeGP = gpId;
+  // Limpiar caché local para que al recargar tome el nuevo GP activo del servidor
+  try { localStorage.removeItem('f1prode_cache_2026'); } catch(e) {}
   lockGPSelector();
   var rgs = document.getElementById('result-gp-select');
   if (rgs && gpId) { rgs.value = gpId; loadResultForm(); }
@@ -2362,6 +2375,17 @@ function renderAdminPredictions() {
             <span class="comp-pts" style="color:var(--gold)">✅ +${pts.breakdown.podio_exact}</span>
           </div>`;
         }
+        ['p1','p2','p3'].forEach(pos => {
+          const key = 'partial_' + pos;
+          if (pts && pts.breakdown && pts.breakdown[key]) {
+            const label = pos === 'p1' ? '🥇' : pos === 'p2' ? '🥈' : '🥉';
+            html += `<div class="pred-comp-row comp-bonus">
+              <span class="comp-label" style="color:#a78bfa">${label} En podio, posición incorrecta</span>
+              <span class="comp-pred">—</span><span class="comp-result">—</span>
+              <span class="comp-pts" style="color:#a78bfa">≈ +${pts.breakdown[key]}</span>
+            </div>`;
+          }
+        });
         html += `<div class="pred-comp-total"><span>TOTAL</span><span>${(pts && pts.total) || 0} puntos</span></div></div>`;
       } else {
         html += `<div class="admin-pred-grid">${fields.map(f =>
