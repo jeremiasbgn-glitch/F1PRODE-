@@ -1551,7 +1551,7 @@ function startCountdown(qualyUtc, gpId) {
   wrap.style.display = 'flex';
 
   function lockForm(msg) {
-    // Solo bloquear si este GP sigue siendo el activo
+    // Solo bloquear si este sigue siendo el GP activo
     if (gpId && appState.activeGP !== gpId) return;
     var submitBtn = document.getElementById('submit-btn');
     var formFields = document.getElementById('form-fields-wrap');
@@ -1670,12 +1670,12 @@ function populateFormSelects() {
 }
 
 function lockGPSelector() {
+  // Limpiar todos los locks del GP anterior antes de evaluar el nuevo
+  unlockFormSubmit();
   var hidden = document.getElementById('f-gp');
   var wrap   = document.getElementById('gp-display-wrap');
   var fields = document.getElementById('form-fields-wrap');
   if (!wrap) return;
-  // Limpiar locks del GP anterior antes de evaluar el nuevo
-  unlockFormSubmit();
   var race = RACES_2026.find(r => r.id === appState.activeGP);
   if (race) {
     var sprint = race.sprint
