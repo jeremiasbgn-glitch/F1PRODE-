@@ -1482,6 +1482,9 @@ function applySheetData(data) {
   appState.activeGP    = (data.config && data.config.activeGP) || null;
   adminPassword        = (data.config && data.config.adminPassword) || 'f1prode';
   recalcAllPoints();
+  // Reconstruir UI con el GP activo correcto (countdown, lock, badge)
+  // Usamos setTimeout para asegurar que el DOM esté listo
+  setTimeout(() => lockGPSelector(), 0);
 }
 
 function showConnectionStatus(state, msg) {
@@ -1540,7 +1543,7 @@ function showView(name) {
 
 // ─── COUNTDOWN ───────────────────────────────────────────────
 var _cdInterval = null;
-function startCountdown(qualyUtc) {
+function startCountdown(qualyUtc, gpId) {
   if (_cdInterval) clearInterval(_cdInterval);
   var wrap  = document.getElementById('qualy-countdown');
   var units = document.getElementById('cd-units');
@@ -1549,6 +1552,8 @@ function startCountdown(qualyUtc) {
   wrap.style.display = 'flex';
 
   function lockForm(msg) {
+    // Solo bloquear si este GP sigue siendo el activo
+    if (gpId && appState.activeGP !== gpId) return;
     var submitBtn = document.getElementById('submit-btn');
     var formFields = document.getElementById('form-fields-wrap');
     var lockedBanner = document.getElementById('form-locked-banner');
@@ -1692,7 +1697,7 @@ function lockGPSelector() {
   updateSprintFields();
   renderCircuitStats(appState.activeGP || '');
   var _race = RACES_2026.find(r => r.id === appState.activeGP);
-  startCountdown(_race ? _race.qualy : null);
+  startCountdown(_race ? _race.qualy : null, appState.activeGP);
 }
 
 // ─── BADGE PERSISTENTE ───────────────────────────────────────
