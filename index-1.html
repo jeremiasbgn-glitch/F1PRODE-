@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>F1 PRODE — Temporada 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   F1 PRODE — MASTER STYLESHEET v2.0
+   Mobile-first, F1 Editorial aesthetic — FIXED & ENHANCED
+   ============================================================ */
+
+:root {
+  --f1-red: #E8002D;
+  --f1-red-dark: #B0001F;
+  --f1-red-glow: rgba(232, 0, 45, 0.25);
+  --black: #08080D;
+  --black-2: #0F0F17;
+  --black-3: #16161F;
+  --card-bg: #1A1A25;
+  --card-border: #252535;
+  --card-border-hover: #35354A;
+  --white: #F5F5F8;
+  --white-muted: rgba(245, 245, 248, 0.6);
+  --white-faint: rgba(245, 245, 248, 0.12);
+  --gold: #FFD100;
+  --silver: #C4C4CC;
+  --bronze: #CD7F32;
+  --green: #00E664;
+  --accent-blue: #00C8FF;
+  --sprint-purple: #7B2FBE;
+  --sprint-light: #B47FFF;
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+
+  --radius: 6px;
+  --radius-lg: 10px;
+  --transition: 0.18s ease;
+  --shadow: 0 8px 32px rgba(0,0,0,0.5);
+  --shadow-red: 0 8px 32px rgba(232,0,45,0.2);
+}
+
+/* ============================================================ RESET */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle grid texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.014) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.014) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================ LOADER */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.loader-inner { text-align: center; }
+.loader-flag {
+  width: 60px;
+  height: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin: 0 auto 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  animation: flagWave 1.5s ease-in-out infinite;
+}
+.loader-stripe.white { background: #fff; }
+.loader-stripe.black { background: #111; }
+
+@keyframes flagWave {
+  0%, 100% { transform: perspective(200px) rotateY(0deg); }
+  50% { transform: perspective(200px) rotateY(-15deg); }
+}
+
+.loader-title {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.loader-bar {
+  width: 180px;
+  height: 3px;
+  background: var(--white-faint);
+  border-radius: 2px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.loader-fill {
+  height: 100%;
+  background: var(--f1-red);
+  border-radius: 2px;
+  animation: loadFill 1.2s ease forwards;
+}
+@keyframes loadFill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ============================================================ HEADER */
+#site-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(8, 8, 13, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--f1-red);
+  box-shadow: 0 4px 40px rgba(232,0,45,0.15);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logo-flag-icon {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 28px;
+  height: 20px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.logo-flag-icon span:nth-child(1) { background: #fff; }
+.logo-flag-icon span:nth-child(2) { background: #111; }
+.logo-flag-icon span:nth-child(3) { background: #111; }
+.logo-flag-icon span:nth-child(4) { background: #fff; }
+
+.logo-text-block { display: flex; flex-direction: column; line-height: 1; }
+.logo-main {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+.logo-season {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: var(--f1-red);
+  font-weight: 700;
+}
+
+/* ── ADMIN HIDDEN TRIGGER — solo visible con ?admin=1 ── */
+#admin-entry-hint {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.15);
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+#admin-entry-hint:hover { color: var(--f1-red); }
+
+/* BOTTOM NAV */
+#main-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  display: flex;
+  background: rgba(10,10,16,0.97);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.nav-btn {
+  flex: 1; background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 10px 4px 14px;
+  color: rgba(255,255,255,0.3);
+  transition: color 0.18s;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-btn::after {
+  content: ''; position: absolute; top: 0; left: 25%; right: 25%;
+  height: 2px; background: var(--f1-red); border-radius: 0 0 3px 3px;
+  transform: scaleX(0);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.nav-btn.active::after { transform: scaleX(1); }
+.nav-btn:active { background: rgba(255,255,255,0.06); }
+.nav-icon { font-size: 1.4rem; line-height: 1; }
+.nav-label { font-family: var(--font-display); font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+.nav-btn.active { color: var(--f1-red); }
+
+/* ── ADMIN NAV BTN siempre visible ── */
+#nav-btn-admin { display: flex; }
+
+/* ============================================================ RACE BANNER */
+.race-banner {
+  background: linear-gradient(135deg, var(--black-3) 0%, #1a0308 60%, var(--black-3) 100%);
+  border-bottom: 1px solid var(--card-border);
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.race-banner::before {
+  content: 'GP';
+  position: absolute; right: -10px; top: -10px;
+  font-family: var(--font-display);
+  font-size: 7rem; font-weight: 900;
+  color: rgba(255,255,255,0.025);
+  line-height: 1; pointer-events: none;
+}
+
+.race-banner-content {
+  max-width: 900px; margin: 0 auto; position: relative; z-index: 1;
+}
+
+.race-round-badge {
+  font-family: var(--font-display);
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 3px;
+  color: var(--f1-red); text-transform: uppercase; margin-bottom: 4px;
+}
+.race-banner-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 800; letter-spacing: 1px;
+  line-height: 1.1; text-transform: uppercase;
+}
+.race-banner-meta {
+  display: flex; align-items: center; gap: 8px; margin-top: 4px;
+  font-size: 0.85rem; color: var(--white-muted);
+}
+.race-banner-stripe {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--f1-red) 0%, transparent 100%);
+}
+
+/* ============================================================ MAIN / CONTAINER */
+#app-main { position: relative; z-index: 1; padding-bottom: 60px; }
+.container { max-width: 640px; margin: 0 auto; padding: 20px 14px 90px; }
+@media (min-width: 900px) { .container { max-width: 900px; } }
+
+/* ============================================================ VIEWS */
+.view { display: none; animation: viewIn 0.3s ease; }
+.view.active { display: block; }
+@keyframes viewIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================ CARDS */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 16px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--f1-red), transparent);
+  opacity: 0.6;
+}
+
+.card-selector { padding: 14px 16px; }
+
+.card-header { margin-bottom: 20px; }
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--white);
+}
+.card-subtitle { font-size: 0.9rem; color: var(--white-muted); margin-top: 2px; }
+.card-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--f1-red);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--card-border);
+}
+
+/* ============================================================ GP SELECT */
+.gp-select {
+  width: 100%;
+  background: var(--black-2);
+  border: 1px solid var(--card-border);
+  color: var(--white);
+  padding: 12px 14px;
+  font-family: var(--font-display);
+  font-size: 1rem; font-weight: 600;
+  border-radius: var(--radius);
+  outline: none; cursor: pointer;
+  transition: border-color var(--transition);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23E8002D' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.gp-select:focus { border-color: var(--f1-red); box-shadow: 0 0 0 2px var(--f1-red-glow); }
+
+/* ============================================================ FORM */
+.form-field { margin-bottom: 16px; }
+.field-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--white-muted); margin-bottom: 7px;
+}
+.field-label.required::after { content: ' *'; color: var(--f1-red); }
+.label-icon { margin-right: 4px; }
+
+.field-input, .field-select {
+  width: 100%;
+  background: var(--black-2);
+  border: 1px solid var(--card-border);
+  color: var(--white);
+  padding: 13px 14px;
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 500;
+  border-radius: var(--radius);
+  outline: none;
+  transition: all var(--transition);
+  -webkit-appearance: none;
+}
+.field-input::placeholder { color: rgba(255,255,255,0.25); }
+.field-input:focus, .field-select:focus {
+  border-color: var(--f1-red);
+  box-shadow: 0 0 0 2px var(--f1-red-glow);
+  background: var(--black-3);
+}
+.field-input.error, .field-select.error {
+  border-color: var(--f1-red);
+  animation: shake 0.3s ease;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.field-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+.field-select option { background: var(--black-3); }
+.field-hint { font-size: 0.75rem; color: var(--white-muted); margin-top: 4px; }
+
+/* Form sections */
+.form-divider {
+  display: flex; align-items: center; gap: 12px; margin: 22px 0 16px;
+}
+.form-divider::before, .form-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--card-border);
+}
+.form-divider span {
+  font-family: var(--font-display);
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--white-muted); white-space: nowrap;
+}
+
+.form-grid-2 {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+@media (max-width: 400px) { .form-grid-2 { grid-template-columns: 1fr; } }
+
+.podio-note {
+  font-size: 0.75rem; color: var(--white-muted); margin-bottom: 12px;
+  padding: 8px 12px; background: var(--white-faint);
+  border-radius: var(--radius); border-left: 2px solid var(--f1-red);
+}
+
+.podio-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 4px;
+}
+@media (max-width: 400px) { .podio-grid { grid-template-columns: 1fr; } }
+
+.form-error {
+  background: rgba(232, 0, 45, 0.1);
+  border: 1px solid rgba(232, 0, 45, 0.4);
+  color: #ff7b7b;
+  padding: 12px 14px; border-radius: var(--radius);
+  font-size: 0.85rem; margin-bottom: 16px;
+}
+
+/* ── PODIO CARDS ── */
+.podio-card { border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07); }
+.podio-rank-bar { display: flex; align-items: center; gap: 5px; padding: 8px 10px 7px; }
+.podio-trophy { font-size: 1.1rem; line-height: 1; flex-shrink: 0; }
+.podio-rank-label { font-family: var(--font-display); font-size: 0.6rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; flex: 1; }
+.podio-pts-badge { font-family: var(--font-display); font-size: 0.6rem; font-weight: 800; opacity: 0.65; white-space: nowrap; }
+.podio-select { width: 100%; border-radius: 0 0 9px 9px !important; border: none !important; border-top: 1px solid rgba(255,255,255,0.07) !important; font-size: 0.88rem !important; padding: 10px !important; background-image: none !important; }
+.podio-gold { background: linear-gradient(160deg, rgba(255,215,0,0.11), rgba(255,215,0,0.03)); border-color: rgba(255,215,0,0.18) !important; }
+.podio-gold .podio-rank-label { color: #FFD700; }
+.podio-gold .podio-pts-badge { color: rgba(255,215,0,0.65); }
+.podio-select-gold { background-color: rgba(255,215,0,0.04) !important; }
+.podio-silver { background: linear-gradient(160deg, rgba(192,192,192,0.09), rgba(192,192,192,0.02)); border-color: rgba(192,192,192,0.15) !important; }
+.podio-silver .podio-rank-label { color: #C8C8C8; }
+.podio-silver .podio-pts-badge { color: rgba(200,200,200,0.55); }
+.podio-select-silver { background-color: rgba(192,192,192,0.03) !important; }
+.podio-bronze { background: linear-gradient(160deg, rgba(205,127,50,0.1), rgba(205,127,50,0.02)); border-color: rgba(205,127,50,0.15) !important; }
+.podio-bronze .podio-rank-label { color: #CD7F32; }
+.podio-bronze .podio-pts-badge { color: rgba(205,127,50,0.6); }
+.podio-select-bronze { background-color: rgba(205,127,50,0.03) !important; }
+
+/* ============================================================ BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: none; border-radius: var(--radius);
+  padding: 14px 24px;
+  font-family: var(--font-display);
+  font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; cursor: pointer;
+  transition: all var(--transition); white-space: nowrap;
+}
+.btn-full { width: 100%; margin-top: 8px; }
+.btn-sm { padding: 8px 14px; font-size: 0.75rem; }
+
+.btn-primary { background: var(--f1-red); color: #fff; box-shadow: var(--shadow-red); }
+.btn-primary:hover { background: var(--f1-red-dark); box-shadow: 0 12px 40px rgba(232,0,45,0.35); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary { background: var(--white-faint); color: var(--white); border: 1px solid var(--card-border); }
+.btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: var(--card-border-hover); }
+
+.btn-ghost { background: transparent; color: var(--white-muted); border: 1px solid var(--card-border); }
+.btn-ghost:hover { color: var(--white); border-color: var(--card-border-hover); }
+
+.btn-danger { background: rgba(232,0,45,0.12); color: var(--f1-red); border: 1px solid rgba(232,0,45,0.3); }
+.btn-danger:hover { background: rgba(232,0,45,0.2); }
+
+.btn-flag { font-size: 1rem; }
+
+/* ── SPINNER ── */
+.btn-spinner {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+  vertical-align: middle; margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================ SUMMARY CARD */
+.card-summary { border-color: rgba(0,230,100,0.2); background: linear-gradient(135deg, var(--card-bg) 0%, rgba(0,80,40,0.15) 100%); }
+.card-summary::before { background: linear-gradient(to right, var(--green), transparent); }
+.success-title { color: var(--green) !important; }
+
+/* ── PRONÓSTICO GUARDADO PERSISTENTE ── */
+.saved-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0,230,100,0.08);
+  border: 1px solid rgba(0,230,100,0.25);
+  border-left: 3px solid var(--green);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+}
+.saved-badge-icon { font-size: 1.2rem; flex-shrink: 0; }
+.saved-badge-text { flex: 1; color: var(--green); font-weight: 600; }
+.saved-badge-sub { font-size: 0.75rem; color: var(--white-muted); font-weight: 400; margin-top: 1px; }
+
+.summary-header-info {
+  background: var(--black-2); border: 1px solid var(--card-border);
+  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px;
+}
+.summary-player-name {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 900;
+  letter-spacing: 1px; color: var(--white);
+}
+.summary-race-name { font-size: 0.85rem; color: var(--f1-red); font-weight: 600; margin-top: 2px; }
+.summary-timestamp { font-size: 0.75rem; color: var(--white-muted); margin-top: 4px; }
+
+.summary-rows {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px;
+}
+.summary-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); gap: 12px;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-row:nth-child(even) { background: rgba(255,255,255,0.02); }
+.summary-row-label {
+  font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--white-muted); flex-shrink: 0;
+}
+.summary-row-val { font-weight: 700; font-size: 0.9rem; color: var(--white); text-align: right; }
+
+.summary-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ── PTS TAG ── */
+.pts-tag {
+  display: inline-block;
+  background: rgba(232, 0, 45, 0.15); color: var(--f1-red);
+  border: 1px solid rgba(232, 0, 45, 0.3);
+  font-family: var(--font-display); font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+  padding: 1px 6px; border-radius: 3px; margin-left: 5px; vertical-align: middle;
+}
+
+/* ============================================================ SPRINT SECTION */
+.sprint-divider span { color: var(--sprint-light); }
+.sprint-divider::before, .sprint-divider::after { background: rgba(155,95,224,0.3); }
+
+.sprint-banner {
+  display: flex; align-items: center; gap: 14px;
+  background: linear-gradient(135deg, rgba(123,47,190,0.12), rgba(123,47,190,0.05));
+  border: 1px solid rgba(123,47,190,0.3); border-left: 3px solid var(--sprint-purple);
+  border-radius: var(--radius); padding: 12px 16px; margin-bottom: 16px;
+}
+.sprint-banner-icon { font-size: 1.6rem; flex-shrink: 0; }
+.sprint-banner-title {
+  font-family: var(--font-display); font-size: 0.75rem; font-weight: 800;
+  letter-spacing: 2px; color: var(--sprint-light); text-transform: uppercase;
+}
+.sprint-banner-sub { font-size: 0.78rem; color: var(--white-muted); margin-top: 2px; }
+
+/* ============================================================ TABLAS VIEW */
+.section-header { margin-bottom: 20px; }
+.section-label {
+  font-family: var(--font-display); font-size: 0.65rem; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--f1-red); font-weight: 700;
+}
+.section-title-text {
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 900;
+  letter-spacing: 2px; text-transform: uppercase; line-height: 1; margin-top: 4px;
+}
+
+/* ── MI PERFIL TAB ── */
+.profile-card {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg); padding: 20px 16px; margin-bottom: 16px;
+  position: relative; overflow: hidden;
+}
+.profile-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, var(--accent-blue), transparent); opacity: 0.7;
+}
+.profile-stat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
+}
+.profile-stat {
+  background: var(--black-2); border: 1px solid var(--card-border);
+  border-radius: var(--radius); padding: 12px 10px; text-align: center;
+}
+.profile-stat-num {
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 900;
+  color: var(--gold); line-height: 1; margin-bottom: 4px;
+}
+.profile-stat-label {
+  font-family: var(--font-display); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--white-muted);
+}
+.accuracy-bar-wrap { margin-bottom: 10px; }
+.accuracy-label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.8rem; color: var(--white-muted); margin-bottom: 5px;
+}
+.accuracy-label span:last-child { color: var(--white); font-weight: 700; }
+.accuracy-bar {
+  height: 6px; background: var(--white-faint); border-radius: 3px; overflow: hidden;
+}
+.accuracy-bar-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--green));
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* GP Tabs */
+.gp-tabs-wrapper {
+  overflow-x: auto; margin: 0 -14px 16px; padding: 0 14px; scrollbar-width: none;
+}
+.gp-tabs-wrapper::-webkit-scrollbar { display: none; }
+.gp-tabs { display: flex; gap: 6px; padding-bottom: 2px; min-width: max-content; }
+.gp-tab {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  color: var(--white-muted); padding: 8px 16px;
+  font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer;
+  border-radius: 20px; transition: all var(--transition); white-space: nowrap;
+}
+.gp-tab:hover { border-color: var(--card-border-hover); color: var(--white); }
+.gp-tab.active { background: var(--f1-red); border-color: var(--f1-red); color: #fff; }
+.gp-tab.tab-profile { }
+.gp-tab.tab-profile.active { background: var(--accent-blue); border-color: var(--accent-blue); color: #000; }
+
+/* Leaderboard */
+.leaderboard-card {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 16px;
+}
+.lb-header {
+  padding: 12px 16px; background: var(--black-3);
+  border-bottom: 1px solid var(--card-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.lb-header-title {
+  font-family: var(--font-display); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--white-muted);
+}
+
+.lb-table { width: 100%; border-collapse: collapse; }
+.lb-table th {
+  font-family: var(--font-display); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--white-muted);
+  padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--card-border); white-space: nowrap;
+}
+.lb-table td { padding: 13px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.9rem; }
+.lb-table tr:last-child td { border-bottom: none; }
+.lb-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+.rank-pos {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  font-family: var(--font-display); font-weight: 900; font-size: 0.75rem;
+}
+.rank-1 { background: var(--gold); color: #000; }
+.rank-2 { background: var(--silver); color: #000; }
+.rank-3 { background: var(--bronze); color: #fff; }
+.rank-other { background: var(--white-faint); color: var(--white-muted); }
+
+.player-name-cell { font-weight: 700; font-size: 0.95rem; }
+.pts-cell { font-family: var(--font-display); font-size: 1.1rem; font-weight: 900; color: var(--gold); }
+.pts-breakdown { font-size: 0.75rem; color: var(--white-muted); }
+.pts-correct { color: var(--green); font-weight: 600; }
+.pts-bar { height: 4px; background: var(--white-faint); border-radius: 2px; overflow: hidden; }
+.pts-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--f1-red), #ff6060);
+  border-radius: 2px; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Points legend */
+.pts-legend-section { margin-top: 12px; }
+.pts-legend-title {
+  font-family: var(--font-display); font-size: 0.65rem; font-weight: 800;
+  letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 8px;
+}
+.pts-legend-grid { display: flex; flex-direction: column; gap: 1px; }
+.pts-legend-row { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 7px; }
+.pts-legend-icon { font-size: 1rem; width: 22px; text-align: center; flex-shrink: 0; }
+.pts-legend-cat { flex: 1; font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+.pts-legend-num {
+  font-family: var(--font-display); font-size: 0.95rem; font-weight: 900;
+  color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.05);
+  border-radius: 5px; padding: 3px 10px; min-width: 44px; text-align: center;
+}
+.pts-legend-highlight .pts-legend-cat { color: rgba(255,255,255,0.8); font-weight: 600; }
+.pts-legend-highlight .pts-legend-num { color: var(--f1-red); background: rgba(232,0,45,0.1); border: 1px solid rgba(232,0,45,0.2); }
+.pts-legend-sprint .pts-legend-cat { color: rgba(167,139,250,0.7); }
+.pts-legend-sprint .pts-legend-num { color: #A78BFA; background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2); }
+
+/* ============================================================ ADMIN */
+.admin-login-card { max-width: 380px; margin: 40px auto; text-align: center; padding: 32px 24px; }
+.admin-login-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.admin-login-card .form-field { text-align: left; margin-top: 20px; }
+.admin-login-card .btn { width: 100%; margin-top: 12px; }
+
+.admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+
+.admin-pred-item {
+  background: var(--black-2); border: 1px solid var(--card-border);
+  border-radius: var(--radius); padding: 14px; margin-bottom: 10px;
+}
+.admin-pred-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px; flex-wrap: wrap; gap: 6px;
+}
+.admin-pred-name { font-family: var(--font-display); font-size: 1rem; font-weight: 800; letter-spacing: 1px; }
+.admin-pred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+.admin-pred-row { display: flex; justify-content: space-between; font-size: 0.8rem; gap: 8px; }
+.admin-pred-row span:first-child { color: var(--white-muted); font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; }
+.admin-pred-row span:last-child { font-weight: 600; text-align: right; }
+
+.admin-pts-badge {
+  display: inline-block; background: var(--f1-red); color: #fff;
+  font-family: var(--font-display); font-size: 0.8rem; font-weight: 900;
+  padding: 4px 10px; border-radius: 20px;
+}
+.admin-pts-badge-empty { font-size: 0.72rem; color: var(--white-muted); font-style: italic; }
+
+.admin-gp-block { margin-bottom: 24px; }
+.admin-gp-title {
+  font-family: var(--font-display); font-size: 0.8rem; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--f1-red);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+
+.status-chip { font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; }
+.status-chip.scored { background: rgba(0,230,100,0.15); color: var(--green); border: 1px solid rgba(0,230,100,0.3); }
+.status-chip.open { background: rgba(255,209,0,0.1); color: var(--gold); border: 1px solid rgba(255,209,0,0.3); }
+
+.admin-rank {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  font-family: var(--font-display); font-weight: 900; font-size: 0.7rem; flex-shrink: 0;
+}
+.admin-rank.rank-1 { background: var(--gold); color: #000; }
+.admin-rank.rank-2 { background: var(--silver); color: #000; }
+.admin-rank.rank-3 { background: var(--bronze); color: #fff; }
+.admin-rank.rank-other { background: var(--white-faint); color: var(--white-muted); }
+
+/* Comparison table */
+.pred-comparison-table {
+  margin-top: 12px; border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden;
+}
+.pred-comp-header {
+  display: grid; grid-template-columns: 2fr 2fr 2fr 1fr; gap: 4px;
+  padding: 8px 12px; background: var(--black-3); border-bottom: 1px solid var(--card-border);
+  font-family: var(--font-display); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--white-muted);
+}
+.pred-comp-row {
+  display: grid; grid-template-columns: 2fr 2fr 2fr 1fr; gap: 4px;
+  padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.8rem; align-items: center; transition: background var(--transition);
+}
+.pred-comp-row:last-child { border-bottom: none; }
+.pred-comp-row.comp-correct { background: rgba(0,230,100,0.06); }
+.pred-comp-row.comp-wrong { background: rgba(232,0,45,0.05); }
+.pred-comp-row.comp-bonus { background: rgba(255,209,0,0.07); }
+
+.comp-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white-muted); }
+.comp-correct .comp-label { color: rgba(0,230,100,0.8); }
+.comp-wrong .comp-label { color: rgba(232,0,45,0.8); }
+.comp-pred { font-weight: 600; color: var(--white); font-size: 0.82rem; }
+.comp-correct .comp-pred { color: var(--green); }
+.comp-wrong .comp-pred { color: rgba(255,100,100,0.9); text-decoration: line-through; text-decoration-color: rgba(232,0,45,0.5); }
+.comp-result { font-weight: 600; color: var(--white-muted); font-size: 0.82rem; }
+.comp-correct .comp-result { color: var(--green); }
+.comp-pts { font-family: var(--font-display); font-weight: 800; font-size: 0.82rem; color: var(--white-muted); text-align: right; }
+.comp-correct .comp-pts { color: var(--green); }
+.comp-wrong .comp-pts { color: rgba(255,100,100,0.6); }
+.pred-comp-total {
+  display: flex; justify-content: space-between; padding: 10px 12px;
+  background: var(--black-3); border-top: 1px solid var(--card-border);
+  font-family: var(--font-display); font-weight: 800; font-size: 0.85rem;
+  letter-spacing: 1px; color: var(--gold);
+}
+@media (max-width: 480px) {
+  .pred-comp-header { grid-template-columns: 2fr 1.5fr 1.5fr 0.8fr; gap: 2px; font-size: 0.52rem; padding: 6px 10px; }
+  .pred-comp-row { grid-template-columns: 2fr 1.5fr 1.5fr 0.8fr; gap: 2px; padding: 8px 10px; font-size: 0.75rem; }
+  .comp-label { font-size: 0.64rem; }
+}
+
+/* ============================================================ EMPTY STATE */
+.empty-state { text-align: center; padding: 48px 20px; color: var(--white-muted); }
+.empty-icon { font-size: 2.8rem; margin-bottom: 14px; opacity: 0.6; }
+.empty-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; color: var(--white); margin-bottom: 6px; }
+.empty-text { font-size: 0.85rem; line-height: 1.5; }
+
+/* ============================================================ TOAST */
+.toast {
+  position: fixed; bottom: 80px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-left: 3px solid var(--f1-red); color: var(--white);
+  padding: 12px 20px; border-radius: var(--radius-lg);
+  font-size: 0.9rem; font-weight: 600;
+  z-index: 9000; box-shadow: var(--shadow);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  white-space: nowrap; max-width: calc(100vw - 40px); text-align: center;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ============================================================ CONNECTION BAR */
+.conn-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  padding: 10px 20px; font-family: var(--font-display);
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 1px;
+  text-align: center; transition: opacity 0.4s;
+}
+.conn-loading { background: #1a1a2e; color: #aaa; }
+.conn-ok { background: rgba(0,180,80,0.9); color: #fff; }
+.conn-warn { background: rgba(255,160,0,0.95); color: #000; }
+.conn-error { background: rgba(200,0,40,0.95); color: #fff; }
+
+/* ============================================================ CIRCUIT STATS */
+.circ-card { background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; margin-bottom: 4px; }
+.circ-title { font-family: var(--font-display); font-size: 0.78rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; }
+.circ-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.circ-item { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 10px 12px; }
+.circ-wide { grid-column: 1/-1; }
+.circ-icon { font-size: 1rem; margin-bottom: 2px; }
+.circ-lbl { font-family: var(--font-display); font-size: 0.6rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 3px; }
+.circ-val { font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.8); line-height: 1.3; }
+.circ-fact { font-size: 0.82rem; color: rgba(255,255,255,0.35); line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; font-style: italic; }
+
+/* ============================================================ GP LOCKED BANNER */
+.gp-locked-banner { background: linear-gradient(135deg, rgba(232,0,45,0.07), rgba(232,0,45,0.02)); border: 1px solid rgba(232,0,45,0.18); border-left: 3px solid var(--f1-red); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
+.gp-locked-icon { font-size: 2rem; flex-shrink: 0; }
+.gp-locked-label { font-family: var(--font-display); font-size: 0.62rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--f1-red); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+.gp-locked-name { font-size: 1.05rem; font-weight: 700; color: #fff; line-height: 1.2; }
+.gp-locked-date { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+.no-gp-banner { background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1); border-radius: 12px; padding: 36px 20px; text-align: center; margin-bottom: 16px; }
+.no-gp-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.no-gp-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; letter-spacing: 1px; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+.no-gp-sub { font-size: 0.88rem; color: rgba(255,255,255,0.2); line-height: 1.6; }
+
+/* ============================================================ COUNTDOWN */
+#qualy-countdown {
+  background: rgba(0,0,0,0.35); border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px;
+}
+.cd-label {
+  font-family: var(--font-display); font-size: 0.58rem; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); white-space: nowrap;
+}
+.cd-units { display: flex; align-items: center; gap: 6px; }
+.cd-unit { display: flex; flex-direction: column; align-items: center; min-width: 38px; }
+.cd-num { font-family: var(--font-display); font-size: 1.4rem; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -1px; }
+.cd-unit-label { font-family: var(--font-display); font-size: 0.5rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-top: 2px; }
+.cd-sep { font-size: 1.1rem; font-weight: 900; color: var(--f1-red); line-height: 1; margin-bottom: 10px; }
+.cd-live { font-family: var(--font-display); font-size: 0.65rem; font-weight: 800; letter-spacing: 2px; color: var(--f1-red); animation: pulse 1s infinite; }
+.cd-done { font-family: var(--font-display); font-size: 0.65rem; color: rgba(255,255,255,0.25); letter-spacing: 1px; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ============================================================ SCROLLBAR */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--black-2); }
+::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--f1-red); }
+
+/* ============================================================ UTILS */
+.text-red { color: var(--f1-red); }
+.text-muted { color: var(--white-muted); }
+.text-gold { color: var(--gold); }
+.text-green { color: var(--green); }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+</style>
+</head>
+<body>
+
+<!-- ── LOADER ─────────────────────────────────────────────── -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-flag">
+      <div class="loader-stripe white"></div>
+      <div class="loader-stripe black"></div>
+      <div class="loader-stripe white"></div>
+      <div class="loader-stripe black"></div>
+    </div>
+    <div class="loader-title">F1 PRODE</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+</div>
+
+<!-- ── HEADER ─────────────────────────────────────────────── -->
+<header id="site-header">
+  <div class="header-content">
+    <div class="header-logo">
+      <div class="logo-flag-icon">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="logo-text-block">
+        <span class="logo-main">F1 PRODE</span>
+        <span class="logo-season">TEMPORADA 2026</span>
+      </div>
+    </div>
+    <!-- Admin trigger oculto: solo visible con ?admin=1 en la URL -->
+    <span id="admin-entry-hint" onclick="showView('admin')" title="Admin">⚙</span>
+  </div>
+</header>
+
+<!-- ── RACE BANNER ────────────────────────────────────────── -->
+<div class="race-banner" id="race-banner">
+  <div class="race-banner-content">
+    <div class="race-round-badge">RONDA <span id="banner-round">—</span></div>
+    <div class="race-banner-name" id="banner-name">Cargando GP...</div>
+    <div class="race-banner-meta">
+      <span id="banner-flag">🏴</span>
+      <span id="banner-circuit" style="color:rgba(255,255,255,0.45);font-size:0.9rem;margin:0 4px;"></span>
+      <span id="banner-date" style="background:rgba(232,0,45,0.12);border:1px solid rgba(232,0,45,0.25);color:#E8002D;font-family:var(--font-display);font-weight:700;font-size:0.75rem;letter-spacing:1px;padding:3px 9px;border-radius:4px;">—</span>
+    </div>
+  </div>
+  <div class="race-banner-stripe"></div>
+</div>
+
+<!-- ── COUNTDOWN ──────────────────────────────────────────── -->
+<div id="qualy-countdown" style="display:none;">
+  <span class="cd-label">Cierre de pronósticos</span>
+  <div class="cd-units" id="cd-units">
+    <div class="cd-unit"><span class="cd-num" id="cd-days">0</span><span class="cd-unit-label">días</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-unit-label">hs</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><span class="cd-unit-label">min</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-unit-label">seg</span></div>
+  </div>
+</div>
+
+<!-- ── MAIN ───────────────────────────────────────────────── -->
+<main id="app-main">
+
+  <!-- ======== VIEW: PRONÓSTICO ======== -->
+  <section class="view active" id="view-pronostico">
+    <div class="container">
+
+      <div id="circuit-stats-wrap" style="display:none;margin-bottom:12px;"></div>
+
+      <!-- Badge persistente de pronóstico guardado -->
+      <div id="saved-badge-wrap" style="display:none;">
+        <div class="saved-badge">
+          <span class="saved-badge-icon">✅</span>
+          <div>
+            <div class="saved-badge-text">Pronóstico registrado</div>
+            <div class="saved-badge-sub" id="saved-badge-detail">Tu apuesta está guardada para este GP.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="form-card">
+        <div class="card-header">
+          <div class="card-title">TU PRONÓSTICO</div>
+          <div class="card-subtitle">Completá todos los campos y enviá antes de la qualy</div>
+        </div>
+
+        <form id="prediction-form" novalidate>
+          <div id="gp-display-wrap"></div>
+          <input type="hidden" id="f-gp" value="">
+
+          <!-- Banner de formulario cerrado -->
+          <div id="form-locked-banner" style="display:none; align-items:center; gap:14px; background:linear-gradient(135deg,rgba(232,0,45,0.1),rgba(232,0,45,0.04)); border:1px solid rgba(232,0,45,0.3); border-left:3px solid var(--f1-red); border-radius:10px; padding:16px; margin-bottom:16px;">
+            <span style="font-size:2rem; flex-shrink:0;">🔒</span>
+            <div>
+              <div style="font-family:var(--font-display); font-size:0.65rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--f1-red); margin-bottom:4px;">PRONÓSTICOS CERRADOS</div>
+              <div class="locked-msg" style="font-size:0.95rem; font-weight:600; color:var(--white);">⚡ Qualy en curso — pronósticos cerrados</div>
+            </div>
+          </div>
+
+          <div id="form-fields-wrap">
+            <div class="form-field">
+              <label class="field-label required">👤 NOMBRE DE JUGADOR</label>
+              <input type="text" id="f-player" class="field-input" placeholder="Tu nombre..." maxlength="24" autocomplete="off" spellcheck="false">
+            </div>
+
+            <div class="form-divider"><span>CLASIFICACIÓN & CARRERA</span></div>
+
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label class="field-label required"><span class="label-icon">⚡</span> POLE POSITION <span class="pts-tag">+5 pts</span></label>
+                <select id="f-pole" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label required"><span class="label-icon">🏆</span> GANADOR DEL GP <span class="pts-tag">+10 pts</span></label>
+                <select id="f-winner" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+            </div>
+
+            <div class="form-divider"><span>PODIO COMPLETO</span></div>
+            <div class="podio-note">⚠️ Los tres pilotos deben ser distintos · Podio exacto completo: <strong>+20 pts bonus</strong> · Cada posición exacta: <strong>+5 pts</strong> · Piloto en podio, posición incorrecta: <strong>+3 pts</strong></div>
+
+            <div class="podio-grid">
+              <div class="podio-card podio-gold"><div class="podio-rank-bar"><span class="podio-trophy">🥇</span><span class="podio-rank-label">1° LUGAR</span><span class="podio-pts-badge">+5 pts</span></div><select id="f-p1" class="field-select podio-select podio-select-gold"><option value="">— Piloto —</option></select></div>
+              <div class="podio-card podio-silver"><div class="podio-rank-bar"><span class="podio-trophy">🥈</span><span class="podio-rank-label">2° LUGAR</span><span class="podio-pts-badge">+5 pts</span></div><select id="f-p2" class="field-select podio-select podio-select-silver"><option value="">— Piloto —</option></select></div>
+              <div class="podio-card podio-bronze"><div class="podio-rank-bar"><span class="podio-trophy">🥉</span><span class="podio-rank-label">3° LUGAR</span><span class="podio-pts-badge">+5 pts</span></div><select id="f-p3" class="field-select podio-select podio-select-bronze"><option value="">— Piloto —</option></select></div>
+            </div>
+
+            <div class="form-divider"><span>DETALLES DE CARRERA</span></div>
+
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label class="field-label required"><span class="label-icon">⏱</span> VUELTA RÁPIDA <span class="pts-tag">+5 pts</span></label>
+                <select id="f-fl" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label required"><span class="label-icon">⭐</span> PILOTO DEL DÍA <span class="pts-tag">+5 pts</span></label>
+                <select id="f-dotd" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label class="field-label required"><span class="label-icon">🔧</span> PIT STOP MÁS RÁPIDO <span class="pts-tag">+5 pts</span></label>
+                <select id="f-pit" class="field-select"><option value="">— Equipo —</option></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label required"><span class="label-icon">💥</span> DNF <span class="pts-tag">+8 pts</span></label>
+                <select id="f-dnf" class="field-select"><option value="">— Piloto / Sin DNF —</option></select>
+              </div>
+            </div>
+
+            <div id="form-error" class="form-error" style="display:none;"></div>
+
+            <!-- Sprint Section -->
+            <div id="sprint-section" style="display:none;">
+              <div class="form-divider sprint-divider"><span>⚡ CARRERA SPRINT</span></div>
+              <div class="sprint-banner">
+                <span class="sprint-banner-icon">🟣</span>
+                <div>
+                  <div class="sprint-banner-title">FIN DE SEMANA CON SPRINT</div>
+                  <div class="sprint-banner-sub">Este GP incluye una carrera Sprint. Pronosticá los resultados adicionales.</div>
+                </div>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-field">
+                  <label class="field-label required"><span class="label-icon">🟣</span> POLE DE LA SPRINT <span class="pts-tag">+3 pts</span></label>
+                  <select id="f-sprint-pole" class="field-select"><option value="">— Piloto —</option></select>
+                </div>
+                <div class="form-field">
+                  <label class="field-label required"><span class="label-icon">🏎</span> GANADOR DE LA SPRINT <span class="pts-tag">+5 pts</span></label>
+                  <select id="f-sprint-winner" class="field-select"><option value="">— Piloto —</option></select>
+                </div>
+              </div>
+            </div>
+          </div><!-- /form-fields-wrap -->
+
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-full">
+            <span class="btn-flag">🏁</span>
+            ENVIAR PRONÓSTICO
+          </button>
+        </form>
+      </div>
+
+      <!-- Summary Card -->
+      <div class="card card-summary" id="summary-card" style="display:none;">
+        <div class="card-header">
+          <div class="card-title success-title">✅ PRONÓSTICO REGISTRADO</div>
+          <div class="card-subtitle">Guardado correctamente. Compartilo con el grupo.</div>
+        </div>
+        <div id="summary-content"></div>
+        <div class="summary-actions">
+          <button class="btn btn-primary" onclick="copySummary()">📋 COPIAR AL PORTAPAPELES</button>
+          <p style="text-align:center;font-size:0.82rem;color:rgba(255,255,255,0.25);margin-top:8px;font-style:italic;">¿Querés modificar? Contactá al administrador.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======== VIEW: TABLAS ======== -->
+  <section class="view" id="view-tablas">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">CLASIFICACIÓN</div>
+        <div class="section-title-text">TABLA DE PUNTOS</div>
+      </div>
+      <div class="gp-tabs-wrapper">
+        <div class="gp-tabs" id="gp-tabs">
+          <button class="gp-tab active" data-tab="general">GENERAL</button>
+          <button class="gp-tab tab-profile" data-tab="profile">👤 MI PERFIL</button>
+        </div>
+      </div>
+      <div id="tabla-content">
+        <div class="empty-state">
+          <div class="empty-icon">🏆</div>
+          <div class="empty-title">Sin datos aún</div>
+          <div class="empty-text">Los puntos aparecerán cuando el admin cargue los resultados</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== VIEW: ADMIN ======== -->
+  <section class="view" id="view-admin">
+    <div class="container">
+
+      <div id="admin-login" class="card admin-login-card">
+        <div class="admin-login-icon">🔐</div>
+        <div class="card-title">PANEL ADMIN</div>
+        <div class="card-subtitle">Acceso restringido</div>
+        <div class="form-field">
+          <input type="password" id="admin-password" class="field-input" placeholder="Contraseña..." onkeydown="if(event.key==='Enter')adminLogin()">
+        </div>
+        <button class="btn btn-primary" onclick="adminLogin()">INGRESAR</button>
+        <div id="login-error" class="form-error" style="display:none;">Contraseña incorrecta</div>
+      </div>
+
+      <div id="admin-panel" style="display:none;">
+        <div class="admin-header">
+          <div class="section-title-text">PANEL ADMIN</div>
+          <div style="display:flex;gap:8px;">
+            <button id="btn-refresh" class="btn btn-ghost btn-sm" onclick="adminRefresh()">🔄 Actualizar</button>
+            <button class="btn btn-ghost btn-sm" onclick="adminLogout()">Salir</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">CONFIGURACIÓN DE FECHA</div>
+          <div class="form-field">
+            <label class="field-label">GP ACTIVO</label>
+            <select id="admin-active-gp" class="field-select" onchange="saveActiveGP()">
+              <option value="">— Seleccionar GP —</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="field-label">CONTRASEÑA ADMIN</label>
+            <div style="display:flex;gap:8px;">
+              <input type="password" id="admin-new-password" class="field-input" placeholder="Nueva contraseña...">
+              <button class="btn btn-secondary btn-sm" onclick="changePassword()">Cambiar</button>
+            </div>
+          </div>
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);">
+            <label class="field-label">🗑️ RESETEAR PRONÓSTICO LOCAL</label>
+            <p style="font-size:0.82rem;color:var(--white-muted);margin:6px 0 10px;">Borra el pronóstico guardado en <strong>este dispositivo</strong> para poder volver a enviar.</p>
+            <button class="btn btn-secondary btn-full" onclick="localStorage.removeItem('f1prode_saved_pred_2026');showToast('🗑️ Pronóstico local borrado');location.reload();">🗑️ Borrar mi pronóstico guardado</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">PRONÓSTICOS RECIBIDOS</div>
+          <div id="admin-predictions-list"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">RESULTADOS OFICIALES</div>
+          <div class="form-field">
+            <label class="field-label">GP</label>
+            <select id="result-gp-select" class="field-select" onchange="loadResultForm()">
+              <option value="">— Seleccionar GP —</option>
+            </select>
+          </div>
+          <div id="result-form" style="display:none;">
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label class="field-label">⚡ POLE POSITION</label>
+                <select id="res-pole" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">🏆 GANADOR</label>
+                <select id="res-winner" class="field-select"><option value="">— Piloto —</option></select>
+              </div>
+            </div>
+            <div class="podio-grid">
+              <div class="form-field"><label class="field-label" style="text-align:center;display:flex;justify-content:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--gold);color:#000;font-family:var(--font-display);font-size:0.85rem;font-weight:900;margin-bottom:4px;">1°</span></label><select id="res-p1" class="field-select podio-select" onchange="updateResultPodioDuplicates()"><option value="">— Piloto —</option></select></div>
+              <div class="form-field"><label class="field-label" style="text-align:center;display:flex;justify-content:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--silver);color:#000;font-family:var(--font-display);font-size:0.85rem;font-weight:900;margin-bottom:4px;">2°</span></label><select id="res-p2" class="field-select podio-select" onchange="updateResultPodioDuplicates()"><option value="">— Piloto —</option></select></div>
+              <div class="form-field"><label class="field-label" style="text-align:center;display:flex;justify-content:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--bronze);color:#fff;font-family:var(--font-display);font-size:0.85rem;font-weight:900;margin-bottom:4px;">3°</span></label><select id="res-p3" class="field-select podio-select" onchange="updateResultPodioDuplicates()"><option value="">— Piloto —</option></select></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-field"><label class="field-label">⏱ VUELTA RÁPIDA</label><select id="res-fl" class="field-select"><option value="">— Piloto —</option></select></div>
+              <div class="form-field"><label class="field-label">⭐ PILOTO DEL DÍA</label><select id="res-dotd" class="field-select"><option value="">— Piloto —</option></select></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-field"><label class="field-label">🔧 PIT STOP MÁS RÁPIDO</label><select id="res-pit" class="field-select"><option value="">— Equipo —</option></select></div>
+              <div class="form-field">
+                <label class="field-label">💥 DNF <span style="font-size:0.65rem;font-weight:400;color:var(--white-muted);letter-spacing:0;">(seleccioná todos los que abandonaron)</span></label>
+                <div id="res-dnf-wrap" style="background:var(--black-2);border:1px solid var(--card-border);border-radius:var(--radius);padding:8px;max-height:180px;overflow-y:auto;"></div>
+                <div style="margin-top:6px;display:flex;gap:8px;">
+                  <button type="button" onclick="toggleNoDNF()" id="btn-no-dnf" class="btn btn-secondary btn-sm">✅ Sin abandonos</button>
+                  <span id="dnf-count-label" style="font-size:0.78rem;color:var(--white-muted);align-self:center;"></span>
+                </div>
+              </div>
+            </div>
+            <div id="admin-sprint-section" style="display:none;">
+              <div class="form-divider sprint-divider"><span>⚡ CARRERA SPRINT</span></div>
+              <div class="form-grid-2">
+                <div class="form-field"><label class="field-label">🟣 POLE DE LA SPRINT</label><select id="res-sprint-pole" class="field-select"><option value="">— Piloto —</option></select></div>
+                <div class="form-field"><label class="field-label">🏎 GANADOR DE LA SPRINT</label><select id="res-sprint-winner" class="field-select"><option value="">— Piloto —</option></select></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="saveResults()">💾 GUARDAR & CALCULAR PUNTOS</button>
+              <button class="btn btn-danger" onclick="resetRace()">🗑 RESETEAR FECHA</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">PUNTOS POR GP</div>
+          <div id="admin-points-summary"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<!-- ── BOTTOM NAV ─────────────────────────────────────────── -->
+<nav id="main-nav">
+  <button class="nav-btn active" data-view="pronostico"><span class="nav-icon">🏁</span><span class="nav-label">Pronóstico</span></button>
+  <button class="nav-btn" data-view="tablas"><span class="nav-icon">📊</span><span class="nav-label">Tablas</span></button>
+  <button class="nav-btn" id="nav-btn-admin" data-view="admin"><span class="nav-icon">⚙️</span><span class="nav-label">Admin</span></button>
+</nav>
+
+<script>
+// ============================================================
+// F1 PRODE — DATA 2026
+// ============================================================
+
+const CIRCUIT_STATS = {
+  // Datos verificados de la temporada 2025 (fuente: formula1.com, gpracingstats.com, Wikipedia)
+  'aus26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Lando Norris',      lastPodium:'Norris · Verstappen · Russell',   fact:'Único circuito con muro de boxes permanente en el calendario.' },
+  'chn26':  { lastPole:'Oscar Piastri',   lastWinner:'Oscar Piastri',    lastFastest:'Lando Norris',      lastPodium:'Piastri · Norris · Russell',       fact:'Volvió al calendario en 2024 tras 5 años de ausencia.' },
+  'jpn26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Kimi Antonelli',    lastPodium:'Verstappen · Norris · Piastri',    fact:'Suzuka es el único circuito con forma de figura 8 en F1.' },
+  'bhr26':  { lastPole:'Oscar Piastri',   lastWinner:'Oscar Piastri',    lastFastest:'Oscar Piastri',     lastPodium:'Piastri · Russell · Norris',       fact:'El único circuito nocturno permanente del calendario.' },
+  'sau26':  { lastPole:'Max Verstappen',  lastWinner:'Oscar Piastri',    lastFastest:'Lando Norris',      lastPodium:'Piastri · Verstappen · Leclerc',  fact:'La recta de Corniche es una de las más largas de la F1.' },
+  'mia26':  { lastPole:'Max Verstappen',  lastWinner:'Oscar Piastri',    lastFastest:'Lando Norris',      lastPodium:'Piastri · Norris · Russell',       fact:'Circuito urbano construido alrededor del estadio Hard Rock.' },
+  'can26':  { lastPole:'George Russell',  lastWinner:'George Russell',   lastFastest:'George Russell',    lastPodium:'Russell · Verstappen · Antonelli', fact:'El Muro de los Campeones en la chicane final cobra víctimas cada año.' },
+  'mon26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Lando Norris',      lastPodium:'Norris · Leclerc · Piastri',       fact:'Se introdujo la estrategia de dos paradas obligatorias en 2025.' },
+  'esp26':  { lastPole:'Oscar Piastri',   lastWinner:'Oscar Piastri',    lastFastest:'Oscar Piastri',     lastPodium:'Piastri · Norris · Leclerc',       fact:'El Circuit de Barcelona-Catalunya es el favorito para pruebas aerodinámicas.' },
+  'aut26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Oscar Piastri',     lastPodium:'Norris · Piastri · Leclerc',       fact:'El Red Bull Ring es el circuito más corto del campeonato.' },
+  'gbr26':  { lastPole:'Max Verstappen',  lastWinner:'Lando Norris',     lastFastest:'Oscar Piastri',     lastPodium:'Norris · Piastri · Hülkenberg',    fact:'Silverstone albergó el primer GP de F1 de la historia en 1950.' },
+  'bel26':  { lastPole:'Lando Norris',    lastWinner:'Oscar Piastri',    lastFastest:'Kimi Antonelli',    lastPodium:'Piastri · Norris · Leclerc',       fact:'Spa-Francorchamps es el circuito más largo del calendario.' },
+  'hun26':  { lastPole:'Charles Leclerc', lastWinner:'Lando Norris',     lastFastest:'George Russell',    lastPodium:'Norris · Piastri · Russell',       fact:'Norris ganó en Hungría por primera vez en 2025 con estrategia de una parada.' },
+  'ned26':  { lastPole:'Oscar Piastri',   lastWinner:'Oscar Piastri',    lastFastest:'Oscar Piastri',     lastPodium:'Piastri · Verstappen · Hadjar',    fact:'Zandvoort tiene la banked curva 3 — única en la Fórmula 1.' },
+  'ita26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Lando Norris',      lastPodium:'Verstappen · Norris · Piastri',    fact:'Monza es el Templo de la Velocidad — el más rápido del año.' },
+  'mad26':  { lastPole:'—',               lastWinner:'—',                lastFastest:'—',                 lastPodium:'—',                                fact:'Nuevo GP de Madrid — debuta en 2026 en el recinto de IFEMA.' },
+  'aze26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',    lastPodium:'Verstappen · Russell · Norris',    fact:'El boulevard de Bakú tiene la segunda recta más larga del campeonato.' },
+  'sgp26':  { lastPole:'George Russell',  lastWinner:'George Russell',   lastFastest:'Lewis Hamilton',    lastPodium:'Russell · Norris · Piastri',       fact:'Singapur es el GP nocturno más físicamente exigente del año.' },
+  'usa26':  { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Kimi Antonelli',    lastPodium:'Verstappen · Russell · Leclerc',   fact:'COTA tiene una subida pronunciada antes de la curva 1 única en F1.' },
+  'mex26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'George Russell',    lastPodium:'Norris · Piastri · Verstappen',    fact:'Ciudad de México está a 2.285 metros de altitud sobre el mar.' },
+  'bra26':  { lastPole:'Lando Norris',    lastWinner:'Lando Norris',     lastFastest:'Alexander Albon',   lastPodium:'Norris · Antonelli · Russell',     fact:'Interlagos fue el escenario de las épicas batallas Senna–Prost.' },
+  'lv26':   { lastPole:'Lando Norris',    lastWinner:'Max Verstappen',   lastFastest:'Max Verstappen',    lastPodium:'Verstappen · Norris · Leclerc',    fact:'La recta del Strip pasa frente a los casinos más famosos del mundo.' },
+  'qat26':  { lastPole:'Oscar Piastri',   lastWinner:'Max Verstappen',   lastFastest:'Oscar Piastri',     lastPodium:'Verstappen · Piastri · Norris',    fact:'Losail es el único circuito de MotoGP reconvertido para F1.' },
+  'abud26': { lastPole:'Max Verstappen',  lastWinner:'Max Verstappen',   lastFastest:'Charles Leclerc',   lastPodium:'Verstappen · Leclerc · Russell',   fact:'Yas Marina cierra la temporada — se corre de noche desde 2009.' },
+};
+
+const DRIVERS_2026 = [
+  { name: 'Lando Norris',       flag: '🇬🇧' },
+  { name: 'Oscar Piastri',      flag: '🇦🇺' },
+  { name: 'George Russell',     flag: '🇬🇧' },
+  { name: 'Kimi Antonelli',     flag: '🇮🇹' },
+  { name: 'Max Verstappen',     flag: '🇳🇱' },
+  { name: 'Isack Hadjar',       flag: '🇫🇷' },
+  { name: 'Charles Leclerc',    flag: '🇲🇨' },
+  { name: 'Lewis Hamilton',     flag: '🇬🇧' },
+  { name: 'Alexander Albon',    flag: '🇹🇭' },
+  { name: 'Carlos Sainz',       flag: '🇪🇸' },
+  { name: 'Liam Lawson',        flag: '🇳🇿' },
+  { name: 'Arvid Lindblad',     flag: '🇸🇪' },
+  { name: 'Fernando Alonso',    flag: '🇪🇸' },
+  { name: 'Lance Stroll',       flag: '🇨🇦' },
+  { name: 'Pierre Gasly',       flag: '🇫🇷' },
+  { name: 'Franco Colapinto',   flag: '🇦🇷' },
+  { name: 'Esteban Ocon',       flag: '🇫🇷' },
+  { name: 'Oliver Bearman',     flag: '🇬🇧' },
+  { name: 'Nico Hülkenberg',    flag: '🇩🇪' },
+  { name: 'Gabriel Bortoleto',  flag: '🇧🇷' },
+  { name: 'Sergio Pérez',       flag: '🇲🇽' },
+  { name: 'Valtteri Bottas',    flag: '🇫🇮' },
+];
+
+const TEAMS_2026 = [
+  'McLaren','Mercedes','Red Bull','Ferrari','Williams',
+  'Racing Bulls','Aston Martin','Haas','Audi','Alpine','Cadillac',
+];
+
+const NO_DNF_OPTION = 'Sin abandonos';
+
+const RACES_2026 = [
+  { id: 'aus26',  round: 1,  name: 'Gran Premio de Australia',       short: 'Australia',      flag: '🇦🇺', date: '6–8 Mar',        circuit: 'Albert Park',                  qualy: '2026-03-07T04:00:00Z' },
+  { id: 'chn26',  round: 2,  name: 'Gran Premio de China',           short: 'China',          flag: '🇨🇳', date: '13–15 Mar',       circuit: 'Shanghai International',        qualy: '2026-03-14T07:00:00Z', sprint: true },
+  { id: 'jpn26',  round: 3,  name: 'Gran Premio de Japón',           short: 'Japón',          flag: '🇯🇵', date: '27–29 Mar',       circuit: 'Suzuka',                        qualy: '2026-03-28T06:00:00Z' },
+  { id: 'bhr26',  round: 4,  name: 'Gran Premio de Baréin',          short: 'Baréin',         flag: '🇧🇭', date: '10–12 Abr',       circuit: 'Sakhir',                        qualy: '2026-04-11T12:00:00Z' },
+  { id: 'sau26',  round: 5,  name: 'Gran Premio de Arabia Saudita',  short: 'Arabia Saudita', flag: '🇸🇦', date: '17–19 Abr',       circuit: 'Jeddah Corniche',               qualy: '2026-04-18T12:00:00Z' },
+  { id: 'mia26',  round: 6,  name: 'Gran Premio de Miami',           short: 'Miami',          flag: '🇺🇸', date: '1–3 May',         circuit: 'Miami International',           qualy: '2026-05-02T19:00:00Z', sprint: true },
+  { id: 'can26',  round: 7,  name: 'Gran Premio de Canadá',          short: 'Canadá',         flag: '🇨🇦', date: '22–24 May',       circuit: 'Gilles Villeneuve',             qualy: '2026-05-23T19:00:00Z', sprint: true },
+  { id: 'mon26',  round: 8,  name: 'Gran Premio de Mónaco',          short: 'Mónaco',         flag: '🇲🇨', date: '5–7 Jun',         circuit: 'Circuit de Monaco',             qualy: '2026-06-06T13:00:00Z' },
+  { id: 'esp26',  round: 9,  name: 'Gran Premio de España',          short: 'España',         flag: '🇪🇸', date: '12–14 Jun',       circuit: 'Circuit de Barcelona-Catalunya',qualy: '2026-06-13T13:00:00Z' },
+  { id: 'aut26',  round: 10, name: 'Gran Premio de Austria',         short: 'Austria',        flag: '🇦🇹', date: '26–28 Jun',       circuit: 'Red Bull Ring',                 qualy: '2026-06-27T13:00:00Z' },
+  { id: 'gbr26',  round: 11, name: 'Gran Premio de Gran Bretaña',    short: 'Gran Bretaña',   flag: '🇬🇧', date: '3–5 Jul',         circuit: 'Silverstone',                   qualy: '2026-07-04T14:00:00Z', sprint: true },
+  { id: 'bel26',  round: 12, name: 'Gran Premio de Bélgica',         short: 'Bélgica',        flag: '🇧🇪', date: '17–19 Jul',       circuit: 'Spa-Francorchamps',             qualy: '2026-07-18T13:00:00Z' },
+  { id: 'hun26',  round: 13, name: 'Gran Premio de Hungría',         short: 'Hungría',        flag: '🇭🇺', date: '24–26 Jul',       circuit: 'Hungaroring',                   qualy: '2026-07-25T13:00:00Z' },
+  { id: 'ned26',  round: 14, name: 'Gran Premio de Países Bajos',    short: 'Países Bajos',   flag: '🇳🇱', date: '21–23 Ago',       circuit: 'Zandvoort',                     qualy: '2026-08-22T13:00:00Z', sprint: true },
+  { id: 'ita26',  round: 15, name: 'Gran Premio de Italia',          short: 'Italia',         flag: '🇮🇹', date: '4–6 Sep',         circuit: 'Monza',                         qualy: '2026-09-05T13:00:00Z' },
+  { id: 'mad26',  round: 16, name: 'Gran Premio de España (Madrid)', short: 'Madrid',         flag: '🇪🇸', date: '11–13 Sep',       circuit: 'Madring (Madrid)',               qualy: '2026-09-12T13:00:00Z' },
+  { id: 'aze26',  round: 17, name: 'Gran Premio de Azerbaiyán',      short: 'Azerbaiyán',     flag: '🇦🇿', date: '24–26 Sep',       circuit: 'Baku City Circuit',             qualy: '2026-09-26T11:00:00Z' },
+  { id: 'sgp26',  round: 18, name: 'Gran Premio de Singapur',        short: 'Singapur',       flag: '🇸🇬', date: '9–11 Oct',        circuit: 'Marina Bay',                    qualy: '2026-10-10T07:00:00Z', sprint: true },
+  { id: 'usa26',  round: 19, name: 'Gran Premio de EE.UU.',          short: 'EE.UU.',         flag: '🇺🇸', date: '23–25 Oct',       circuit: 'Circuit of the Americas',       qualy: '2026-10-24T20:00:00Z' },
+  { id: 'mex26',  round: 20, name: 'Gran Premio de México',          short: 'México',         flag: '🇲🇽', date: '30 Oct–1 Nov',    circuit: 'Hermanos Rodríguez',            qualy: '2026-10-31T20:00:00Z' },
+  { id: 'bra26',  round: 21, name: 'Gran Premio de Brasil',          short: 'Brasil',         flag: '🇧🇷', date: '6–8 Nov',         circuit: 'Interlagos',                    qualy: '2026-11-07T18:00:00Z' },
+  { id: 'lv26',   round: 22, name: 'Gran Premio de Las Vegas',       short: 'Las Vegas',      flag: '🇺🇸', date: '19–21 Nov',       circuit: 'Las Vegas Strip',               qualy: '2026-11-21T06:00:00Z' },
+  { id: 'qat26',  round: 23, name: 'Gran Premio de Catar',           short: 'Catar',          flag: '🇶🇦', date: '27–29 Nov',       circuit: 'Losail',                        qualy: '2026-11-28T12:00:00Z' },
+  { id: 'abud26', round: 24, name: 'Gran Premio de Abu Dabi',        short: 'Abu Dabi',       flag: '🇦🇪', date: '4–6 Dic',         circuit: 'Yas Marina',                    qualy: '2026-12-05T11:00:00Z' },
+];
+
+// FIX: alias para que todo el código interno use RACES_2026
+const RACES_2025 = RACES_2026;
+const DRIVERS_2025 = DRIVERS_2026;
+const TEAMS_2025 = TEAMS_2026;
+
+const POINTS_SYSTEM = {
+  pole: 5, winner: 10,
+  podio_exact: 20, p1_exact: 5, p2_exact: 5, p3_exact: 5,
+  podio_partial: 3,   // piloto en podio pero posición incorrecta
+  fastest_lap: 5, dotd: 5, pit_stop: 5, dnf: 8,
+  sprint_pole: 3, sprint_winner: 5,
+};
+
+// ─── API URL ──────────────────────────────────────────────────
+const API_URL = 'https://script.google.com/macros/s/AKfycbww3pUvG38u6K5-qvTJwABg7JNgdh4LggV4wMZzBj-agX14drz8QvJAEKVZG7sDPvs/exec';
+
+// ─── ESTADO ──────────────────────────────────────────────────
+let appState = {
+  activeGP: null,
+  predictions: [],
+  results: {},
+  points: {},
+};
+let isAdminLoggedIn = false;
+let adminPassword = 'f1prode';
+let currentSummaryText = '';
+let isSending = false;
+
+// ─── ADMIN MODE — oculto salvo ?admin=1 ──────────────────────
+function checkAdminMode() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('admin') === '1') {
+    document.getElementById('nav-btn-admin').style.display = '';
+    document.getElementById('admin-entry-hint').style.display = 'inline-block';
+  }
+}
+
+// ─── PUNTOS ──────────────────────────────────────────────────
+function calculatePointsForGP(gpId) {
+  const result = appState.results[gpId];
+  if (!result) return;
+  if (!appState.points[gpId]) appState.points[gpId] = {};
+  appState.predictions.filter(p => p.gpId === gpId).forEach(pred => {
+    const bd = {}; let total = 0;
+    const hit = (val, res, key, pts) => { if (val && val === res) { bd[key] = pts; total += pts; } };
+    hit(pred.pole,       result.pole,       'pole',       POINTS_SYSTEM.pole);
+    hit(pred.winner,     result.winner,     'winner',     POINTS_SYSTEM.winner);
+    hit(pred.p1,         result.p1,         'p1',         POINTS_SYSTEM.p1_exact);
+    hit(pred.p2,         result.p2,         'p2',         POINTS_SYSTEM.p2_exact);
+    hit(pred.p3,         result.p3,         'p3',         POINTS_SYSTEM.p3_exact);
+    // Podio parcial: piloto acertado pero en posición equivocada (+3 pts c/u)
+    const realPodium = [result.p1, result.p2, result.p3].filter(Boolean);
+    ['p1','p2','p3'].forEach(pos => {
+      if (pred[pos] && realPodium.includes(pred[pos]) && pred[pos] !== result[pos]) {
+        bd['partial_' + pos] = POINTS_SYSTEM.podio_partial;
+        total += POINTS_SYSTEM.podio_partial;
+      }
+    });
+    if (pred.p1 === result.p1 && pred.p2 === result.p2 && pred.p3 === result.p3) {
+      bd.podio_exact = POINTS_SYSTEM.podio_exact; total += POINTS_SYSTEM.podio_exact;
+    }
+    hit(pred.fastestLap, result.fastestLap, 'fastestLap', POINTS_SYSTEM.fastest_lap);
+    hit(pred.dotd,       result.dotd,       'dotd',       POINTS_SYSTEM.dotd);
+    hit(pred.pitStop,    result.pitStop,    'pitStop',    POINTS_SYSTEM.pit_stop);
+    // DNF: result.dnf puede ser lista separada por comas (múltiples abandonos)
+    if (pred.dnf && result.dnf && result.dnf !== NO_DNF_OPTION) {
+      const dnfList = result.dnf.split(',').map(s => s.trim());
+      if (dnfList.includes(pred.dnf)) { bd.dnf = POINTS_SYSTEM.dnf; total += POINTS_SYSTEM.dnf; }
+    }
+    if (result.sprintPole != null && result.sprintPole !== '') {
+      hit(pred.sprintPole,   result.sprintPole,   'sprintPole',   POINTS_SYSTEM.sprint_pole);
+      hit(pred.sprintWinner, result.sprintWinner, 'sprintWinner', POINTS_SYSTEM.sprint_winner);
+    }
+    appState.points[gpId][pred.player] = { total, breakdown: bd };
+  });
+}
+
+function recalcAllPoints() {
+  appState.points = {};
+  RACES_2026.forEach(r => { if (appState.results[r.id]) calculatePointsForGP(r.id); });
+}
+
+// ─── API ─────────────────────────────────────────────────────
+async function apiGet(params) {
+  if (!API_URL) throw new Error('NO_API');
+  const res = await fetch(API_URL + '?' + new URLSearchParams(params));
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+async function apiPost(body) {
+  if (!API_URL) throw new Error('NO_API');
+  const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(body) });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+// ─── CARGAR DATOS + CACHÉ LOCALSTROAGE ───────────────────────
+const LS_CACHE_KEY = 'f1prode_cache_2026';
+const LS_SAVED_KEY = 'f1prode_saved_pred_2026';
+
+function saveCacheLocal(data) {
+  try { localStorage.setItem(LS_CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e) {}
+}
+function loadCacheLocal() {
+  try {
+    const raw = localStorage.getItem(LS_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    // Cache válido por 10 minutos
+    if (Date.now() - parsed.ts > 600000) return null;
+    return parsed.data;
+  } catch(e) { return null; }
+}
+
+// Guardar pronóstico del jugador actual en localStorage
+function saveLastPredLocal(pred) {
+  try { localStorage.setItem(LS_SAVED_KEY, JSON.stringify(pred)); } catch(e) {}
+}
+function loadLastPredLocal() {
+  try { const r = localStorage.getItem(LS_SAVED_KEY); return r ? JSON.parse(r) : null; } catch(e) { return null; }
+}
+
+async function loadFromSheets() {
+  showConnectionStatus('loading');
+  // Intentar con caché primero para mostrar datos rápido
+  const cached = loadCacheLocal();
+  if (cached) {
+    applySheetData(cached);
+    showConnectionStatus('ok');
+  }
+  try {
+    const data = await apiGet({ action: 'getAll' });
+    applySheetData(data);
+    saveCacheLocal(data);
+    showConnectionStatus('ok');
+    return true;
+  } catch(e) {
+    if (!cached) {
+      if (e.message === 'NO_API') showConnectionStatus('no-api');
+      else showConnectionStatus('error', e.message);
+    }
+    return false;
+  }
+}
+
+function applySheetData(data) {
+  appState.predictions = Array.isArray(data.predictions) ? data.predictions : [];
+  appState.results     = data.results  || {};
+  appState.activeGP    = (data.config && data.config.activeGP) || null;
+  adminPassword        = (data.config && data.config.adminPassword) || 'f1prode';
+  recalcAllPoints();
+  // Reconstruir UI con el GP activo correcto (countdown, lock, badge)
+  setTimeout(() => lockGPSelector(), 0);
+}
+
+function showConnectionStatus(state, msg) {
+  let bar = document.getElementById('conn-bar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'conn-bar';
+    document.body.prepend(bar);
+  }
+  const states = {
+    loading:  { cls: 'conn-loading', text: '⏳ Conectando con la base de datos...' },
+    ok:       { cls: 'conn-ok',      text: '✅ Conectado — datos compartidos activos', hide: 3000 },
+    'no-api': { cls: 'conn-warn',    text: '⚠️ Sin API configurada. Pegá la URL del script en el HTML.' },
+    error:    { cls: 'conn-error',   text: '❌ Error de conexión: ' + (msg || '') },
+  };
+  const s = states[state] || states.error;
+  bar.className = 'conn-bar ' + s.cls;
+  bar.textContent = s.text;
+  bar.style.display = 'block';
+  if (s.hide) setTimeout(() => bar.style.display = 'none', s.hide);
+}
+
+// ─── TOAST ───────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, duration = 3500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ─── LOADER — FIX: una sola función limpia ───────────────────
+function hideLoader() {
+  var l = document.getElementById('loader');
+  if (l) { l.classList.add('hidden'); }
+}
+
+// ─── NAV ─────────────────────────────────────────────────────
+function initNav() {
+  document.querySelectorAll('.nav-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { showView(btn.dataset.view); });
+  });
+}
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const vEl = document.getElementById('view-' + name);
+  if (vEl) vEl.classList.add('active');
+  const bEl = document.querySelector('[data-view="' + name + '"]');
+  if (bEl) bEl.classList.add('active');
+  if (name === 'tablas') renderTablas();
+  if (name === 'admin')  renderAdminPanel();
+}
+
+// ─── COUNTDOWN ───────────────────────────────────────────────
+var _cdInterval = null;
+function startCountdown(qualyUtc, gpId) {
+  if (_cdInterval) clearInterval(_cdInterval);
+  var wrap  = document.getElementById('qualy-countdown');
+  var units = document.getElementById('cd-units');
+  if (!wrap) return;
+  if (!qualyUtc) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'flex';
+
+  function lockForm(msg) {
+    // Solo bloquear si este sigue siendo el GP activo
+    if (gpId && appState.activeGP !== gpId) return;
+    var submitBtn = document.getElementById('submit-btn');
+    var formFields = document.getElementById('form-fields-wrap');
+    var lockedBanner = document.getElementById('form-locked-banner');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.4'; submitBtn.style.pointerEvents = 'none'; submitBtn.dataset.qualyLocked = '1'; }
+    if (formFields) { formFields.querySelectorAll('select, input, button:not(#submit-btn)').forEach(el => { el.disabled = true; }); }
+    if (lockedBanner) { lockedBanner.style.display = 'flex'; lockedBanner.dataset.qualyLocked = '1'; lockedBanner.querySelector('.locked-msg').textContent = msg; }
+  }
+
+  function tick() {
+    var now    = Date.now();
+    var target = new Date(qualyUtc).getTime();
+    var diff   = target - now;
+    if (diff <= 0 && diff > -7200000) {
+      units.innerHTML = '<span class="cd-live">⚡ QUALY EN VIVO</span>';
+      lockForm('⚡ Qualy en curso — pronósticos cerrados');
+      return;
+    }
+    if (diff <= -7200000) {
+      units.innerHTML = '<span class="cd-done">QUALY FINALIZADA</span>';
+      lockForm('🏁 Qualy finalizada — pronósticos cerrados');
+      clearInterval(_cdInterval); return;
+    }
+    var days  = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var mins  = Math.floor((diff % 3600000) / 60000);
+    var secs  = Math.floor((diff % 60000) / 1000);
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    document.getElementById('cd-days').textContent  = days;
+    document.getElementById('cd-hours').textContent = pad(hours);
+    document.getElementById('cd-mins').textContent  = pad(mins);
+    document.getElementById('cd-secs').textContent  = pad(secs);
+  }
+  tick();
+  _cdInterval = setInterval(tick, 1000);
+}
+
+// ─── CIRCUIT STATS ───────────────────────────────────────────
+function renderCircuitStats(gpId) {
+  var wrap  = document.getElementById('circuit-stats-wrap');
+  if (!wrap) return;
+  var stats = CIRCUIT_STATS[gpId];
+  var race  = RACES_2026.find(r => r.id === gpId);
+  if (!stats || !race) { wrap.innerHTML = ''; wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  wrap.innerHTML =
+    '<div class="circ-card">' +
+      '<div class="circ-title">' + race.flag + ' Estadísticas · ' + race.circuit + '</div>' +
+      '<div class="circ-grid">' +
+        '<div class="circ-item"><div class="circ-icon">⚡</div><div class="circ-lbl">Última Pole</div><div class="circ-val">' + stats.lastPole + '</div></div>' +
+        '<div class="circ-item"><div class="circ-icon">🏆</div><div class="circ-lbl">Último Ganador</div><div class="circ-val">' + stats.lastWinner + '</div></div>' +
+        '<div class="circ-item"><div class="circ-icon">⏱</div><div class="circ-lbl">Vuelta Rápida</div><div class="circ-val">' + stats.lastFastest + '</div></div>' +
+        '<div class="circ-item circ-wide"><div class="circ-icon">🥇</div><div class="circ-lbl">Último Podio</div><div class="circ-val">' + stats.lastPodium + '</div></div>' +
+      '</div>' +
+      '<div class="circ-fact">💡 ' + stats.fact + '</div>' +
+    '</div>';
+}
+
+// ─── BANNER ──────────────────────────────────────────────────
+function updateBanner() {
+  var race = RACES_2026.find(r => r.id === appState.activeGP);
+  var el = id => document.getElementById(id);
+  if (!race) {
+    if (el('banner-round'))   el('banner-round').textContent = '—';
+    if (el('banner-name'))    el('banner-name').textContent  = 'Sin GP activo';
+    if (el('banner-flag'))    el('banner-flag').textContent  = '🏁';
+    if (el('banner-circuit')) el('banner-circuit').textContent = '';
+    if (el('banner-date'))    el('banner-date').textContent  = '';
+    return;
+  }
+  if (el('banner-round'))   el('banner-round').textContent   = race.round;
+  if (el('banner-name'))    el('banner-name').textContent    = race.name;
+  if (el('banner-flag'))    el('banner-flag').textContent    = race.flag;
+  if (el('banner-circuit')) el('banner-circuit').textContent = race.circuit + ' ·';
+  if (el('banner-date'))    el('banner-date').textContent    = race.date;
+}
+
+// ─── SELECTS ─────────────────────────────────────────────────
+function driverOptions(sel) {
+  sel = sel || '';
+  return DRIVERS_2026.map(d =>
+    `<option value="${d.name}"${d.name === sel ? ' selected' : ''}>${d.flag} ${d.name}</option>`
+  ).join('');
+}
+
+function teamOptions(sel = '') {
+  return TEAMS_2026.map(t => `<option value="${t}"${t === sel ? ' selected' : ''}>${t}</option>`).join('');
+}
+
+function populateGPSelect(id, sel = '') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '<option value="">— Seleccioná el GP —</option>' +
+    RACES_2026.map(r =>
+      `<option value="${r.id}"${r.id === sel ? ' selected' : ''}>${r.flag} R${r.round} — ${r.short} (${r.date})${r.sprint ? ' ⚡ SPRINT' : ''}</option>`
+    ).join('');
+}
+
+function populateFormSelects() {
+  ['f-pole','f-winner','f-p1','f-p2','f-p3','f-fl','f-dotd','f-sprint-pole','f-sprint-winner',
+   'res-pole','res-winner','res-p1','res-p2','res-p3','res-fl','res-dotd','res-sprint-pole','res-sprint-winner']
+    .forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = '<option value="">— Piloto —</option>' + driverOptions();
+    });
+  const dnf = document.getElementById('f-dnf');
+  if (dnf) dnf.innerHTML = `<option value="">— Piloto / Sin DNF —</option><option value="${NO_DNF_OPTION}">${NO_DNF_OPTION}</option>` + driverOptions();
+  const pit = document.getElementById('f-pit');
+  if (pit) pit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions();
+  const rpit = document.getElementById('res-pit');
+  if (rpit) rpit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions();
+  const rdnf = document.getElementById('res-dnf');
+  if (rdnf) rdnf.innerHTML = `<option value="">—</option><option value="${NO_DNF_OPTION}">${NO_DNF_OPTION}</option>` + driverOptions();
+  populateGPSelect('f-gp', appState.activeGP || '');
+  updateSprintFields();
+}
+
+function lockGPSelector() {
+  // Limpiar todos los locks del GP anterior antes de evaluar el nuevo
+  unlockFormSubmit();
+  var hidden = document.getElementById('f-gp');
+  var wrap   = document.getElementById('gp-display-wrap');
+  var fields = document.getElementById('form-fields-wrap');
+  if (!wrap) return;
+  var race = RACES_2026.find(r => r.id === appState.activeGP);
+  if (race) {
+    var sprint = race.sprint
+      ? '<span style="background:#8B5CF6;color:#fff;font-size:0.6rem;font-family:var(--font-display);font-weight:800;letter-spacing:1px;padding:2px 7px;border-radius:3px;text-transform:uppercase;margin-left:6px;">⚡ SPRINT</span>'
+      : '';
+    wrap.innerHTML = `<div class="gp-locked-banner"><div class="gp-locked-icon">${race.flag}</div><div><div class="gp-locked-label">GP ACTIVO${sprint}</div><div class="gp-locked-name">${race.name}</div><div class="gp-locked-date">📅 ${race.date} · ${race.circuit}</div></div></div>`;
+    if (hidden) hidden.value = race.id;
+    if (fields) fields.style.display = 'block';
+    // Mostrar badge persistente si ya existe un pronóstico guardado
+    showSavedBadgeIfExists(race.id);
+  } else {
+    wrap.innerHTML = `<div class="no-gp-banner"><div class="no-gp-icon">🏁</div><div class="no-gp-title">Sin GP activo</div><div class="no-gp-sub">El admin todavía no activó ningún GP.<br>Volvé cuando se acerque la fecha de carrera.</div></div>`;
+    if (hidden) hidden.value = '';
+    if (fields) fields.style.display = 'none';
+    hideSavedBadge();
+  }
+  updateBanner();
+  updateSprintFields();
+  renderCircuitStats(appState.activeGP || '');
+  var _race = RACES_2026.find(r => r.id === appState.activeGP);
+  startCountdown(_race ? _race.qualy : null, appState.activeGP);
+}
+
+// ─── BADGE PERSISTENTE ───────────────────────────────────────
+function showSavedBadgeIfExists(gpId) {
+  const saved = loadLastPredLocal();
+  const badgeWrap = document.getElementById('saved-badge-wrap');
+  const badgeDetail = document.getElementById('saved-badge-detail');
+  if (saved && saved.gpId === gpId) {
+    const time = new Date(saved.timestamp).toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'});
+    if (badgeDetail) badgeDetail.textContent = `${saved.player} · enviado a las ${time}`;
+    if (badgeWrap) badgeWrap.style.display = 'block';
+    // Bloquear el formulario — ya hay un pronóstico enviado para este GP
+    lockFormAlreadySubmitted(saved);
+  } else {
+    hideSavedBadge();
+    unlockFormSubmit();
+  }
+}
+
+function lockFormAlreadySubmitted(saved) {
+  var submitBtn  = document.getElementById('submit-btn');
+  var formFields = document.getElementById('form-fields-wrap');
+  var lockedBanner = document.getElementById('form-locked-banner');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.4'; submitBtn.style.pointerEvents = 'none'; }
+  if (formFields) { formFields.querySelectorAll('select, input').forEach(el => { el.disabled = true; }); }
+  if (lockedBanner) {
+    lockedBanner.style.display = 'flex';
+    const msg = lockedBanner.querySelector('.locked-msg');
+    const time = new Date(saved.timestamp).toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'});
+    if (msg) msg.innerHTML = `✅ Ya enviaste tu pronóstico como <strong>${saved.player}</strong> a las ${time} &nbsp;<button onclick="showSummaryFromSaved()" style="background:var(--f1-red);color:#fff;border:none;border-radius:4px;padding:4px 10px;font-family:var(--font-display);font-size:0.7rem;font-weight:800;letter-spacing:1px;cursor:pointer;margin-left:6px;">VER PRONÓSTICO</button>`;
+  }
+}
+
+function unlockFormSubmit() {
+  var submitBtn    = document.getElementById('submit-btn');
+  var formFields   = document.getElementById('form-fields-wrap');
+  var lockedBanner = document.getElementById('form-locked-banner');
+  if (submitBtn) {
+    delete submitBtn.dataset.qualyLocked;
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '';
+    submitBtn.style.pointerEvents = '';
+  }
+  if (formFields) {
+    formFields.querySelectorAll('select, input').forEach(el => { el.disabled = false; });
+  }
+  if (lockedBanner) {
+    delete lockedBanner.dataset.qualyLocked;
+    lockedBanner.style.display = 'none';
+  }
+}
+function hideSavedBadge() {
+  const badgeWrap = document.getElementById('saved-badge-wrap');
+  if (badgeWrap) badgeWrap.style.display = 'none';
+}
+
+function updatePodioDuplicates() {
+  var ids  = ['f-p1','f-p2','f-p3'];
+  var vals = ids.map(id => { var e = document.getElementById(id); return e ? e.value : ''; });
+  // Deshabilitar duplicados entre campos de podio
+  ids.forEach((id, i) => {
+    var sel = document.getElementById(id); if (!sel) return;
+    var others = vals.filter((v, j) => j !== i && v);
+    Array.from(sel.options).forEach(opt => {
+      if (!opt.value) return;
+      opt.disabled = others.includes(opt.value);
+    });
+  });
+  // Excluir del DNF a los pilotos ya elegidos en el podio
+  var podioDrivers = vals.filter(v => v);
+  var dnfSel = document.getElementById('f-dnf');
+  if (!dnfSel) return;
+  Array.from(dnfSel.options).forEach(opt => {
+    if (!opt.value || opt.value === NO_DNF_OPTION) return;
+    opt.disabled = podioDrivers.includes(opt.value);
+  });
+  // Si el valor actual del DNF quedó inválido, resetearlo
+  if (dnfSel.value && dnfSel.value !== NO_DNF_OPTION && podioDrivers.includes(dnfSel.value)) {
+    dnfSel.value = '';
+  }
+}
+
+function updateSprintFields() {
+  var gpId = document.getElementById('f-gp') ? document.getElementById('f-gp').value : '';
+  var race = RACES_2026.find(r => r.id === gpId);
+  var sec  = document.getElementById('sprint-section');
+  if (!sec) return;
+  if (race && race.sprint) {
+    sec.style.display = 'block';
+  } else {
+    sec.style.display = 'none';
+    ['f-sprint-pole','f-sprint-winner'].forEach(id => { var e = document.getElementById(id); if (e) e.value = ''; });
+  }
+}
+
+// ─── VALIDACIÓN ──────────────────────────────────────────────
+function validateForm() {
+  document.querySelectorAll('#prediction-form .field-input, #prediction-form .field-select')
+    .forEach(el => el.classList.remove('error'));
+  const errEl = document.getElementById('form-error');
+  errEl.style.display = 'none';
+
+  var gpId = document.getElementById('f-gp') ? document.getElementById('f-gp').value : '';
+  var race = RACES_2026.find(r => r.id === gpId);
+  const checks = [
+    { id:'f-gp',     label:'Gran Premio' },
+    { id:'f-player', label:'Tu nombre' },
+    { id:'f-pole',   label:'Pole position' },
+    { id:'f-winner', label:'Ganador' },
+    { id:'f-p1',     label:'1° lugar' },
+    { id:'f-p2',     label:'2° lugar' },
+    { id:'f-p3',     label:'3° lugar' },
+    { id:'f-fl',     label:'Vuelta rápida' },
+    { id:'f-dotd',   label:'Piloto del día' },
+    { id:'f-pit',    label:'Pit stop' },
+    { id:'f-dnf',    label:'DNF' },
+  ];
+  if (race && race.sprint) {
+    checks.push({ id:'f-sprint-pole',   label:'Pole Sprint' });
+    checks.push({ id:'f-sprint-winner', label:'Ganador Sprint' });
+  }
+  const missing = checks.filter(({ id }) => {
+    const el = document.getElementById(id);
+    const ok = el && el.value && el.value.trim();
+    if (!ok && el) el.classList.add('error');
+    return !ok;
+  }).map(c => c.label);
+
+  if (missing.length) {
+    errEl.innerHTML = `⚠️ Falta completar: <strong>${missing.join(', ')}</strong>`;
+    errEl.style.display = 'block';
+    const firstErr = document.querySelector('#prediction-form .error');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return false;
+  }
+
+  const podio = ['f-p1','f-p2','f-p3'].map(id => document.getElementById(id).value);
+  if (new Set(podio).size < 3) {
+    ['f-p1','f-p2','f-p3'].forEach(id => document.getElementById(id).classList.add('error'));
+    errEl.textContent = '⚠️ El podio no puede tener pilotos repetidos.';
+    errEl.style.display = 'block';
+    return false;
+  }
+  return true;
+}
+
+// ─── ENVIAR PRONÓSTICO ───────────────────────────────────────
+function initPredictionForm() {
+  const form = document.getElementById('prediction-form');
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (isSending || !validateForm()) return;
+
+    const gpId = document.getElementById('f-gp').value;
+    const race = RACES_2026.find(r => r.id === gpId);
+    const pred = {
+      id:           Date.now(),
+      timestamp:    new Date().toISOString(),
+      player:       document.getElementById('f-player').value.trim().toLowerCase().replace(/^\w/, c => c.toUpperCase()),
+      gpId,
+      pole:         document.getElementById('f-pole').value,
+      winner:       document.getElementById('f-winner').value,
+      p1:           document.getElementById('f-p1').value,
+      p2:           document.getElementById('f-p2').value,
+      p3:           document.getElementById('f-p3').value,
+      fastestLap:   document.getElementById('f-fl').value,
+      dotd:         document.getElementById('f-dotd').value,
+      pitStop:      document.getElementById('f-pit').value,
+      dnf:          document.getElementById('f-dnf').value,
+      sprintPole:   (race && race.sprint) ? document.getElementById('f-sprint-pole').value : '',
+      sprintWinner: (race && race.sprint) ? document.getElementById('f-sprint-winner').value : '',
+    };
+
+    isSending = true;
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spinner"></span> Enviando...';
+
+    try {
+      if (API_URL) {
+        await apiPost({ action: 'savePrediction', data: pred });
+      }
+      appState.predictions = appState.predictions.filter(
+        p => !(p.player.toLowerCase() === pred.player.toLowerCase() && p.gpId === pred.gpId)
+      );
+      appState.predictions.push(pred);
+      if (appState.results[gpId]) calculatePointsForGP(gpId);
+      // Guardar en localStorage para badge persistente
+      saveLastPredLocal(pred);
+      showSummary(pred);
+      showToast('✅ ¡Pronóstico enviado!');
+    } catch(err) {
+      showToast('❌ Error al enviar: ' + err.message);
+    } finally {
+      isSending = false;
+      btn.disabled = false;
+      btn.innerHTML = '<span class="btn-flag">🏁</span> ENVIAR PRONÓSTICO';
+    }
+  });
+  ['f-p1','f-p2','f-p3'].forEach(id => {
+    var e = document.getElementById(id);
+    if (e) e.addEventListener('change', updatePodioDuplicates);
+  });
+}
+
+// ─── RESUMEN ─────────────────────────────────────────────────
+function showSummary(pred) {
+  const race = RACES_2026.find(r => r.id === pred.gpId);
+  const rows = [
+    { icon:'⚡', label:'Pole Position',      val: pred.pole },
+    { icon:'🏆', label:'Ganador del GP',      val: pred.winner },
+    { icon:'🥇', label:'1° Lugar',            val: pred.p1 },
+    { icon:'🥈', label:'2° Lugar',            val: pred.p2 },
+    { icon:'🥉', label:'3° Lugar',            val: pred.p3 },
+    { icon:'⏱',  label:'Vuelta Rápida',       val: pred.fastestLap },
+    { icon:'⭐', label:'Piloto del Día',       val: pred.dotd },
+    { icon:'🔧', label:'Pit Stop más Rápido', val: pred.pitStop },
+    { icon:'💥', label:'DNF',                 val: pred.dnf },
+  ];
+  if (race && race.sprint && pred.sprintPole) {
+    rows.push({ icon:'🟣', label:'Pole Sprint',    val: pred.sprintPole });
+    rows.push({ icon:'🏎',  label:'Ganador Sprint', val: pred.sprintWinner });
+  }
+  const time = new Date().toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'});
+  const spBadge = (race && race.sprint)
+    ? ' <span style="background:#7B2FBE;color:#fff;font-size:0.6rem;padding:2px 7px;border-radius:3px;font-weight:800;vertical-align:middle;">SPRINT</span>' : '';
+
+  document.getElementById('summary-content').innerHTML = `
+    <div class="summary-header-info">
+      <div class="summary-player-name">${pred.player}</div>
+      <div class="summary-race-name">${race.flag} ${race.name}${spBadge}</div>
+      <div class="summary-timestamp">✅ Enviado a las ${time} · ${race.date}</div>
+    </div>
+    <div class="summary-rows">
+      ${rows.map(r => `<div class="summary-row">
+        <span class="summary-row-label">${r.icon} ${r.label}</span>
+        <span class="summary-row-val">${r.val}</span>
+      </div>`).join('')}
+    </div>`;
+
+  currentSummaryText =
+    `🏁 F1 PRODE 2026\n━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `👤 ${pred.player}\n🏎️ ${race.name} (${race.date})${race && race.sprint ? ' ⚡ SPRINT' : ''}\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━\n` +
+    rows.map(r => `${r.icon} ${r.label}: ${r.val}`).join('\n') +
+    `\n━━━━━━━━━━━━━━━━━━━━━━`;
+
+  const card = document.getElementById('summary-card');
+  card.style.display = 'block';
+  // Mostrar badge persistente
+  showSavedBadgeIfExists(pred.gpId);
+  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+}
+
+function copySummary() {
+  var txt = currentSummaryText;
+  if (!txt) { showToast('No hay pronóstico para copiar'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(() => showToast('📋 ¡Copiado! Pegalo en el grupo')).catch(() => fallbackCopy(txt));
+  } else {
+    fallbackCopy(txt);
+  }
+}
+
+function fallbackCopy(txt) {
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;';
+    document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, 99999);
+    var ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast(ok ? '📋 ¡Copiado! Pegalo en el grupo' : 'No se pudo copiar');
+  } catch(e) { showToast('No se pudo copiar'); }
+}
+
+function showSummaryFromSaved() {
+  const saved = loadLastPredLocal();
+  if (saved) showSummary(saved);
+}
+
+function newPrediction() {
+  document.getElementById('summary-card').style.display = 'none';
+  document.getElementById('prediction-form').reset();
+  if (appState.activeGP) document.getElementById('f-gp').value = appState.activeGP;
+  updateSprintFields();
+  document.getElementById('form-card').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── CAMBIAR CONTRASEÑA ───────────────────────────────────────
+async function changePassword() {
+  const newPwd = document.getElementById('admin-new-password').value.trim();
+  if (!newPwd) { showToast('Escribí la nueva contraseña'); return; }
+  try {
+    if (API_URL) await apiPost({ action: 'setPassword', newPassword: newPwd, password: adminPassword });
+    adminPassword = newPwd;
+    document.getElementById('admin-new-password').value = '';
+    showToast('✅ Contraseña actualizada');
+  } catch(e) { showToast('❌ Error: ' + e.message); }
+}
+
+// ─── TABLAS ──────────────────────────────────────────────────
+function renderTablas() {
+  const scored = RACES_2026.filter(r => appState.results[r.id]);
+  const tabs = [
+    { id:'general',  label:'GENERAL',       cls: '' },
+    { id:'profile',  label:'👤 MI PERFIL',  cls: 'tab-profile' },
+    ...scored.map(r => ({ id: r.id, label: `R${r.round} ${r.short}`, cls: '' }))
+  ];
+  const cont = document.getElementById('gp-tabs');
+  cont.innerHTML = tabs.map(t =>
+    `<button class="gp-tab${t.cls ? ' ' + t.cls : ''}${t.id === 'general' ? ' active' : ''}" data-tab="${t.id}">${t.label}</button>`
+  ).join('');
+  cont.querySelectorAll('.gp-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      cont.querySelectorAll('.gp-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTable(btn.dataset.tab);
+    });
+  });
+  renderTable('general');
+}
+
+function renderTable(tabId) {
+  const el = document.getElementById('tabla-content');
+  if (tabId === 'profile') {
+    renderProfileTab(el);
+    return;
+  }
+  if (tabId === 'general') {
+    const totals = {};
+    Object.entries(appState.points).forEach(([gpId, gp]) => {
+      Object.entries(gp).forEach(([player, d]) => {
+        if (!totals[player]) totals[player] = { total: 0, races: 0 };
+        totals[player].total += d.total;
+        totals[player].races++;
+      });
+    });
+    const board = Object.entries(totals).map(([name, d]) => ({ name, ...d })).sort((a, b) => b.total - a.total);
+    if (!board.length) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-title">Sin puntos aún</div><div class="empty-text">Los puntos aparecen cuando el admin cargue los resultados oficiales</div></div>`;
+      return;
+    }
+    el.innerHTML = renderLeaderboard(board, 'Tabla General', true);
+  } else {
+    const race = RACES_2026.find(r => r.id === tabId);
+    const board = Object.entries(appState.points[tabId] || {})
+      .map(([name, d]) => ({ name, total: d.total, breakdown: d.breakdown }))
+      .sort((a, b) => b.total - a.total);
+    if (!board.length) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">Sin datos</div></div>`;
+      return;
+    }
+    el.innerHTML = renderLeaderboard(board, `${race.flag} ${race.name}`, false, tabId);
+  }
+}
+
+// ─── PERFIL PERSONAL ─────────────────────────────────────────
+function renderProfileTab(el) {
+  const saved = loadLastPredLocal();
+  if (!saved) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">👤</div><div class="empty-title">Sin datos de perfil</div><div class="empty-text">Enviá tu primer pronóstico para ver tus estadísticas aquí.</div></div>`;
+    return;
+  }
+  const playerName = saved.player;
+  // Calcular estadísticas del jugador
+  let totalPts = 0, totalRaces = 0, totalHits = 0, totalPossible = 0;
+  const categoryHits = { pole:0, winner:0, p1:0, p2:0, p3:0, fastestLap:0, dotd:0, pitStop:0, dnf:0, sprintPole:0, sprintWinner:0 };
+  const categoryCounts = { ...categoryHits };
+
+  RACES_2026.forEach(race => {
+    const result = appState.results[race.id];
+    if (!result) return;
+    const pts = appState.points[race.id] && appState.points[race.id][playerName];
+    if (!pts) return;
+    totalPts  += pts.total;
+    totalRaces++;
+    const bd = pts.breakdown || {};
+    Object.keys(categoryHits).forEach(k => {
+      if (bd[k]) { categoryHits[k]++; totalHits++; }
+      if (k !== 'sprintPole' && k !== 'sprintWinner') { categoryCounts[k]++; totalPossible++; }
+      else if (race.sprint) { categoryCounts[k]++; totalPossible++; }
+    });
+  });
+
+  const accuracy = totalPossible > 0 ? Math.round((totalHits / totalPossible) * 100) : 0;
+  const avgPts   = totalRaces > 0 ? Math.round(totalPts / totalRaces) : 0;
+
+  const catLabels = {
+    pole:'⚡ Pole', winner:'🏆 Ganador', p1:'🥇 1°',
+    p2:'🥈 2°', p3:'🥉 3°', fastestLap:'⏱ VR',
+    dotd:'⭐ PdD', pitStop:'🔧 Pit', dnf:'💥 DNF',
+    sprintPole:'🟣 Sp.Pole', sprintWinner:'🏎 Sp.Win',
+  };
+
+  let accBars = Object.entries(catLabels).map(([k, label]) => {
+    const total = categoryCounts[k];
+    if (!total) return '';
+    const hits = categoryHits[k];
+    const pct  = Math.round((hits / total) * 100);
+    return `<div class="accuracy-bar-wrap">
+      <div class="accuracy-label"><span>${label}</span><span>${hits}/${total} (${pct}%)</span></div>
+      <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="profile-card">
+      <div class="card-title" style="margin-bottom:16px;">👤 ${playerName}</div>
+      <div class="profile-stat-grid">
+        <div class="profile-stat"><div class="profile-stat-num">${totalPts}</div><div class="profile-stat-label">Puntos totales</div></div>
+        <div class="profile-stat"><div class="profile-stat-num">${totalRaces}</div><div class="profile-stat-label">GPs puntuados</div></div>
+        <div class="profile-stat"><div class="profile-stat-num">${accuracy}%</div><div class="profile-stat-label">Precisión</div></div>
+      </div>
+      <div class="card-label">PRECISIÓN POR CATEGORÍA</div>
+      ${accBars || '<div class="text-muted" style="font-size:0.85rem">Sin resultados aún.</div>'}
+    </div>
+    ${renderPtsLegend()}`;
+}
+
+function renderLeaderboard(board, title, showRaces, gpId) {
+  const max     = (board[0] && board[0].total) || 1;
+  const medals  = ['🥇','🥈','🥉'];
+  let html = `<div class="leaderboard-card">
+    <div class="lb-header"><div class="lb-header-title">${title}</div></div>
+    <table class="lb-table"><thead><tr>
+      <th>POS</th><th>JUGADOR</th>${showRaces ? '<th>FEC</th>' : ''}<th>PTS</th><th>${gpId ? 'ACIERTOS' : 'PROGRESO'}</th>
+    </tr></thead><tbody>`;
+
+  board.forEach((p, i) => {
+    const pct = Math.round((p.total / max) * 100);
+    const bd  = p.breakdown || {};
+    let right = '';
+    if (gpId) {
+      const parts = [];
+      if (bd.pole)          parts.push(`Pole +${bd.pole}`);
+      if (bd.winner)        parts.push(`Gan. +${bd.winner}`);
+      if (bd.podio_exact)   parts.push(`🎯Podio +${bd.podio_exact}`);
+      if (bd.p1)            parts.push(`P1 +${bd.p1}`);
+      if (bd.p2)            parts.push(`P2 +${bd.p2}`);
+      if (bd.p3)            parts.push(`P3 +${bd.p3}`);
+      if (bd.fastestLap)    parts.push(`VR +${bd.fastestLap}`);
+      if (bd.dotd)          parts.push(`PdD +${bd.dotd}`);
+      if (bd.pitStop)       parts.push(`Pit +${bd.pitStop}`);
+      if (bd.dnf)           parts.push(`DNF +${bd.dnf}`);
+      if (bd.sprintPole)    parts.push(`SpPole +${bd.sprintPole}`);
+      if (bd.sprintWinner)  parts.push(`SpWin +${bd.sprintWinner}`);
+      right = `<td class="pts-breakdown">${parts.join(' · ') || '—'}</td>`;
+    } else {
+      right = `<td><div class="pts-bar"><div class="pts-bar-fill" style="width:${pct}%"></div></div></td>`;
+    }
+    html += `<tr>
+      <td><span class="rank-pos rank-${i < 3 ? i + 1 : 'other'}">${medals[i] || i + 1}</span></td>
+      <td class="player-name-cell">${p.name}</td>
+      ${showRaces ? `<td class="text-muted">${p.races}</td>` : ''}
+      <td class="pts-cell">${p.total}</td>${right}
+    </tr>`;
+  });
+
+  html += `</tbody></table></div>${renderPtsLegend()}`;
+  return html;
+}
+
+function renderPtsLegend() {
+  return `<div class="pts-legend-section">
+    <div class="pts-legend-title">Sistema de puntos</div>
+    <div class="pts-legend-grid">
+      <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🏆</span><span class="pts-legend-cat">Ganador del GP</span><span class="pts-legend-num">+10</span></div>
+      <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🎯</span><span class="pts-legend-cat">Podio exacto (bonus)</span><span class="pts-legend-num">+20</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">🥇</span><span class="pts-legend-cat">Posición podio (c/u)</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">⚡</span><span class="pts-legend-cat">Pole position</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">⏱</span><span class="pts-legend-cat">Vuelta rápida</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">⭐</span><span class="pts-legend-cat">Piloto del día</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">🔧</span><span class="pts-legend-cat">Pit stop</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">💥</span><span class="pts-legend-cat">DNF</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row pts-legend-sprint"><span class="pts-legend-icon">🏎</span><span class="pts-legend-cat">Ganador Sprint</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row pts-legend-sprint"><span class="pts-legend-icon">🟣</span><span class="pts-legend-cat">Pole Sprint</span><span class="pts-legend-num">+3</span></div>
+    </div>
+  </div>`;
+}
+
+// ─── ADMIN DNF MULTI-SELECT HELPERS ──────────────────────────
+function syncDNFPodiumFilter() {
+  const podiumDrivers = ['res-p1','res-p2','res-p3'].map(id => {
+    const el = document.getElementById(id); return el ? el.value : '';
+  }).filter(Boolean);
+  document.querySelectorAll('.res-dnf-cb').forEach(cb => {
+    const label = cb.closest('label');
+    if (podiumDrivers.includes(cb.value)) {
+      cb.disabled = true; cb.checked = false;
+      if (label) { label.style.opacity = '0.3'; label.style.cursor = 'not-allowed'; }
+    } else {
+      cb.disabled = false;
+      if (label) { label.style.opacity = '1'; label.style.cursor = 'pointer'; }
+    }
+  });
+  updateDNFCount();
+}
+
+function updateDNFCount() {
+  const checked = document.querySelectorAll('.res-dnf-cb:checked');
+  const lbl = document.getElementById('dnf-count-label');
+  const btnNoDnf = document.getElementById('btn-no-dnf');
+  if (checked.length > 0 && btnNoDnf) { btnNoDnf.dataset.active = '0'; updateNoDNFButton(); }
+  if (lbl) lbl.textContent = checked.length > 0 ? `${checked.length} seleccionado${checked.length > 1 ? 's' : ''}` : '';
+}
+
+function toggleNoDNF() {
+  const btn = document.getElementById('btn-no-dnf');
+  if (!btn) return;
+  const isActive = btn.dataset.active === '1';
+  btn.dataset.active = isActive ? '0' : '1';
+  if (!isActive) {
+    // Activar "Sin abandonos" → desmarcar todos los checkboxes
+    document.querySelectorAll('.res-dnf-cb').forEach(cb => { cb.checked = false; });
+    const lbl = document.getElementById('dnf-count-label');
+    if (lbl) lbl.textContent = '';
+  }
+  updateNoDNFButton();
+}
+
+function updateNoDNFButton() {
+  const btn = document.getElementById('btn-no-dnf');
+  if (!btn) return;
+  if (btn.dataset.active === '1') {
+    btn.style.background = 'rgba(34,197,94,0.15)';
+    btn.style.borderColor = 'rgba(34,197,94,0.4)';
+    btn.style.color = '#22c55e';
+  } else {
+    btn.style.background = '';
+    btn.style.borderColor = '';
+    btn.style.color = '';
+  }
+}
+
+// ─── ADMIN ───────────────────────────────────────────────────
+function adminLogin() {
+  const pwd = document.getElementById('admin-password').value;
+  if (pwd === adminPassword) {
+    isAdminLoggedIn = true;
+    document.getElementById('admin-login').style.display  = 'none';
+    document.getElementById('admin-panel').style.display  = 'block';
+    document.getElementById('login-error').style.display  = 'none';
+    renderAdminPanel();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('admin-password').classList.add('error');
+    setTimeout(() => document.getElementById('admin-password').classList.remove('error'), 400);
+  }
+}
+
+function adminLogout() {
+  isAdminLoggedIn = false;
+  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('admin-password').value = '';
+}
+
+function renderAdminPanel() {
+  if (!isAdminLoggedIn) return;
+  populateGPSelect('admin-active-gp', appState.activeGP || '');
+  populateGPSelect('result-gp-select', '');
+  renderAdminPredictions();
+  renderAdminPointsSummary();
+}
+
+async function adminRefresh() {
+  const btn = document.getElementById('btn-refresh');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Actualizando...'; }
+  await loadFromSheets();
+  renderAdminPredictions();
+  renderAdminPointsSummary();
+  if (btn) { btn.disabled = false; btn.textContent = '🔄 Actualizar datos'; }
+  showToast('🔄 Datos actualizados desde Google Sheets');
+}
+
+async function saveActiveGP() {
+  const gpId = document.getElementById('admin-active-gp').value || null;
+  appState.activeGP = gpId;
+  try { localStorage.removeItem('f1prode_cache_2026'); } catch(e) {}
+  lockGPSelector();
+  var rgs = document.getElementById('result-gp-select');
+  if (rgs && gpId) { rgs.value = gpId; loadResultForm(); }
+  try {
+    if (API_URL) {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'setActiveGP', gpId: gpId || '', password: adminPassword })
+      });
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch(e) { data = { raw: text }; }
+      if (data.error) { showToast('❌ Error servidor: ' + data.error); return; }
+      if (data.raw)   { showToast('❌ Respuesta: ' + data.raw.substring(0, 100)); return; }
+      showToast('✅ GP activo guardado: ' + (gpId || 'ninguno'));
+    } else {
+      showToast('✅ GP activo (sin API)');
+    }
+  } catch(e) { showToast('❌ Error de red: ' + e.message); }
+}
+
+function renderAdminPredictions() {
+  const el = document.getElementById('admin-predictions-list');
+  if (!appState.predictions.length) {
+    el.innerHTML = `<div class="empty-state" style="padding:24px 0"><div class="empty-text">Sin pronósticos aún</div></div>`;
+    return;
+  }
+  const grouped = {};
+  appState.predictions.forEach(p => { if (!grouped[p.gpId]) grouped[p.gpId] = []; grouped[p.gpId].push(p); });
+
+  let html = '';
+  RACES_2026.forEach(race => {
+    if (!grouped[race.id]) return;
+    const result = appState.results[race.id] || null;
+    const hasRes = !!result;
+    const preds  = [...grouped[race.id]];
+    if (hasRes) preds.sort((a, b) =>
+      ((appState.points[race.id] && appState.points[race.id][b.player] && appState.points[race.id][b.player].total) || 0) -
+      ((appState.points[race.id] && appState.points[race.id][a.player] && appState.points[race.id][a.player].total) || 0)
+    );
+
+    html += `<div class="admin-gp-block">
+      <div class="admin-gp-title">
+        ${race.flag} R${race.round} — ${race.name}
+        ${race.sprint ? '<span class="status-chip" style="background:rgba(123,47,190,.2);color:#B47FFF;border-color:rgba(123,47,190,.4)">⚡ SPRINT</span>' : ''}
+        ${hasRes ? '<span class="status-chip scored">✅ Puntuado</span>' : '<span class="status-chip open">⏳ Pendiente</span>'}
+      </div>`;
+
+    preds.forEach((pred, idx) => {
+      const pts  = appState.points[race.id] && appState.points[race.id][pred.player];
+      const rank = hasRes ? idx + 1 : null;
+      const fields = [
+        { label:'⚡ Pole',     pred: pred.pole,         res: result && result.pole,         pts: pts && pts.breakdown && pts.breakdown.pole },
+        { label:'🏆 Ganador',  pred: pred.winner,       res: result && result.winner,       pts: pts && pts.breakdown && pts.breakdown.winner },
+        { label:'🥇 1°',       pred: pred.p1,           res: result && result.p1,           pts: pts && pts.breakdown && pts.breakdown.p1 },
+        { label:'🥈 2°',       pred: pred.p2,           res: result && result.p2,           pts: pts && pts.breakdown && pts.breakdown.p2 },
+        { label:'🥉 3°',       pred: pred.p3,           res: result && result.p3,           pts: pts && pts.breakdown && pts.breakdown.p3 },
+        { label:'⏱ VR',        pred: pred.fastestLap,   res: result && result.fastestLap,   pts: pts && pts.breakdown && pts.breakdown.fastestLap },
+        { label:'⭐ PdD',       pred: pred.dotd,         res: result && result.dotd,         pts: pts && pts.breakdown && pts.breakdown.dotd },
+        { label:'🔧 Pit',      pred: pred.pitStop,      res: result && result.pitStop,      pts: pts && pts.breakdown && pts.breakdown.pitStop },
+        { label:'💥 DNF',      pred: pred.dnf,          res: result && result.dnf,          pts: pts && pts.breakdown && pts.breakdown.dnf },
+      ];
+      if (race.sprint) {
+        fields.push({ label:'🟣 Sp.Pole',  pred: pred.sprintPole,   res: result && result.sprintPole,   pts: pts && pts.breakdown && pts.breakdown.sprintPole });
+        fields.push({ label:'🏎 Sp.Win',   pred: pred.sprintWinner, res: result && result.sprintWinner, pts: pts && pts.breakdown && pts.breakdown.sprintWinner });
+      }
+
+      html += `<div class="admin-pred-item${hasRes ? ' has-result' : ''}">
+        <div class="admin-pred-header">
+          <div style="display:flex;align-items:center;gap:10px">
+            ${rank ? `<span class="admin-rank rank-${rank <= 3 ? rank : 'other'}">${rank}</span>` : ''}
+            <span class="admin-pred-name">${pred.player}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+            ${pts ? `<span class="admin-pts-badge">${pts.total} pts</span>` : '<span class="admin-pts-badge-empty">Sin puntuar</span>'}
+            <button class="btn btn-ghost btn-sm" onclick="deletePred(${pred.id})" title="Eliminar">🗑</button>
+          </div>
+        </div>`;
+
+      if (hasRes) {
+        html += `<div class="pred-comparison-table">
+          <div class="pred-comp-header"><span>CATEGORÍA</span><span>PRONÓSTICO</span><span>OFICIAL</span><span>PTS</span></div>`;
+        fields.forEach(f => {
+          // Para DNF: result puede ser lista separada por comas
+          let ok, bad;
+          if (f.label === '💥 DNF' && f.res && f.res !== NO_DNF_OPTION) {
+            const dnfList = f.res.split(',').map(s => s.trim());
+            ok  = f.pred && dnfList.includes(f.pred);
+            bad = f.res && !ok;
+          } else {
+            ok  = f.pred && f.pred === f.res;
+            bad = f.res  && f.pred !== f.res;
+          }
+          const cls = ok ? 'comp-correct' : bad ? 'comp-wrong' : 'comp-pending';
+          html += `<div class="pred-comp-row ${cls}">
+            <span class="comp-label">${f.label}</span>
+            <span class="comp-pred">${f.pred || '—'}</span>
+            <span class="comp-result">${f.res || '—'}</span>
+            <span class="comp-pts">${ok ? '✅' : bad ? '❌' : '—'} ${f.pts ? '+' + f.pts : ''}</span>
+          </div>`;
+        });
+        if (pts && pts.breakdown && pts.breakdown.podio_exact) {
+          html += `<div class="pred-comp-row comp-correct comp-bonus">
+            <span class="comp-label" style="color:var(--gold)">🎯 BONUS Podio Exacto</span>
+            <span class="comp-pred">—</span><span class="comp-result">—</span>
+            <span class="comp-pts" style="color:var(--gold)">✅ +${pts.breakdown.podio_exact}</span>
+          </div>`;
+        }
+        html += `<div class="pred-comp-total"><span>TOTAL</span><span>${(pts && pts.total) || 0} puntos</span></div></div>`;
+      } else {
+        html += `<div class="admin-pred-grid">${fields.map(f =>
+          `<div class="admin-pred-row"><span>${f.label}</span><span>${f.pred || '—'}</span></div>`
+        ).join('')}</div>`;
+      }
+      html += `</div>`;
+    });
+    html += `</div>`;
+  });
+  el.innerHTML = html;
+}
+
+async function deletePred(id) {
+  if (!confirm('¿Eliminar este pronóstico?')) return;
+  try {
+    if (API_URL) await apiPost({ action: 'deletePrediction', id, password: adminPassword });
+    const pred = appState.predictions.find(p => p.id == id);
+    appState.predictions = appState.predictions.filter(p => p.id != id);
+    if (pred && appState.points[pred.gpId]) delete appState.points[pred.gpId][pred.player];
+    renderAdminPredictions();
+    renderAdminPointsSummary();
+    showToast('Pronóstico eliminado');
+  } catch(e) { showToast('❌ Error: ' + e.message); }
+}
+
+function updateResultPodioDuplicates() {
+  var ids  = ['res-p1','res-p2','res-p3'];
+  var vals = ids.map(id => { var e = document.getElementById(id); return e ? e.value : ''; });
+  ids.forEach((id, i) => {
+    var sel = document.getElementById(id); if (!sel) return;
+    var others = vals.filter((v, j) => j !== i && v);
+    Array.from(sel.options).forEach(opt => {
+      if (!opt.value) return;
+      opt.disabled = others.includes(opt.value);
+    });
+  });
+}
+
+function loadResultForm() {
+  const gpId   = document.getElementById('result-gp-select').value;
+  const formEl = document.getElementById('result-form');
+  const spSec  = document.getElementById('admin-sprint-section');
+  if (!gpId) { formEl.style.display = 'none'; return; }
+  const race = RACES_2026.find(r => r.id === gpId);
+  const ex   = appState.results[gpId] || {};
+  formEl.style.display = 'block';
+
+  const fm = { 'res-pole':'pole','res-winner':'winner','res-p1':'p1','res-p2':'p2','res-p3':'p3','res-fl':'fastestLap','res-dotd':'dotd' };
+  Object.entries(fm).forEach(([id, k]) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '<option value="">— Piloto —</option>' + driverOptions(ex[k] || '');
+  });
+  const rpit = document.getElementById('res-pit');
+  if (rpit) rpit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions(ex.pitStop || '');
+  const rdnfWrap = document.getElementById('res-dnf-wrap');
+  if (rdnfWrap) {
+    const savedDnfs = ex.dnf === NO_DNF_OPTION ? [] : (ex.dnf ? ex.dnf.split(',').map(s => s.trim()).filter(Boolean) : []);
+    rdnfWrap.innerHTML = DRIVERS_2026.map(d => {
+      const name = d.name || d;
+      const flag = d.flag || '';
+      const isChecked = savedDnfs.includes(name);
+      return `<label style="display:flex;align-items:center;gap:8px;padding:5px 4px;border-radius:4px;cursor:pointer;">
+        <input type="checkbox" class="res-dnf-cb" value="${name}" ${isChecked ? 'checked' : ''} onchange="syncDNFPodiumFilter();updateDNFCount()" style="accent-color:var(--f1-red);width:15px;height:15px;flex-shrink:0;">
+        <span style="font-size:0.88rem;">${flag} ${name}</span>
+      </label>`;
+    }).join('');
+    ['res-p1','res-p2','res-p3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.removeEventListener('change', el._dnfSync); el._dnfSync = () => syncDNFPodiumFilter(); el.addEventListener('change', el._dnfSync); }
+    });
+    const btnNoDnf = document.getElementById('btn-no-dnf');
+    if (btnNoDnf) { btnNoDnf.dataset.active = ex.dnf === NO_DNF_OPTION ? '1' : '0'; }
+    syncDNFPodiumFilter();
+    updateDNFCount();
+    updateNoDNFButton();
+  }
+
+  if (spSec) {
+    spSec.style.display = (race && race.sprint) ? 'block' : 'none';
+    if (race && race.sprint) {
+      const rsp = document.getElementById('res-sprint-pole');
+      if (rsp) rsp.innerHTML = '<option value="">— Piloto —</option>' + driverOptions(ex.sprintPole || '');
+      const rsw = document.getElementById('res-sprint-winner');
+      if (rsw) rsw.innerHTML = '<option value="">— Piloto —</option>' + driverOptions(ex.sprintWinner || '');
+    }
+  }
+}
+
+async function saveResults() {
+  const gpId = document.getElementById('result-gp-select').value;
+  if (!gpId) { showToast('Seleccioná un GP'); return; }
+  const race = RACES_2026.find(r => r.id === gpId);
+  const result = {
+    gpId,
+    pole:         document.getElementById('res-pole').value,
+    winner:       document.getElementById('res-winner').value,
+    p1:           document.getElementById('res-p1').value,
+    p2:           document.getElementById('res-p2').value,
+    p3:           document.getElementById('res-p3').value,
+    fastestLap:   document.getElementById('res-fl').value,
+    dotd:         document.getElementById('res-dotd').value,
+    pitStop:      document.getElementById('res-pit').value,
+    dnf:          (function() {
+      const btn = document.getElementById('btn-no-dnf');
+      if (btn && btn.dataset.active === '1') return NO_DNF_OPTION;
+      const checked = Array.from(document.querySelectorAll('.res-dnf-cb:checked')).map(cb => cb.value);
+      return checked.length ? checked.join(', ') : '';
+    })(),
+    sprintPole:   (race && race.sprint) ? (document.getElementById('res-sprint-pole') ? document.getElementById('res-sprint-pole').value : '') : '',
+    sprintWinner: (race && race.sprint) ? (document.getElementById('res-sprint-winner') ? document.getElementById('res-sprint-winner').value : '') : '',
+  };
+  if (!result.winner || !result.p1) { showToast('Completá al menos ganador y podio'); return; }
+
+  const btn = document.querySelector('#result-form .btn-primary');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Guardando...'; }
+  try {
+    if (API_URL) await apiPost({ action: 'saveResults', data: result, password: adminPassword });
+    appState.results[gpId] = result;
+    calculatePointsForGP(gpId);
+    renderAdminPredictions();
+    renderAdminPointsSummary();
+    showToast('✅ Resultados guardados y puntos calculados');
+  } catch(e) { showToast('❌ Error: ' + e.message); }
+  finally {
+    if (btn) { btn.disabled = false; btn.textContent = '💾 GUARDAR & CALCULAR PUNTOS'; }
+  }
+}
+
+function renderAdminPointsSummary() {
+  const el     = document.getElementById('admin-points-summary');
+  const scored = RACES_2026.filter(r => appState.results[r.id] && appState.points[r.id]);
+  if (!scored.length) {
+    el.innerHTML = `<div style="color:var(--white-muted);font-size:.85rem;padding:8px 0">Sin GP puntuados aún</div>`;
+    return;
+  }
+  el.innerHTML = scored.map(race => {
+    const entries = Object.entries(appState.points[race.id]).sort((a, b) => b[1].total - a[1].total);
+    return `<div style="margin-bottom:16px">
+      <div style="font-family:var(--font-display);font-size:.7rem;letter-spacing:2px;color:var(--f1-red);margin-bottom:8px;text-transform:uppercase">${race.flag} R${race.round} — ${race.short}</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        ${entries.map(([player, d]) => `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--black-2);border-radius:var(--radius);border:1px solid var(--card-border)">
+            <span style="font-weight:600">${player}</span>
+            <span class="admin-pts-badge">${d.total} pts</span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function resetRace() {
+  const gpId = document.getElementById('result-gp-select').value;
+  if (!gpId) { showToast('Seleccioná un GP'); return; }
+  const race = RACES_2026.find(r => r.id === gpId);
+  if (!confirm(`¿Resetear TODOS los datos de ${race.name}?\nSe eliminarán pronósticos, resultados y puntos.`)) return;
+  try {
+    if (API_URL) await apiPost({ action: 'resetRace', gpId, password: adminPassword });
+    appState.predictions = appState.predictions.filter(p => p.gpId !== gpId);
+    delete appState.results[gpId];
+    delete appState.points[gpId];
+    document.getElementById('result-form').style.display = 'none';
+    document.getElementById('result-gp-select').value = '';
+    renderAdminPredictions();
+    renderAdminPointsSummary();
+    showToast(`✅ ${race.short} reseteado`);
+  } catch(e) { showToast('❌ Error: ' + e.message); }
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+function appInit() {
+  // FIX: un solo punto de ocultar el loader, correctamente
+  setTimeout(hideLoader, 2500);
+
+  checkAdminMode();
+
+  try {
+    initNav();
+    populateFormSelects();
+    populateGPSelect('admin-active-gp', '');
+    populateGPSelect('result-gp-select', '');
+    initPredictionForm();
+    updateBanner();
+    lockGPSelector();
+  } catch(e) {
+    console.error('appInit error:', e);
+    hideLoader();
+  }
+
+  loadFromSheets().then(() => {
+    lockGPSelector();
+    if (appState.activeGP) {
+      populateGPSelect('admin-active-gp', appState.activeGP);
+      var rgs = document.getElementById('result-gp-select');
+      if (rgs) { rgs.value = appState.activeGP; loadResultForm(); }
+    }
+  }).catch(e => { console.error(e); lockGPSelector(); });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', appInit);
+} else {
+  appInit();
+}
+
+// Exponer al HTML inline
+window.adminLogin      = adminLogin;
+window.adminLogout     = adminLogout;
+window.adminRefresh    = adminRefresh;
+window.changePassword  = changePassword;
+window.copySummary          = copySummary;
+window.showSummaryFromSaved = showSummaryFromSaved;
+window.deletePred      = deletePred;
+window.loadResultForm  = loadResultForm;
+window.newPrediction   = newPrediction;
+window.resetRace       = resetRace;
+window.saveActiveGP    = saveActiveGP;
+window.saveResults     = saveResults;
+window.showView        = showView;
+window.toggleNoDNF     = toggleNoDNF;
+</script>
+</body>
+</html>
