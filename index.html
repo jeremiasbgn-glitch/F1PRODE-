@@ -777,18 +777,23 @@ body::before {
 .pred-comp-row.comp-correct { background: rgba(0,230,100,0.06); }
 .pred-comp-row.comp-wrong { background: rgba(232,0,45,0.05); }
 .pred-comp-row.comp-bonus { background: rgba(255,209,0,0.07); }
+.pred-comp-row.comp-partial { background: rgba(0,200,255,0.06); }
 
 .comp-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white-muted); }
 .comp-correct .comp-label { color: rgba(0,230,100,0.8); }
 .comp-wrong .comp-label { color: rgba(232,0,45,0.8); }
+.comp-partial .comp-label { color: rgba(0,200,255,0.8); }
 .comp-pred { font-weight: 600; color: var(--white); font-size: 0.82rem; }
 .comp-correct .comp-pred { color: var(--green); }
 .comp-wrong .comp-pred { color: rgba(255,100,100,0.9); text-decoration: line-through; text-decoration-color: rgba(232,0,45,0.5); }
+.comp-partial .comp-pred { color: var(--accent-blue); }
 .comp-result { font-weight: 600; color: var(--white-muted); font-size: 0.82rem; }
 .comp-correct .comp-result { color: var(--green); }
+.comp-partial .comp-result { color: var(--accent-blue); }
 .comp-pts { font-family: var(--font-display); font-weight: 800; font-size: 0.82rem; color: var(--white-muted); text-align: right; }
 .comp-correct .comp-pts { color: var(--green); }
 .comp-wrong .comp-pts { color: rgba(255,100,100,0.6); }
+.comp-partial .comp-pts { color: var(--accent-blue); }
 .pred-comp-total {
   display: flex; justify-content: space-between; padding: 10px 12px;
   background: var(--black-3); border-top: 1px solid var(--card-border);
@@ -1549,6 +1554,17 @@ function showView(name) {
 
 // ─── COUNTDOWN ───────────────────────────────────────────────
 var _cdInterval = null;
+
+// Lock completo del form por qualy cerrada — deshabilita inputs Y muestra banner
+function lockFormByQualy(msg) {
+  var submitBtn    = document.getElementById('submit-btn');
+  var formFields   = document.getElementById('form-fields-wrap');
+  var lockedBanner = document.getElementById('form-locked-banner');
+  if (submitBtn)    { submitBtn.disabled = true; submitBtn.style.opacity = '0.4'; submitBtn.style.pointerEvents = 'none'; submitBtn.dataset.qualyLocked = '1'; }
+  if (formFields)   { formFields.querySelectorAll('select, input, button:not(#submit-btn)').forEach(el => { el.disabled = true; }); }
+  if (lockedBanner) { lockedBanner.style.display = 'flex'; lockedBanner.dataset.qualyLocked = '1'; var msgEl = lockedBanner.querySelector('.locked-msg'); if (msgEl) msgEl.textContent = msg; }
+}
+
 function startCountdown(qualyUtc) {
   if (_cdInterval) { clearInterval(_cdInterval); _cdInterval = null; }
   var wrap  = document.getElementById('qualy-countdown');
@@ -1566,16 +1582,6 @@ function startCountdown(qualyUtc) {
     <span class="cd-sep">:</span>
     <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-unit-label">seg</span></div>`;
   wrap.style.display = 'flex';
-
-  function lockFormByQualy(msg) {
-    var lockedBanner = document.getElementById('form-locked-banner');
-    if (lockedBanner) {
-      lockedBanner.style.display = 'flex';
-      lockedBanner.dataset.qualyLocked = '1';
-      var msgEl = lockedBanner.querySelector('.locked-msg');
-      if (msgEl) msgEl.textContent = msg;
-    }
-  }
 
   function tick() {
     var now    = Date.now();
@@ -2178,18 +2184,21 @@ function renderLeaderboard(board, title, showRaces, gpId) {
     let right = '';
     if (gpId) {
       const parts = [];
-      if (bd.pole)          parts.push(`Pole +${bd.pole}`);
-      if (bd.winner)        parts.push(`Gan. +${bd.winner}`);
-      if (bd.podio_exact)   parts.push(`🎯Podio +${bd.podio_exact}`);
-      if (bd.p1)            parts.push(`P1 +${bd.p1}`);
-      if (bd.p2)            parts.push(`P2 +${bd.p2}`);
-      if (bd.p3)            parts.push(`P3 +${bd.p3}`);
-      if (bd.fastestLap)    parts.push(`VR +${bd.fastestLap}`);
-      if (bd.dotd)          parts.push(`PdD +${bd.dotd}`);
-      if (bd.pitStop)       parts.push(`Pit +${bd.pitStop}`);
-      if (bd.dnf)           parts.push(`DNF +${bd.dnf}`);
-      if (bd.sprintPole)    parts.push(`SpPole +${bd.sprintPole}`);
-      if (bd.sprintWinner)  parts.push(`SpWin +${bd.sprintWinner}`);
+      if (bd.pole)                parts.push(`Pole +${bd.pole}`);
+      if (bd.winner)              parts.push(`Gan. +${bd.winner}`);
+      if (bd.podio_exact)         parts.push(`🎯Podio +${bd.podio_exact}`);
+      if (bd.p1)                  parts.push(`P1 +${bd.p1}`);
+      if (bd.p2)                  parts.push(`P2 +${bd.p2}`);
+      if (bd.p3)                  parts.push(`P3 +${bd.p3}`);
+      if (bd.partial_p1)          parts.push(`🔀P1 +${bd.partial_p1}`);
+      if (bd.partial_p2)          parts.push(`🔀P2 +${bd.partial_p2}`);
+      if (bd.partial_p3)          parts.push(`🔀P3 +${bd.partial_p3}`);
+      if (bd.fastestLap)          parts.push(`VR +${bd.fastestLap}`);
+      if (bd.dotd)                parts.push(`PdD +${bd.dotd}`);
+      if (bd.pitStop)             parts.push(`Pit +${bd.pitStop}`);
+      if (bd.dnf)                 parts.push(`DNF +${bd.dnf}`);
+      if (bd.sprintPole)          parts.push(`SpPole +${bd.sprintPole}`);
+      if (bd.sprintWinner)        parts.push(`SpWin +${bd.sprintWinner}`);
       right = `<td class="pts-breakdown">${parts.join(' · ') || '—'}</td>`;
     } else {
       right = `<td><div class="pts-bar"><div class="pts-bar-fill" style="width:${pct}%"></div></div></td>`;
@@ -2212,7 +2221,8 @@ function renderPtsLegend() {
     <div class="pts-legend-grid">
       <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🏆</span><span class="pts-legend-cat">Ganador del GP</span><span class="pts-legend-num">+10</span></div>
       <div class="pts-legend-row pts-legend-highlight"><span class="pts-legend-icon">🎯</span><span class="pts-legend-cat">Podio exacto (bonus)</span><span class="pts-legend-num">+20</span></div>
-      <div class="pts-legend-row"><span class="pts-legend-icon">🥇</span><span class="pts-legend-cat">Posición podio (c/u)</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">🥇</span><span class="pts-legend-cat">Posición podio exacta (c/u)</span><span class="pts-legend-num">+5</span></div>
+      <div class="pts-legend-row"><span class="pts-legend-icon">🔀</span><span class="pts-legend-cat">Piloto en podio, posición incorrecta</span><span class="pts-legend-num">+3</span></div>
       <div class="pts-legend-row"><span class="pts-legend-icon">⚡</span><span class="pts-legend-cat">Pole position</span><span class="pts-legend-num">+5</span></div>
       <div class="pts-legend-row"><span class="pts-legend-icon">⏱</span><span class="pts-legend-cat">Vuelta rápida</span><span class="pts-legend-num">+5</span></div>
       <div class="pts-legend-row"><span class="pts-legend-icon">⭐</span><span class="pts-legend-cat">Piloto del día</span><span class="pts-legend-num">+5</span></div>
@@ -2381,21 +2391,30 @@ function renderAdminPredictions() {
           <div class="pred-comp-header"><span>CATEGORÍA</span><span>PRONÓSTICO</span><span>OFICIAL</span><span>PTS</span></div>`;
         fields.forEach(f => {
           // Para DNF: result puede ser lista separada por comas
-          let ok, bad;
+          let ok, bad, partial;
           if (f.label === '💥 DNF' && f.res && f.res !== NO_DNF_OPTION) {
             const dnfList = f.res.split(',').map(s => s.trim());
             ok  = f.pred && dnfList.includes(f.pred);
             bad = f.res && !ok;
+          } else if (['🥇 1°','🥈 2°','🥉 3°'].includes(f.label)) {
+            ok      = f.pred && f.pred === f.res;
+            // parcial: acertó el piloto pero en posición equivocada
+            const pos = f.label === '🥇 1°' ? 'p1' : f.label === '🥈 2°' ? 'p2' : 'p3';
+            const partialPts = pts && pts.breakdown && pts.breakdown['partial_' + pos];
+            partial = !ok && partialPts > 0;
+            bad     = f.res && !ok && !partial;
           } else {
             ok  = f.pred && f.pred === f.res;
             bad = f.res  && f.pred !== f.res;
           }
-          const cls = ok ? 'comp-correct' : bad ? 'comp-wrong' : 'comp-pending';
+          const cls = ok ? 'comp-correct' : partial ? 'comp-partial' : bad ? 'comp-wrong' : 'comp-pending';
+          const posKey = f.label === '🥇 1°' ? 'p1' : f.label === '🥈 2°' ? 'p2' : f.label === '🥉 3°' ? 'p3' : null;
+          const partialPts = posKey && pts && pts.breakdown && pts.breakdown['partial_' + posKey];
           html += `<div class="pred-comp-row ${cls}">
             <span class="comp-label">${f.label}</span>
             <span class="comp-pred">${f.pred || '—'}</span>
             <span class="comp-result">${f.res || '—'}</span>
-            <span class="comp-pts">${ok ? '✅' : bad ? '❌' : '—'} ${f.pts ? '+' + f.pts : ''}</span>
+            <span class="comp-pts">${ok ? '✅' : partial ? '🔀' : bad ? '❌' : '—'} ${ok && f.pts ? '+' + f.pts : partial && partialPts ? '+' + partialPts : ''}</span>
           </div>`;
         });
         if (pts && pts.breakdown && pts.breakdown.podio_exact) {
