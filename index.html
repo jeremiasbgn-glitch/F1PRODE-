@@ -888,213 +888,6 @@ body::before {
 .mt-8 { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }
 .flex-between { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-
-/* ============================================================ PIT BOARD — NEW GP ALERT */
-#pit-board-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-#pit-board-overlay.visible {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.pit-board {
-  background: var(--black-2);
-  border: 1px solid var(--card-border);
-  border-top: 4px solid var(--f1-red);
-  border-radius: var(--radius-lg);
-  padding: 28px 24px 24px;
-  max-width: 340px;
-  width: calc(100vw - 40px);
-  text-align: center;
-  transform: scale(0.88) translateY(20px);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-  overflow: hidden;
-}
-#pit-board-overlay.visible .pit-board {
-  transform: scale(1) translateY(0);
-}
-
-.pit-board::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 100%;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 12px,
-    rgba(232, 0, 45, 0.025) 12px,
-    rgba(232, 0, 45, 0.025) 24px
-  );
-  pointer-events: none;
-}
-
-.pit-board-signal {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: rgba(232, 0, 45, 0.12);
-  border: 1px solid rgba(232, 0, 45, 0.3);
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-family: var(--font-display);
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--f1-red);
-  margin-bottom: 16px;
-}
-.pit-board-signal-dot {
-  width: 7px; height: 7px;
-  background: var(--f1-red);
-  border-radius: 50%;
-  animation: pitDotPulse 1s infinite;
-  flex-shrink: 0;
-}
-@keyframes pitDotPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(0.7); }
-}
-
-.pit-board-icon { font-size: 3.2rem; margin-bottom: 10px; line-height: 1; }
-
-.pit-board-title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 6px;
-  line-height: 1.1;
-}
-
-.pit-board-sub {
-  font-size: 0.88rem;
-  color: var(--white-muted);
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-.pit-board-race-card {
-  background: linear-gradient(135deg, rgba(232,0,45,0.08), rgba(232,0,45,0.02));
-  border: 1px solid rgba(232,0,45,0.2);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  margin-bottom: 22px;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.pit-board-race-flag { font-size: 2.2rem; flex-shrink: 0; }
-.pit-board-race-info {}
-.pit-board-race-round {
-  font-family: var(--font-display);
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: var(--f1-red);
-  text-transform: uppercase;
-  margin-bottom: 3px;
-}
-.pit-board-race-name {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: var(--white);
-  text-transform: uppercase;
-  line-height: 1.1;
-}
-.pit-board-race-date {
-  font-size: 0.8rem;
-  color: var(--white-muted);
-  margin-top: 3px;
-}
-
-.pit-board-btn {
-  width: 100%;
-  background: var(--f1-red);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius);
-  padding: 15px 20px;
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: background 0.18s, transform 0.12s;
-  -webkit-tap-highlight-color: transparent;
-}
-.pit-board-btn:hover { background: var(--f1-red-dark); }
-.pit-board-btn:active { transform: scale(0.98); }
-
-/* Micro-indicator de polling en el header */
-#gp-poll-indicator {
-  position: fixed;
-  bottom: 76px;
-  right: 14px;
-  z-index: 300;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(10,10,16,0.85);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 20px;
-  padding: 4px 10px 4px 8px;
-  font-family: var(--font-display);
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-  opacity: 0;
-  transition: opacity 0.4s;
-  pointer-events: none;
-}
-#gp-poll-indicator.syncing {
-  opacity: 1;
-  color: var(--accent-blue);
-  border-color: rgba(0,200,255,0.2);
-}
-#gp-poll-indicator.new-gp {
-  opacity: 1;
-  color: var(--f1-red);
-  border-color: rgba(232,0,45,0.3);
-}
-.poll-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-  animation: pollDotSpin 0.8s ease-in-out infinite;
-  flex-shrink: 0;
-}
-@keyframes pollDotSpin {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
-}
 </style>
 </head>
 <body>
@@ -1185,8 +978,14 @@ body::before {
         </div>
 
         <form id="prediction-form" novalidate>
-          <div id="gp-display-wrap"></div>
-          <input type="hidden" id="f-gp" value="">
+
+          <!-- Selector de GP visible para el jugador -->
+          <div class="form-field" style="margin-bottom:18px;">
+            <label class="field-label required">🏎 GRAN PREMIO</label>
+            <select id="f-gp" class="gp-select" onchange="onGPSelectChange()">
+              <option value="">— Seleccioná el GP —</option>
+            </select>
+          </div>
 
           <!-- Banner de formulario cerrado -->
           <div id="form-locked-banner" style="display:none; align-items:center; gap:14px; background:linear-gradient(135deg,rgba(232,0,45,0.1),rgba(232,0,45,0.04)); border:1px solid rgba(232,0,45,0.3); border-left:3px solid var(--f1-red); border-radius:10px; padding:16px; margin-bottom:16px;">
@@ -1197,7 +996,7 @@ body::before {
             </div>
           </div>
 
-          <div id="form-fields-wrap">
+          <div id="form-fields-wrap" style="display:none;">
             <div class="form-field">
               <label class="field-label required">👤 NOMBRE DE JUGADOR</label>
               <input type="text" id="f-player" class="field-input" placeholder="Tu nombre..." maxlength="24" autocomplete="off" spellcheck="false">
@@ -1345,13 +1144,7 @@ body::before {
         </div>
 
         <div class="card">
-          <div class="card-label">CONFIGURACIÓN DE FECHA</div>
-          <div class="form-field">
-            <label class="field-label">GP ACTIVO</label>
-            <select id="admin-active-gp" class="field-select" onchange="saveActiveGP()">
-              <option value="">— Seleccionar GP —</option>
-            </select>
-          </div>
+          <div class="card-label">CONFIGURACIÓN</div>
           <div class="form-field">
             <label class="field-label">CONTRASEÑA ADMIN</label>
             <div style="display:flex;gap:8px;">
@@ -1757,20 +1550,31 @@ function showView(name) {
 // ─── COUNTDOWN ───────────────────────────────────────────────
 var _cdInterval = null;
 function startCountdown(qualyUtc) {
-  if (_cdInterval) clearInterval(_cdInterval);
+  if (_cdInterval) { clearInterval(_cdInterval); _cdInterval = null; }
   var wrap  = document.getElementById('qualy-countdown');
   var units = document.getElementById('cd-units');
   if (!wrap) return;
   if (!qualyUtc) { wrap.style.display = 'none'; return; }
+
+  // Resetear el display antes de arrancar
+  units.innerHTML = `
+    <div class="cd-unit"><span class="cd-num" id="cd-days">0</span><span class="cd-unit-label">días</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-unit-label">hs</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><span class="cd-unit-label">min</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-unit-label">seg</span></div>`;
   wrap.style.display = 'flex';
 
-  function lockForm(msg) {
-    var submitBtn = document.getElementById('submit-btn');
-    var formFields = document.getElementById('form-fields-wrap');
+  function lockFormByQualy(msg) {
     var lockedBanner = document.getElementById('form-locked-banner');
-    if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.4'; submitBtn.style.pointerEvents = 'none'; submitBtn.dataset.qualyLocked = '1'; }
-    if (formFields) { formFields.querySelectorAll('select, input, button:not(#submit-btn)').forEach(el => { el.disabled = true; }); }
-    if (lockedBanner) { lockedBanner.style.display = 'flex'; lockedBanner.dataset.qualyLocked = '1'; lockedBanner.querySelector('.locked-msg').textContent = msg; }
+    if (lockedBanner) {
+      lockedBanner.style.display = 'flex';
+      lockedBanner.dataset.qualyLocked = '1';
+      var msgEl = lockedBanner.querySelector('.locked-msg');
+      if (msgEl) msgEl.textContent = msg;
+    }
   }
 
   function tick() {
@@ -1779,14 +1583,18 @@ function startCountdown(qualyUtc) {
     var diff   = target - now;
     if (diff <= 0 && diff > -7200000) {
       units.innerHTML = '<span class="cd-live">⚡ QUALY EN VIVO</span>';
-      lockForm('⚡ Qualy en curso — pronósticos cerrados');
+      wrap.dataset.qualyState = 'live';
+      lockFormByQualy('⚡ Qualy en curso — pronósticos cerrados');
       return;
     }
     if (diff <= -7200000) {
       units.innerHTML = '<span class="cd-done">QUALY FINALIZADA</span>';
-      lockForm('🏁 Qualy finalizada — pronósticos cerrados');
-      clearInterval(_cdInterval); return;
+      wrap.dataset.qualyState = 'done';
+      lockFormByQualy('🏁 Qualy finalizada — pronósticos cerrados');
+      if (_cdInterval) { clearInterval(_cdInterval); _cdInterval = null; }
+      return;
     }
+    wrap.dataset.qualyState = 'open';
     var days  = Math.floor(diff / 86400000);
     var hours = Math.floor((diff % 86400000) / 3600000);
     var mins  = Math.floor((diff % 3600000) / 60000);
@@ -1797,8 +1605,9 @@ function startCountdown(qualyUtc) {
     document.getElementById('cd-mins').textContent  = pad(mins);
     document.getElementById('cd-secs').textContent  = pad(secs);
   }
-  tick();
+  // Asignar el intervalo ANTES del primer tick para que tick() pueda cancelarlo
   _cdInterval = setInterval(tick, 1000);
+  tick();
 }
 
 // ─── CIRCUIT STATS ───────────────────────────────────────────
@@ -1823,12 +1632,17 @@ function renderCircuitStats(gpId) {
 }
 
 // ─── BANNER ──────────────────────────────────────────────────
-function updateBanner() {
-  var race = RACES_2026.find(r => r.id === appState.activeGP);
+function updateBanner(gpId) {
+  // Si no se pasa gpId, usar el select del formulario
+  if (gpId === undefined) {
+    var sel = document.getElementById('f-gp');
+    gpId = sel ? sel.value : null;
+  }
+  var race = RACES_2026.find(r => r.id === gpId);
   var el = id => document.getElementById(id);
   if (!race) {
     if (el('banner-round'))   el('banner-round').textContent = '—';
-    if (el('banner-name'))    el('banner-name').textContent  = 'Sin GP activo';
+    if (el('banner-name'))    el('banner-name').textContent  = 'F1 Prode 2026';
     if (el('banner-flag'))    el('banner-flag').textContent  = '🏁';
     if (el('banner-circuit')) el('banner-circuit').textContent = '';
     if (el('banner-date'))    el('banner-date').textContent  = '';
@@ -1877,52 +1691,67 @@ function populateFormSelects() {
   if (rpit) rpit.innerHTML = '<option value="">— Equipo —</option>' + teamOptions();
   const rdnf = document.getElementById('res-dnf');
   if (rdnf) rdnf.innerHTML = `<option value="">—</option><option value="${NO_DNF_OPTION}">${NO_DNF_OPTION}</option>` + driverOptions();
-  populateGPSelect('f-gp', appState.activeGP || '');
+  // Poblar el selector de GP del formulario con todas las carreras
+  populateGPSelect('f-gp', '');
   updateSprintFields();
 }
 
-function lockGPSelector() {
-  var hidden = document.getElementById('f-gp');
-  var wrap   = document.getElementById('gp-display-wrap');
+// ─── GP SELECT DEL JUGADOR ───────────────────────────────────
+// Llamada cada vez que el jugador cambia el GP en el selector
+function onGPSelectChange() {
+  var gpId = document.getElementById('f-gp').value;
   var fields = document.getElementById('form-fields-wrap');
-  if (!wrap) return;
-  var race = RACES_2026.find(r => r.id === appState.activeGP);
-  if (race) {
-    var sprint = race.sprint
-      ? '<span style="background:#8B5CF6;color:#fff;font-size:0.6rem;font-family:var(--font-display);font-weight:800;letter-spacing:1px;padding:2px 7px;border-radius:3px;text-transform:uppercase;margin-left:6px;">⚡ SPRINT</span>'
-      : '';
-    wrap.innerHTML = `<div class="gp-locked-banner"><div class="gp-locked-icon">${race.flag}</div><div><div class="gp-locked-label">GP ACTIVO${sprint}</div><div class="gp-locked-name">${race.name}</div><div class="gp-locked-date">📅 ${race.date} · ${race.circuit}</div></div></div>`;
-    if (hidden) hidden.value = race.id;
-    if (fields) fields.style.display = 'block';
-    // Mostrar badge persistente si ya existe un pronóstico guardado
-    showSavedBadgeIfExists(race.id);
-  } else {
-    wrap.innerHTML = `<div class="no-gp-banner"><div class="no-gp-icon">🏁</div><div class="no-gp-title">Sin GP activo</div><div class="no-gp-sub">El admin todavía no activó ningún GP.<br>Volvé cuando se acerque la fecha de carrera.</div></div>`;
-    if (hidden) hidden.value = '';
+
+  // 1. Limpiar todo el estado anterior del formulario
+  document.getElementById('prediction-form').reset();
+  document.getElementById('f-gp').value = gpId;
+  unlockFormSubmit();           // siempre arrancar desde estado limpio
+  hideSavedBadge();
+  document.getElementById('summary-card').style.display = 'none';
+
+  // 2. Sin GP seleccionado: ocultar campos y parar countdown
+  if (!gpId) {
     if (fields) fields.style.display = 'none';
-    hideSavedBadge();
+    updateBanner(gpId);
+    startCountdown(null);
+    return;
   }
-  updateBanner();
+
+  // 3. Actualizar contexto visual
+  updateBanner(gpId);
+  renderCircuitStats(gpId);
   updateSprintFields();
-  renderCircuitStats(appState.activeGP || '');
-  var _race = RACES_2026.find(r => r.id === appState.activeGP);
-  startCountdown(_race ? _race.qualy : null);
+
+  // 4. Mostrar los campos del formulario
+  if (fields) fields.style.display = 'block';
+
+  // 5. Arrancar el countdown — puede lockear el form si la qualy ya pasó
+  var race = RACES_2026.find(r => r.id === gpId);
+  startCountdown(race ? race.qualy : null);
+
+  // 6. Check de pronóstico ya enviado para ESTE GP
+  //    Si existe, lockea el form con el mensaje de "ya enviaste" (pisa el lock de qualy)
+  showSavedBadgeIfExists(gpId);
+}
+
+// Función legacy — ya no controla el GP activo, pero se mantiene vacía
+// para no romper referencias que puedan quedar
+function lockGPSelector() {
+  // El control del GP ahora está en manos del jugador vía onGPSelectChange
+  updateBanner();
 }
 
 // ─── BADGE PERSISTENTE ───────────────────────────────────────
 function showSavedBadgeIfExists(gpId) {
   const saved = loadLastPredLocal();
-  // Segunda línea de defensa: borrar si no coincide con el GP activo
-  if (saved && saved.gpId !== gpId) {
-    try { localStorage.removeItem('f1prode_saved_pred_2026'); } catch(e) {}
-  }
   const badgeWrap = document.getElementById('saved-badge-wrap');
   const badgeDetail = document.getElementById('saved-badge-detail');
+
+  // Mostrar badge y lockear solo si el pronóstico guardado es para ESTE GP
   if (saved && saved.gpId === gpId) {
     const time = new Date(saved.timestamp).toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'});
     if (badgeDetail) badgeDetail.textContent = `${saved.player} · enviado a las ${time}`;
     if (badgeWrap) badgeWrap.style.display = 'block';
-    // Bloquear el formulario — ya hay un pronóstico enviado para este GP
     lockFormAlreadySubmitted(saved);
   } else {
     hideSavedBadge();
@@ -2194,9 +2023,11 @@ function showSummaryFromSaved() {
 }
 
 function newPrediction() {
+  var currentGP = document.getElementById('f-gp').value;
   document.getElementById('summary-card').style.display = 'none';
   document.getElementById('prediction-form').reset();
-  if (appState.activeGP) document.getElementById('f-gp').value = appState.activeGP;
+  // Restaurar el GP que tenía seleccionado
+  if (currentGP) document.getElementById('f-gp').value = currentGP;
   updateSprintFields();
   document.getElementById('form-card').scrollIntoView({ behavior: 'smooth' });
 }
@@ -2472,7 +2303,6 @@ function adminLogout() {
 
 function renderAdminPanel() {
   if (!isAdminLoggedIn) return;
-  populateGPSelect('admin-active-gp', appState.activeGP || '');
   populateGPSelect('result-gp-select', '');
   renderAdminPredictions();
   renderAdminPointsSummary();
@@ -2486,33 +2316,6 @@ async function adminRefresh() {
   renderAdminPointsSummary();
   if (btn) { btn.disabled = false; btn.textContent = '🔄 Actualizar datos'; }
   showToast('🔄 Datos actualizados desde Google Sheets');
-}
-
-async function saveActiveGP() {
-  const gpId = document.getElementById('admin-active-gp').value || null;
-  appState.activeGP = gpId;
-  try { localStorage.removeItem('f1prode_cache_2026'); } catch(e) {}
-  // Resetear el estado del pit board para este dispositivo (admin no necesita la notificación)
-  _pitBoardShown = false;
-  lockGPSelector();
-  var rgs = document.getElementById('result-gp-select');
-  if (rgs && gpId) { rgs.value = gpId; loadResultForm(); }
-  try {
-    if (API_URL) {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'setActiveGP', gpId: gpId || '', password: adminPassword })
-      });
-      const text = await res.text();
-      let data;
-      try { data = JSON.parse(text); } catch(e) { data = { raw: text }; }
-      if (data.error) { showToast('❌ Error servidor: ' + data.error); return; }
-      if (data.raw)   { showToast('❌ Respuesta: ' + data.raw.substring(0, 100)); return; }
-      showToast('✅ GP activo guardado: ' + (gpId || 'ninguno'));
-    } else {
-      showToast('✅ GP activo (sin API)');
-    }
-  } catch(e) { showToast('❌ Error de red: ' + e.message); }
 }
 
 function renderAdminPredictions() {
@@ -2773,7 +2576,6 @@ async function resetRace() {
 
 // ─── INIT ────────────────────────────────────────────────────
 function appInit() {
-  // FIX: un solo punto de ocultar el loader, correctamente
   setTimeout(hideLoader, 2500);
 
   checkAdminMode();
@@ -2781,24 +2583,18 @@ function appInit() {
   try {
     initNav();
     populateFormSelects();
-    populateGPSelect('admin-active-gp', '');
     populateGPSelect('result-gp-select', '');
     initPredictionForm();
     updateBanner();
-    lockGPSelector();
   } catch(e) {
     console.error('appInit error:', e);
     hideLoader();
   }
 
   loadFromSheets().then(() => {
-    lockGPSelector();
-    if (appState.activeGP) {
-      populateGPSelect('admin-active-gp', appState.activeGP);
-      var rgs = document.getElementById('result-gp-select');
-      if (rgs) { rgs.value = appState.activeGP; loadResultForm(); }
-    }
-  }).catch(e => { console.error(e); lockGPSelector(); });
+    var rgs = document.getElementById('result-gp-select');
+    if (rgs && appState.activeGP) { rgs.value = appState.activeGP; loadResultForm(); }
+  }).catch(e => { console.error(e); });
 }
 
 if (document.readyState === 'loading') {
@@ -2818,188 +2614,36 @@ window.deletePred      = deletePred;
 window.loadResultForm  = loadResultForm;
 window.newPrediction   = newPrediction;
 window.resetRace       = resetRace;
-window.saveActiveGP    = saveActiveGP;
 window.saveResults     = saveResults;
 window.showView        = showView;
 window.toggleNoDNF     = toggleNoDNF;
+window.onGPSelectChange = onGPSelectChange;
 
-// ─── PIT BOARD + POLLING DE CAMBIO DE GP ──────────────────────
-// Intervalo de polling: 30 segundos
-const POLL_INTERVAL_MS = 30000;
-let _pollTimer         = null;
-let _pitBoardShown     = false;
+// Arrancar polling silencioso de datos (puntos, predicciones) cada 60s
+// Ya no detectamos cambio de GP activo — el jugador elige el GP
+const POLL_INTERVAL_MS = 60000;
+let _pollTimer = null;
 
-function showPollIndicator(state) {
-  const el = document.getElementById('gp-poll-indicator');
-  const txt = document.getElementById('poll-indicator-text');
-  if (!el) return;
-  el.className = 'gp-poll-indicator';
-  if (state === 'syncing') {
-    el.classList.add('syncing');
-    if (txt) txt.textContent = 'SYNC';
-    clearTimeout(el._hideTimer);
-    el._hideTimer = setTimeout(() => { el.className = 'gp-poll-indicator'; }, 2500);
-  } else if (state === 'new-gp') {
-    el.classList.add('new-gp');
-    if (txt) txt.textContent = 'NUEVO GP';
-  }
-}
-
-// Pit Board: mostrar notificación de cambio de GP
-function showPitBoard(race) {
-  if (_pitBoardShown) return;
-  _pitBoardShown = true;
-
-  const overlay  = document.getElementById('pit-board-overlay');
-  const icon     = document.getElementById('pit-board-icon');
-  const flag     = document.getElementById('pit-board-race-flag');
-  const round    = document.getElementById('pit-board-race-round');
-  const name     = document.getElementById('pit-board-race-name');
-  const date     = document.getElementById('pit-board-race-date');
-
-  if (icon)  icon.textContent  = race.flag || '🏁';
-  if (flag)  flag.textContent  = race.flag || '🏁';
-  if (round) round.textContent = `RONDA ${race.round}`;
-  if (name)  name.textContent  = race.name;
-  if (date)  date.textContent  = `📅 ${race.date} · ${race.circuit}`;
-
-  if (overlay) {
-    overlay.style.display = 'flex';
-    // Force reflow para activar la transición
-    overlay.offsetHeight;
-    overlay.classList.add('visible');
-  }
-
-  showPollIndicator('new-gp');
-
-  // Vibración si disponible (mobile)
-  try { if (navigator.vibrate) navigator.vibrate([100, 60, 100]); } catch(e) {}
-}
-
-function dismissPitBoard() {
-  const overlay = document.getElementById('pit-board-overlay');
-  if (overlay) {
-    overlay.classList.remove('visible');
-    setTimeout(() => { overlay.style.display = 'none'; }, 420);
-  }
-  // Navegar a la vista de pronóstico y refrescar el formulario
-  showView('pronostico');
-  // Scroll al tope del formulario con un leve delay para la animación
-  setTimeout(() => {
-    const formCard = document.getElementById('form-card');
-    if (formCard) formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 200);
-}
-window.dismissPitBoard = dismissPitBoard;
-
-// Poll silencioso: solo llama la API y compara el GP activo
-async function pollForGPChange() {
-  // No hacer nada si no hay API configurada o si el admin está usando la app
+function startDataPolling() {
   if (!API_URL) return;
-  const isAdminView = document.getElementById('view-admin') &&
-                      document.getElementById('view-admin').classList.contains('active');
-  if (isAdminView) return;
-
-  showPollIndicator('syncing');
-
-  try {
-    const data = await apiGet({ action: 'getAll' });
-    const serverGP = data && data.config && data.config.activeGP;
-    const currentGP = appState.activeGP;
-
-    // Si el GP cambió (y el servidor tiene uno activo), mostramos el Pit Board
-    if (serverGP && serverGP !== currentGP) {
-      // Invalidar caché local para que la próxima carga sea fresca
-      try { localStorage.removeItem(LS_CACHE_KEY); } catch(e) {}
-      // Aplicar los datos nuevos al estado
-      applySheetData(data);
-      saveCacheLocal(data);
-      // Actualizar UI silenciosamente
-      lockGPSelector();
-      // Resetear flag para que la notificación aparezca (puede cambiar varias veces en la sesión)
-      _pitBoardShown = false;
-      // Mostrar notificación solo si el usuario no tiene pronóstico ya enviado para este GP
-      const savedPred = loadLastPredLocal();
-      const alreadySubmitted = savedPred && savedPred.gpId === serverGP;
-      const race = RACES_2026.find(r => r.id === serverGP);
-      if (race && !alreadySubmitted) showPitBoard(race);
-    } else if (serverGP === currentGP) {
-      // Mismo GP: actualizar silenciosamente datos (puntos, predicciones, etc.)
-      applySheetData(data);
-      saveCacheLocal(data);
-    }
-  } catch(e) {
-    // Silenciar errores de red en el polling — no molestar al usuario
-    console.warn('[F1 Prode] Poll error:', e.message);
-  }
-}
-
-// Reducir el tiempo de caché a 1 minuto para evitar stale data prolongado
-// (override de la función original)
-function loadCacheLocalFast() {
-  try {
-    const raw = localStorage.getItem(LS_CACHE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    // Caché válido solo 60 segundos (era 10 minutos)
-    if (Date.now() - parsed.ts > 60000) return null;
-    return parsed.data;
-  } catch(e) { return null; }
-}
-
-function startGPPolling() {
-  if (!API_URL) return; // Sin API no hay nada que hacer
   if (_pollTimer) clearInterval(_pollTimer);
-  _pollTimer = setInterval(pollForGPChange, POLL_INTERVAL_MS);
+  _pollTimer = setInterval(async () => {
+    try {
+      const data = await apiGet({ action: 'getAll' });
+      applySheetData(data);
+      saveCacheLocal(data);
+    } catch(e) { /* silencioso */ }
+  }, POLL_INTERVAL_MS);
 
-  // También escuchar visibilitychange: si el usuario vuelve a la pestaña
-  // después de un rato, hacer poll inmediato
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
-      // Solo si pasaron más de 60 segundos desde el último poll
       clearInterval(_pollTimer);
-      pollForGPChange();
-      _pollTimer = setInterval(pollForGPChange, POLL_INTERVAL_MS);
+      startDataPolling();
     }
   });
 }
 
-// Arrancar polling después de que la app cargue
-const _origAppInit = appInit;
-// Parchear el final del loadFromSheets para iniciar polling
-const _origLoadFromSheets = loadFromSheets;
-// Iniciar polling una vez que el app esté listo
-setTimeout(() => startGPPolling(), 5000);
+setTimeout(() => startDataPolling(), 5000);
 </script>
-
-<!-- ── PIT BOARD — NEW GP NOTIFICATION ─────────────────────── -->
-<div id="pit-board-overlay" style="display:none;">
-  <div class="pit-board">
-    <div class="pit-board-signal">
-      <span class="pit-board-signal-dot"></span>
-      NUEVO GP ACTIVADO
-    </div>
-    <div class="pit-board-icon" id="pit-board-icon">🏁</div>
-    <div class="pit-board-title">¡Nuevo Grand Prix!</div>
-    <div class="pit-board-sub">El admin activó una nueva carrera.<br>Ya podés cargar tu pronóstico.</div>
-    <div class="pit-board-race-card">
-      <div class="pit-board-race-flag" id="pit-board-race-flag">🏁</div>
-      <div class="pit-board-race-info">
-        <div class="pit-board-race-round" id="pit-board-race-round">RONDA —</div>
-        <div class="pit-board-race-name" id="pit-board-race-name">—</div>
-        <div class="pit-board-race-date" id="pit-board-race-date">—</div>
-      </div>
-    </div>
-    <button class="pit-board-btn" onclick="dismissPitBoard()">
-      🏎 ¡IR AL PRONÓSTICO!
-    </button>
-  </div>
-</div>
-
-<!-- ── POLLING SYNC INDICATOR ──────────────────────────────── -->
-<div id="gp-poll-indicator">
-  <span class="poll-dot"></span>
-  <span id="poll-indicator-text">SYNC</span>
-</div>
 </body>
 </html>
