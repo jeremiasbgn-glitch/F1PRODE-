@@ -1676,10 +1676,15 @@ function teamOptions(sel = '') {
 function populateGPSelect(id, sel = '') {
   const el = document.getElementById(id);
   if (!el) return;
+  const now = Date.now();
+  const isPlayerForm = id === 'f-gp';
   el.innerHTML = '<option value="">— Seleccioná el GP —</option>' +
-    RACES_2026.map(r =>
-      `<option value="${r.id}"${r.id === sel ? ' selected' : ''}>${r.flag} R${r.round} — ${r.short} (${r.date})${r.sprint ? ' ⚡ SPRINT' : ''}</option>`
-    ).join('');
+    RACES_2026.map(r => {
+      const qualyPassed = isPlayerForm && r.qualy && (now - new Date(r.qualy).getTime()) > 7200000;
+      const disabled    = qualyPassed ? ' disabled' : '';
+      const label       = `${r.flag} R${r.round} — ${r.short} (${r.date})${r.sprint ? ' ⚡ SPRINT' : ''}${qualyPassed ? ' 🔒' : ''}`;
+      return `<option value="${r.id}"${r.id === sel ? ' selected' : ''}${disabled}>${label}</option>`;
+    }).join('');
 }
 
 function populateFormSelects() {
