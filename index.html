@@ -679,6 +679,10 @@ body::before {
 .rank-other { background: var(--white-faint); color: var(--white-muted); }
 
 .player-name-cell { font-weight: 700; font-size: 0.95rem; }
+.pos-delta { font-family: var(--font-display); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.5px; padding: 1px 5px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+.pos-delta.up   { color: var(--green); background: rgba(0,230,100,0.12); }
+.pos-delta.down { color: #ff4d4d; background: rgba(255,77,77,0.12); }
+.pos-delta.same { color: var(--white-muted); background: transparent; font-size: 0.8rem; }
 .pts-cell { font-family: var(--font-display); font-size: 1.1rem; font-weight: 900; color: var(--gold); }
 .pts-breakdown { font-size: 0.75rem; color: var(--white-muted); }
 .pts-correct { color: var(--green); font-weight: 600; }
@@ -737,12 +741,19 @@ body::before {
 }
 .admin-pts-badge-empty { font-size: 0.72rem; color: var(--white-muted); font-style: italic; }
 
-.admin-gp-block { margin-bottom: 24px; }
+.admin-gp-block { margin-bottom: 12px; border: 1px solid var(--card-border); border-radius: 10px; overflow: hidden; }
 .admin-gp-title {
   font-family: var(--font-display); font-size: 0.8rem; font-weight: 800;
   letter-spacing: 2px; text-transform: uppercase; color: var(--f1-red);
-  margin-bottom: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 12px 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  cursor: pointer; background: var(--black-2); user-select: none;
 }
+.admin-gp-title:hover { background: var(--black-3); }
+.admin-gp-arrow { margin-left: auto; font-size: 0.9rem; color: var(--white-muted); transition: transform 0.2s; flex-shrink: 0; }
+.admin-gp-block.collapsed .admin-gp-arrow { transform: rotate(-90deg); }
+.admin-gp-body { display: block; padding: 10px 10px 4px; }
+.admin-gp-block.collapsed .admin-gp-body { display: none; }
+.admin-gp-count { font-size: 0.65rem; color: var(--white-muted); font-weight: 600; letter-spacing: 1px; margin-left: 4px; }
 
 .status-chip { font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; }
 .status-chip.scored { background: rgba(0,230,100,0.15); color: var(--green); border: 1px solid rgba(0,230,100,0.3); }
@@ -2088,15 +2099,44 @@ function renderTable(tabId) {
     return;
   }
   if (tabId === 'general') {
+    const scored = RACES_2026.filter(r => appState.results[r.id]);
     const totals = {};
-    Object.entries(appState.points).forEach(([gpId, gp]) => {
-      Object.entries(gp).forEach(([player, d]) => {
+    Object.entries(appState.points).forEach(function(entry) {
+      var gpId = entry[0]; var gp = entry[1];
+      Object.entries(gp).forEach(function(pe) {
+        var player = pe[0]; var d = pe[1];
         if (!totals[player]) totals[player] = { total: 0, races: 0 };
         totals[player].total += d.total;
         totals[player].races++;
       });
     });
-    const board = Object.entries(totals).map(([name, d]) => ({ name, ...d })).sort((a, b) => b.total - a.total);
+    const board = Object.entries(totals).map(function(e) { return { name: e[0], total: e[1].total, races: e[1].races }; }).sort(function(a,b){ return b.total - a.total; });
+
+    // Calcular posición anterior (sin el último GP puntuado)
+    const prevPos = {};
+    if (scored.length > 1) {
+      const lastGP = scored[scored.length - 1].id;
+      const prevTotals = {};
+      Object.entries(appState.points).forEach(function(entry) {
+        var gpId = entry[0]; var gp = entry[1];
+        if (gpId === lastGP) return;
+        Object.entries(gp).forEach(function(pe) {
+          var player = pe[0]; var d = pe[1];
+          if (!prevTotals[player]) prevTotals[player] = 0;
+          prevTotals[player] += d.total;
+        });
+      });
+      var prevBoard = Object.entries(prevTotals).map(function(e){ return { name: e[0], total: e[1] }; }).sort(function(a,b){ return b.total - a.total; });
+      prevBoard.forEach(function(p, i) { prevPos[p.name] = i + 1; });
+    }
+
+    // Añadir delta de posición a cada jugador
+    board.forEach(function(p, i) {
+      var curr = i + 1;
+      var prev = prevPos[p.name];
+      p.posDelta = (prev != null) ? prev - curr : null;
+    });
+
     if (!board.length) {
       el.innerHTML = `<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-title">Sin puntos aún</div><div class="empty-text">Los puntos aparecen cuando el admin cargue los resultados oficiales</div></div>`;
       return;
@@ -2212,9 +2252,16 @@ function renderLeaderboard(board, title, showRaces, gpId) {
     } else {
       right = `<td><div class="pts-bar"><div class="pts-bar-fill" style="width:${pct}%"></div></div></td>`;
     }
+    // Flecha de posición (solo tabla general, cuando hay delta calculado)
+    var deltaHtml = '';
+    if (!gpId && p.posDelta != null) {
+      if (p.posDelta > 0)      deltaHtml = `<span class="pos-delta up" title="Subió ${p.posDelta} posición${p.posDelta > 1 ? 'es' : ''}">▲${p.posDelta}</span>`;
+      else if (p.posDelta < 0) deltaHtml = `<span class="pos-delta down" title="Bajó ${Math.abs(p.posDelta)} posición${Math.abs(p.posDelta) > 1 ? 'es' : ''}">▼${Math.abs(p.posDelta)}</span>`;
+      else                     deltaHtml = `<span class="pos-delta same" title="Sin cambios">—</span>`;
+    }
     html += `<tr>
       <td><span class="rank-pos rank-${i < 3 ? i + 1 : 'other'}">${medals[i] || i + 1}</span></td>
-      <td class="player-name-cell">${p.name}</td>
+      <td class="player-name-cell">${p.name}${deltaHtml}</td>
       ${showRaces ? `<td class="text-muted">${p.races}</td>` : ''}
       <td class="pts-cell">${p.total}</td>${right}
     </tr>`;
@@ -2357,12 +2404,16 @@ function renderAdminPredictions() {
       ((appState.points[race.id] && appState.points[race.id][a.player] && appState.points[race.id][a.player].total) || 0)
     );
 
-    html += `<div class="admin-gp-block">
-      <div class="admin-gp-title">
+    const gpBlockId = 'admin-gp-' + race.id;
+    html += `<div class="admin-gp-block" id="${gpBlockId}">
+      <div class="admin-gp-title" onclick="toggleAdminGP('${gpBlockId}')">
         ${race.flag} R${race.round} — ${race.name}
         ${race.sprint ? '<span class="status-chip" style="background:rgba(123,47,190,.2);color:#B47FFF;border-color:rgba(123,47,190,.4)">⚡ SPRINT</span>' : ''}
         ${hasRes ? '<span class="status-chip scored">✅ Puntuado</span>' : '<span class="status-chip open">⏳ Pendiente</span>'}
-      </div>`;
+        <span class="admin-gp-count">${preds.length} pronóstico${preds.length !== 1 ? 's' : ''}</span>
+        <span class="admin-gp-arrow">▼</span>
+      </div>
+      <div class="admin-gp-body">`;
 
     preds.forEach((pred, idx) => {
       const pts  = appState.points[race.id] && appState.points[race.id][pred.player];
@@ -2439,15 +2490,25 @@ function renderAdminPredictions() {
           `<div class="admin-pred-row"><span>${f.label}</span><span>${f.pred || '—'}</span></div>`
         ).join('')}</div>`;
       }
-      html += `</div>`;
+      html += `</div>`;  // close admin-pred-item
     });
-    html += `</div>`;
+    html += `</div></div>`;  // close admin-gp-body + admin-gp-block
   });
   el.innerHTML = html;
+  // Auto-colapsar los GPs ya puntuados; dejar abiertos los pendientes
+  RACES_2026.forEach(race => {
+    if (!grouped[race.id]) return;
+    var block = document.getElementById('admin-gp-' + race.id);
+    if (block && appState.results[race.id]) block.classList.add('collapsed');
+  });
+}
+
+function toggleAdminGP(blockId) {
+  var block = document.getElementById(blockId);
+  if (block) block.classList.toggle('collapsed');
 }
 
 async function deletePred(id) {
-  if (!confirm('¿Eliminar este pronóstico?')) return;
   try {
     if (API_URL) await apiPost({ action: 'deletePrediction', id, password: adminPassword });
     const pred = appState.predictions.find(p => p.id == id);
