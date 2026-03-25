@@ -4,6 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>F1 PRODE — Temporada 2026</title>
+
+<!-- PWA: manifest inline -->
+<link rel="manifest" href="data:application/manifest+json,{
+  %22name%22:%22F1 PRODE 2026%22,
+  %22short_name%22:%22F1 PRODE%22,
+  %22description%22:%22Pronósticos de Fórmula 1 — Temporada 2026%22,
+  %22start_url%22:%22.%22,
+  %22display%22:%22standalone%22,
+  %22background_color%22:%2208080D%22,
+  %22theme_color%22:%22E8002D%22,
+  %22orientation%22:%22portrait%22,
+  %22icons%22:[{
+    %22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%2308080D'/%3E%3Crect x='0' y='460' width='512' height='12' fill='%23E8002D'/%3E%3Ctext x='256' y='320' font-family='Arial Black,sans-serif' font-size='180' font-weight='900' text-anchor='middle' fill='%23F5F5F8'%3EF1%3C/text%3E%3Ctext x='256' y='430' font-family='Arial,sans-serif' font-size='72' font-weight='700' text-anchor='middle' fill='%23E8002D'%3EPRODE%3C/text%3E%3C/svg%3E%22,
+    %22sizes%22:%22512x512%22,
+    %22type%22:%22image/svg+xml%22,
+    %22purpose%22:%22any maskable%22
+  }]
+}">
+
+<!-- PWA: iOS support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="F1 PRODE">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%2308080D'/%3E%3Crect x='0' y='460' width='512' height='12' fill='%23E8002D'/%3E%3Ctext x='256' y='320' font-family='Arial Black,sans-serif' font-size='180' font-weight='900' text-anchor='middle' fill='%23F5F5F8'%3EF1%3C/text%3E%3Ctext x='256' y='430' font-family='Arial,sans-serif' font-size='72' font-weight='700' text-anchor='middle' fill='%23E8002D'%3EPRODE%3C/text%3E%3C/svg%3E">
+
+<!-- PWA: theme color (barra del navegador) -->
+<meta name="theme-color" content="#E8002D">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -391,6 +419,22 @@ body::before {
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
 }
+
+/* ── Nombre recordado ─────────────────── */
+.player-name-hint {
+  display: none; align-items: center; gap: 8px;
+  margin-top: 6px; font-size: 0.78rem; color: var(--white-muted);
+}
+.player-name-hint.visible { display: flex; }
+.player-name-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0,230,100,0.1); border: 1px solid rgba(0,230,100,0.25);
+  color: var(--green); border-radius: 20px; padding: 3px 10px 3px 8px;
+  font-family: var(--font-display); font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.5px; cursor: pointer; transition: background 0.15s;
+}
+.player-name-chip:hover { background: rgba(0,230,100,0.18); }
+.player-name-chip-icon { font-size: 0.9rem; }
 
 .field-select {
   appearance: none;
@@ -823,6 +867,47 @@ body::before {
 .empty-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; color: var(--white); margin-bottom: 6px; }
 .empty-text { font-size: 0.85rem; line-height: 1.5; }
 
+
+
+/* ============================================================ EVOLUCIÓN */
+.evo-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:12px; }
+.evo-header { padding:14px 16px 10px; border-bottom:1px solid var(--card-border); }
+.evo-title { font-family:var(--font-display); font-size:0.75rem; font-weight:800; letter-spacing:2px; color:var(--white); }
+.evo-subtitle { font-size:0.72rem; color:var(--white-muted); margin-top:2px; }
+.evo-chart-wrap { padding:12px 10px 4px; background:var(--black-2); }
+.evo-legend { display:flex; flex-direction:column; gap:2px; padding:10px 14px 12px; }
+.evo-legend-item { display:flex; align-items:center; gap:8px; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+.evo-legend-item:last-child { border-bottom:none; }
+.evo-legend-rank { font-family:var(--font-display); font-size:0.8rem; font-weight:900; color:var(--white-muted); width:16px; text-align:center; flex-shrink:0; }
+.evo-legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.evo-legend-name { flex:1; font-size:0.82rem; font-weight:600; color:var(--white); }
+.evo-legend-pts { font-family:var(--font-display); font-size:0.75rem; font-weight:800; color:var(--gold); }
+
+/* ============================================================ HORARIOS INLINE */
+.hi-wrap{background:var(--black-2);border:1px solid var(--card-border);border-radius:12px;overflow:hidden;font-size:0.82rem;}
+.hi-header{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--card-border);background:rgba(255,255,255,0.02);}
+.hi-title{font-family:var(--font-display);font-size:0.68rem;font-weight:800;letter-spacing:2px;color:var(--white-muted);}
+.hi-sprint-chip{font-family:var(--font-display);font-size:0.6rem;font-weight:800;letter-spacing:1px;padding:2px 7px;border-radius:10px;background:rgba(123,47,190,.2);color:#B47FFF;border:1px solid rgba(123,47,190,.35);}
+.hi-status-wrap{padding:8px 14px;border-bottom:1px solid var(--card-border);}
+.hi-status-live{display:flex;align-items:center;gap:7px;font-size:0.78rem;font-weight:700;color:var(--green);}
+.hi-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;animation:hiPulse 1.2s infinite;}
+@keyframes hiPulse{0%,100%{opacity:1}50%{opacity:0.25}}
+.hi-status-next{font-size:0.75rem;color:var(--f1-red);font-weight:600;}
+.hi-sessions{padding:2px 0;}
+.hi-row{display:grid;grid-template-columns:54px 1fr auto auto;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.hi-row:last-child{border-bottom:none;}
+.hi-row.hi-live{background:rgba(0,230,100,0.07);border-left:3px solid var(--green);padding-left:11px;}
+.hi-row.hi-next{background:rgba(232,0,45,0.05);border-left:3px solid rgba(232,0,45,0.45);padding-left:11px;}
+.hi-row.hi-done{opacity:0.4;}
+.hi-day{font-size:0.78rem;color:var(--white-muted);white-space:nowrap;}
+.hi-day b{font-family:var(--font-display);font-size:0.95rem;font-weight:900;color:var(--white);margin-right:2px;}
+.hi-name{font-family:var(--font-display);font-size:0.75rem;font-weight:800;letter-spacing:0.5px;color:var(--white);}
+.hi-time{font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:var(--white);white-space:nowrap;text-align:right;}
+.hi-time-end{color:var(--white-muted);font-weight:500;}
+.hi-badge{font-family:var(--font-display);font-size:0.55rem;font-weight:800;letter-spacing:1px;padding:2px 6px;border-radius:6px;white-space:nowrap;}
+.hi-badge-live{background:rgba(0,230,100,0.15);color:var(--green);animation:hiPulse 1.4s infinite;}
+.hi-badge-next{background:rgba(232,0,45,0.12);color:var(--f1-red);}
+
 /* ============================================================ TOAST */
 .toast {
   position: fixed; bottom: 80px; left: 50%;
@@ -996,12 +1081,15 @@ body::before {
         <form id="prediction-form" novalidate>
 
           <!-- Selector de GP visible para el jugador -->
-          <div class="form-field" style="margin-bottom:18px;">
+          <div class="form-field" style="margin-bottom:12px;">
             <label class="field-label required">🏎 GRAN PREMIO</label>
             <select id="f-gp" class="gp-select" onchange="onGPSelectChange()">
               <option value="">— Seleccioná el GP —</option>
             </select>
           </div>
+
+          <!-- Panel de horarios inline — se muestra al seleccionar GP -->
+          <div id="horarios-inline" style="display:none;margin-bottom:16px;"></div>
 
           <!-- Banner de formulario cerrado -->
           <div id="form-locked-banner" style="display:none; align-items:center; gap:14px; background:linear-gradient(135deg,rgba(232,0,45,0.1),rgba(232,0,45,0.04)); border:1px solid rgba(232,0,45,0.3); border-left:3px solid var(--f1-red); border-radius:10px; padding:16px; margin-bottom:16px;">
@@ -1016,6 +1104,14 @@ body::before {
             <div class="form-field">
               <label class="field-label required">👤 NOMBRE DE JUGADOR</label>
               <input type="text" id="f-player" class="field-input" placeholder="Tu nombre..." maxlength="24" autocomplete="off" spellcheck="false">
+              <div class="player-name-hint" id="player-name-hint">
+                <span>¿Sos</span>
+                <span class="player-name-chip" id="player-name-chip" onclick="applyRememberedName()">
+                  <span class="player-name-chip-icon">👤</span>
+                  <span id="player-name-chip-text"></span>
+                </span>
+                <span>?</span>
+              </div>
             </div>
 
             <div class="form-divider"><span>CLASIFICACIÓN & CARRERA</span></div>
@@ -1444,8 +1540,55 @@ async function apiPost(body) {
 }
 
 // ─── CARGAR DATOS + CACHÉ LOCALSTROAGE ───────────────────────
-const LS_CACHE_KEY = 'f1prode_cache_2026';
-const LS_SAVED_KEY = 'f1prode_saved_pred_2026';
+const LS_CACHE_KEY  = 'f1prode_cache_2026';
+const LS_SAVED_KEY  = 'f1prode_saved_pred_2026';
+const LS_PLAYER_KEY = 'f1prode_player_name';
+
+// ─── NOMBRE RECORDADO ────────────────────────────────────────
+function normalizePlayerName(name) {
+  return name.trim().replace(/\s+/g, ' ').toLowerCase().replace(/^\w/, function(c) { return c.toUpperCase(); });
+}
+function savePlayerName(name) {
+  try { localStorage.setItem(LS_PLAYER_KEY, normalizePlayerName(name)); } catch(e) {}
+}
+function loadPlayerName() {
+  try { return localStorage.getItem(LS_PLAYER_KEY) || ''; } catch(e) { return ''; }
+}
+function initPlayerNameHint() {
+  var saved = loadPlayerName();
+  var input = document.getElementById('f-player');
+  var hint  = document.getElementById('player-name-hint');
+  var chip  = document.getElementById('player-name-chip-text');
+  if (!input || !hint || !chip) return;
+
+  // Si hay nombre guardado, precargarlo directamente en el campo
+  if (saved) {
+    input.value = saved;
+    hint.classList.remove('visible'); // campo ya relleno, no mostrar hint
+  }
+
+  // Al limpiar el campo manualmente: mostrar el chip de sugerencia
+  input.addEventListener('input', function() {
+    if (!saved) return;
+    var current = input.value.trim();
+    if (current === '') {
+      chip.textContent = saved;
+      hint.classList.add('visible');
+    } else {
+      hint.classList.remove('visible');
+    }
+  });
+}
+function applyRememberedName() {
+  var saved = loadPlayerName();
+  var input = document.getElementById('f-player');
+  var hint  = document.getElementById('player-name-hint');
+  if (input && saved) {
+    input.value = saved;
+    if (hint) hint.classList.remove('visible');
+    input.focus();
+  }
+}
 
 function saveCacheLocal(data) {
   try { localStorage.setItem(LS_CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e) {}
@@ -1559,7 +1702,7 @@ function showView(name) {
   if (vEl) vEl.classList.add('active');
   const bEl = document.querySelector('[data-view="' + name + '"]');
   if (bEl) bEl.classList.add('active');
-  if (name === 'tablas') renderTablas();
+  if (name === 'tablas')   renderTablas();
   if (name === 'admin')  renderAdminPanel();
 }
 
@@ -1737,6 +1880,7 @@ function onGPSelectChange() {
   if (!gpId) {
     if (fields) fields.style.display = 'none';
     updateBanner(gpId);
+    renderHorariosInline(null);
     startCountdown(null);
     return;
   }
@@ -1745,6 +1889,7 @@ function onGPSelectChange() {
   updateBanner(gpId);
   renderCircuitStats(gpId);
   updateSprintFields();
+  renderHorariosInline(gpId);
 
   // 4. Mostrar los campos del formulario
   if (fields) fields.style.display = 'block';
@@ -1925,7 +2070,7 @@ function initPredictionForm() {
     const pred = {
       id:           Date.now(),
       timestamp:    new Date().toISOString(),
-      player:       document.getElementById('f-player').value.trim().toLowerCase().replace(/^\w/, c => c.toUpperCase()),
+      player:       normalizePlayerName(document.getElementById('f-player').value),
       gpId,
       pole:         document.getElementById('f-pole').value,
       winner:       document.getElementById('f-winner').value,
@@ -1954,8 +2099,9 @@ function initPredictionForm() {
       );
       appState.predictions.push(pred);
       if (appState.results[gpId]) calculatePointsForGP(gpId);
-      // Guardar en localStorage para badge persistente
+      // Guardar en localStorage para badge persistente y nombre recordado
       saveLastPredLocal(pred);
+      savePlayerName(pred.player);
       showSummary(pred);
       showToast('✅ ¡Pronóstico enviado!');
     } catch(err) {
@@ -2071,11 +2217,287 @@ async function changePassword() {
 }
 
 // ─── TABLAS ──────────────────────────────────────────────────
+
+
+// ─── HORARIOS: DATOS COMPLETOS 2026 (horario ART = UTC-3) ────────────────
+// Cada sesión: { key, label, start: 'YYYY-MM-DDTHH:MM:00-03:00', dur (minutos) }
+// Tipos: fp1, fp2, fp3, sq (sprint qualy), spr (sprint), qu, race
+const SCHEDULE_2026 = [
+  { id:'aus26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-03-05T22:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-03-06T02:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-03-06T22:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-03-07T02:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-03-08T01:00:00-03:00', dur:120 },
+  ]},
+  { id:'chn26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-03-13T00:30:00-03:00', dur:60 },
+    { key:'sq',   label:'Clasif. Sprint',   start:'2026-03-13T04:30:00-03:00', dur:60 },
+    { key:'spr',  label:'Carrera Sprint',   start:'2026-03-14T00:00:00-03:00', dur:30 },
+    { key:'qu',   label:'Clasificación',    start:'2026-03-14T04:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-03-15T04:00:00-03:00', dur:120 },
+  ]},
+  { id:'jpn26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-03-26T23:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-03-27T03:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-03-27T23:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-03-28T03:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-03-29T02:00:00-03:00', dur:120 },
+  ]},
+  { id:'bhr26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-04-10T08:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-04-10T12:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-04-11T09:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-04-11T13:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-04-12T12:00:00-03:00', dur:120 },
+  ]},
+  { id:'sau26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-04-17T10:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-04-17T14:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-04-18T10:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-04-18T14:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-04-19T14:00:00-03:00', dur:120 },
+  ]},
+  { id:'mia26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-05-01T13:30:00-03:00', dur:60 },
+    { key:'sq',   label:'Clasif. Sprint',   start:'2026-05-01T17:30:00-03:00', dur:60 },
+    { key:'spr',  label:'Carrera Sprint',   start:'2026-05-02T13:00:00-03:00', dur:30 },
+    { key:'qu',   label:'Clasificación',    start:'2026-05-02T17:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-05-03T17:00:00-03:00', dur:120 },
+  ]},
+  { id:'can26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-05-22T13:30:00-03:00', dur:60 },
+    { key:'sq',   label:'Clasif. Sprint',   start:'2026-05-22T17:30:00-03:00', dur:60 },
+    { key:'spr',  label:'Carrera Sprint',   start:'2026-05-23T13:00:00-03:00', dur:30 },
+    { key:'qu',   label:'Clasificación',    start:'2026-05-23T17:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-05-24T17:00:00-03:00', dur:120 },
+  ]},
+  { id:'mon26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-06-05T08:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-06-05T12:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-06-06T07:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-06-06T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-06-07T10:00:00-03:00', dur:120 },
+  ]},
+  { id:'esp26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-06-12T08:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-06-12T12:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-06-13T07:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-06-13T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-06-14T10:00:00-03:00', dur:120 },
+  ]},
+  { id:'aut26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-06-26T08:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-06-26T12:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-06-27T07:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-06-27T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-06-28T10:00:00-03:00', dur:120 },
+  ]},
+  { id:'gbr26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-07-03T08:30:00-03:00', dur:60 },
+    { key:'sq',   label:'Clasif. Sprint',   start:'2026-07-03T12:30:00-03:00', dur:60 },
+    { key:'spr',  label:'Carrera Sprint',   start:'2026-07-04T08:00:00-03:00', dur:30 },
+    { key:'qu',   label:'Clasificación',    start:'2026-07-04T12:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-07-05T11:00:00-03:00', dur:120 },
+  ]},
+  { id:'bel26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-07-17T08:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-07-17T12:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-07-18T07:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-07-18T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-07-19T10:00:00-03:00', dur:120 },
+  ]},
+  { id:'hun26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-07-24T08:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-07-24T12:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-07-25T07:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-07-25T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-07-26T10:00:00-03:00', dur:120 },
+  ]},
+  { id:'ned26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-08-21T07:30:00-03:00', dur:60 },
+    { key:'sq',   label:'Clasif. Sprint',   start:'2026-08-21T11:30:00-03:00', dur:60 },
+    { key:'spr',  label:'Carrera Sprint',   start:'2026-08-22T07:00:00-03:00', dur:30 },
+    { key:'qu',   label:'Clasificación',    start:'2026-08-22T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-08-23T10:00:00-03:00', dur:120 },
+  ]},
+  { id:'ita26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-09-04T07:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-09-04T11:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-09-05T07:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-09-05T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-09-06T10:00:00-03:00', dur:120 },
+  ]},
+  { id:'mad26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-09-11T08:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-09-11T12:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-09-12T07:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-09-12T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-09-13T10:00:00-03:00', dur:120 },
+  ]},
+  { id:'aze26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-09-24T05:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-09-24T09:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-09-25T05:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-09-25T09:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-09-26T08:00:00-03:00', dur:120 },
+  ]},
+  { id:'sgp26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-10-09T06:30:00-03:00', dur:60 },
+    { key:'sq',   label:'Clasif. Sprint',   start:'2026-10-09T09:30:00-03:00', dur:60 },
+    { key:'spr',  label:'Carrera Sprint',   start:'2026-10-10T06:00:00-03:00', dur:30 },
+    { key:'qu',   label:'Clasificación',    start:'2026-10-10T10:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-10-11T09:00:00-03:00', dur:120 },
+  ]},
+  { id:'usa26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-10-23T14:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-10-23T18:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-10-24T14:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-10-24T18:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-10-25T17:00:00-03:00', dur:120 },
+  ]},
+  { id:'mex26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-10-30T14:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-10-30T18:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-10-31T13:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-10-31T17:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-11-01T16:00:00-03:00', dur:120 },
+  ]},
+  { id:'bra26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-11-06T12:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-11-06T16:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-11-07T11:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-11-07T15:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-11-08T14:00:00-03:00', dur:120 },
+  ]},
+  { id:'lv26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-11-19T20:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-11-20T00:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-11-20T20:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-11-21T00:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-11-22T00:00:00-03:00', dur:120 },
+  ]},
+  { id:'qat26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-11-27T10:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-11-27T14:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-11-28T11:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-11-28T15:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-11-29T13:00:00-03:00', dur:120 },
+  ]},
+  { id:'abud26', sessions:[
+    { key:'fp1',  label:'Práctica 1',       start:'2026-12-04T06:30:00-03:00', dur:60 },
+    { key:'fp2',  label:'Práctica 2',       start:'2026-12-04T10:00:00-03:00', dur:60 },
+    { key:'fp3',  label:'Práctica 3',       start:'2026-12-05T07:30:00-03:00', dur:60 },
+    { key:'qu',   label:'Clasificación',    start:'2026-12-05T11:00:00-03:00', dur:60 },
+    { key:'race', label:'Carrera',          start:'2026-12-06T10:00:00-03:00', dur:120 },
+  ]},
+];
+
+// ─── HORARIOS INLINE ─────────────────────────────────────────────────────────
+var _horariosInterval = null;
+
+function renderHorariosInline(gpId) {
+  var el = document.getElementById('horarios-inline');
+  if (!el) return;
+  if (!gpId) { el.style.display = 'none'; el.innerHTML = ''; return; }
+
+  var sch = SCHEDULE_2026.find(function(s) { return s.id === gpId; });
+  var race = RACES_2026.find(function(r) { return r.id === gpId; });
+  if (!sch || !race) { el.style.display = 'none'; return; }
+
+  el.style.display = 'block';
+  _drawHorariosInline(el, sch, race);
+
+  // Refrescar cada 30s mientras el panel esté visible
+  if (_horariosInterval) clearInterval(_horariosInterval);
+  _horariosInterval = setInterval(function() {
+    var cur = document.getElementById('f-gp');
+    if (cur && cur.value === gpId) {
+      _drawHorariosInline(el, sch, race);
+    } else {
+      clearInterval(_horariosInterval);
+    }
+  }, 30000);
+}
+
+function _drawHorariosInline(el, sch, race) {
+  var now = Date.now();
+  var DAYS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  var MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+  var sessions = sch.sessions.map(function(s) {
+    var startMs = new Date(s.start).getTime();
+    var endMs   = startMs + s.dur * 60000;
+    var state   = now < startMs ? 'upcoming' : now < endMs ? 'live' : 'done';
+    return Object.assign({}, s, { startMs: startMs, endMs: endMs, state: state });
+  });
+
+  var liveSession = sessions.find(function(s) { return s.state === 'live'; });
+  var nextSession = sessions.find(function(s) { return s.state === 'upcoming'; });
+
+  // Badge de estado en vivo / próximo
+  var statusHtml = '';
+  if (liveSession) {
+    statusHtml = '<div class="hi-status-live"><span class="hi-dot"></span>' + liveSession.label + ' en vivo</div>';
+  } else if (nextSession) {
+    statusHtml = '<div class="hi-status-next">⏱ Próxima: ' + nextSession.label + ' · en ' + _fmtCountdown(nextSession.startMs - now) + '</div>';
+  }
+
+  // Filas de sesiones
+  var rows = sessions.map(function(s) {
+    var d      = new Date(s.startMs);
+    var endD   = new Date(s.endMs);
+    var dayNum = d.getDate();
+    var dayN   = DAYS[d.getDay()];
+    var tStart = _pad(d.getHours()) + ':' + _pad(d.getMinutes());
+    var tEnd   = _pad(endD.getHours()) + ':' + _pad(endD.getMinutes());
+
+    var rowCls = 'hi-row';
+    var badge  = '';
+    if      (s.state === 'live')     { rowCls += ' hi-live';  badge = '<span class="hi-badge hi-badge-live">EN VIVO</span>'; }
+    else if (s === nextSession)      { rowCls += ' hi-next';  badge = '<span class="hi-badge hi-badge-next">PRÓXIMA</span>'; }
+    else if (s.state === 'done')     { rowCls += ' hi-done'; }
+
+    return '<div class="' + rowCls + '">' +
+      '<div class="hi-day"><b>' + dayNum + '</b> ' + dayN + '</div>' +
+      '<div class="hi-name">' + s.label + '</div>' +
+      '<div class="hi-time">' + tStart + '<span class="hi-time-end"> – ' + tEnd + '</span></div>' +
+      badge +
+      '</div>';
+  }).join('');
+
+  el.innerHTML =
+    '<div class="hi-wrap">' +
+      '<div class="hi-header">' +
+        '<span class="hi-title">🕐 HORARIOS · ' + race.short.toUpperCase() + '</span>' +
+        (race.sprint ? '<span class="hi-sprint-chip">⚡ SPRINT</span>' : '') +
+      '</div>' +
+      (statusHtml ? '<div class="hi-status-wrap">' + statusHtml + '</div>' : '') +
+      '<div class="hi-sessions">' + rows + '</div>' +
+    '</div>';
+}
+
+function _pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+function _fmtCountdown(ms) {
+  if (ms <= 0) return '0m';
+  var totalMin = Math.floor(ms / 60000);
+  var days = Math.floor(totalMin / 1440);
+  var hours = Math.floor((totalMin % 1440) / 60);
+  var mins = totalMin % 60;
+  var parts = [];
+  if (days > 0) parts.push(days + 'd');
+  if (hours > 0) parts.push(hours + 'h');
+  if (mins > 0 || parts.length === 0) parts.push(mins + 'm');
+  return parts.join(' ');
+}
+
 function renderTablas() {
   const scored = RACES_2026.filter(r => appState.results[r.id]);
   const tabs = [
-    { id:'general',  label:'GENERAL',       cls: '' },
-    { id:'profile',  label:'👤 MI PERFIL',  cls: 'tab-profile' },
+    { id:'general',   label:'GENERAL',       cls: '' },
+    { id:'evolucion', label:'📈 EVOLUCIÓN',   cls: '' },
+    { id:'profile',   label:'👤 MI PERFIL',  cls: 'tab-profile' },
     ...scored.map(r => ({ id: r.id, label: `R${r.round} ${r.short}`, cls: '' }))
   ];
   const cont = document.getElementById('gp-tabs');
@@ -2096,6 +2518,10 @@ function renderTable(tabId) {
   const el = document.getElementById('tabla-content');
   if (tabId === 'profile') {
     renderProfileTab(el);
+    return;
+  }
+  if (tabId === 'evolucion') {
+    renderEvolucion(el);
     return;
   }
   if (tabId === 'general') {
@@ -2156,6 +2582,155 @@ function renderTable(tabId) {
 }
 
 // ─── PERFIL PERSONAL ─────────────────────────────────────────
+// ─── EVOLUCIÓN DE POSICIONES ─────────────────────────────────
+function renderEvolucion(el) {
+  var scored = RACES_2026.filter(function(r) { return appState.results[r.id]; });
+
+  if (scored.length < 2) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📈</div><div class="empty-title">Faltan datos</div><div class="empty-text">El gráfico de evolución aparece cuando haya al menos 2 fechas puntuadas.</div></div>';
+    return;
+  }
+
+  // Paleta de colores F1-style
+  var COLORS = ['#E8002D','#00E664','#4BB8FF','#FFD100','#B47FFF','#FF6B35','#00D2BE','#FF8800','#C0C0C0','#DC143C','#00FF7F','#1E90FF'];
+
+  // Recopilar todos los jugadores
+  var allPlayers = {};
+  scored.forEach(function(r) {
+    var gp = appState.points[r.id] || {};
+    Object.keys(gp).forEach(function(p) { allPlayers[p] = true; });
+  });
+  var players = Object.keys(allPlayers);
+
+  // Para cada GP, calcular ranking acumulado hasta ese punto
+  // posData[player] = array de posiciones (1 = primero) por cada GP scored
+  var posData = {};
+  players.forEach(function(p) { posData[p] = []; });
+
+  scored.forEach(function(race, idx) {
+    // Acumular puntos hasta este GP inclusive
+    var cumulative = {};
+    players.forEach(function(p) { cumulative[p] = 0; });
+    for (var i = 0; i <= idx; i++) {
+      var gp = appState.points[scored[i].id] || {};
+      players.forEach(function(p) {
+        cumulative[p] += (gp[p] ? gp[p].total : 0);
+      });
+    }
+    // Ordenar y asignar posiciones
+    var sorted = players.slice().sort(function(a, b) { return cumulative[b] - cumulative[a]; });
+    sorted.forEach(function(p, pos) {
+      posData[p].push({ pos: pos + 1, pts: cumulative[p] });
+    });
+  });
+
+  var numRaces  = scored.length;
+  var numPlayers = players.length;
+
+  // Dimensiones SVG — responsive
+  var W = 340, H = 240;
+  var PAD_LEFT = 28, PAD_RIGHT = 70, PAD_TOP = 16, PAD_BOTTOM = 28;
+  var chartW = W - PAD_LEFT - PAD_RIGHT;
+  var chartH = H - PAD_TOP - PAD_BOTTOM;
+
+  // Escalas
+  function xScale(i) { return PAD_LEFT + (i / (numRaces - 1)) * chartW; }
+  function yScale(pos) { return PAD_TOP + ((pos - 1) / (numPlayers - 1 || 1)) * chartH; }
+
+  // Líneas de guía horizontales (una por posición)
+  var gridLines = '';
+  for (var pos = 1; pos <= numPlayers; pos++) {
+    var y = yScale(pos);
+    gridLines += '<line x1="' + PAD_LEFT + '" y1="' + y + '" x2="' + (W - PAD_RIGHT) + '" y2="' + y +
+      '" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>';
+    gridLines += '<text x="' + (PAD_LEFT - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="9" fill="rgba(255,255,255,0.3)" font-family="Arial">' + pos + '</text>';
+  }
+
+  // Etiquetas del eje X (nombre corto del GP)
+  var xLabels = '';
+  scored.forEach(function(r, i) {
+    var x = xScale(i);
+    xLabels += '<text x="' + x + '" y="' + (H - 8) + '" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.4)" font-family="Arial">' + r.short.substring(0,3).toUpperCase() + '</text>';
+    if (i > 0) {
+      xLabels += '<line x1="' + x + '" y1="' + PAD_TOP + '" x2="' + x + '" y2="' + (H - PAD_BOTTOM) + '" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>';
+    }
+  });
+
+  // Líneas y puntos por jugador
+  var lines = '';
+  players.forEach(function(player, pi) {
+    var color = COLORS[pi % COLORS.length];
+    var pts = posData[player];
+
+    // Línea
+    var d = pts.map(function(p, i) {
+      return (i === 0 ? 'M' : 'L') + xScale(i).toFixed(1) + ',' + yScale(p.pos).toFixed(1);
+    }).join(' ');
+    lines += '<path d="' + d + '" stroke="' + color + '" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round" opacity="0.9"/>';
+
+    // Puntos en cada GP
+    pts.forEach(function(p, i) {
+      var cx = xScale(i).toFixed(1);
+      var cy = yScale(p.pos).toFixed(1);
+      lines += '<circle cx="' + cx + '" cy="' + cy + '" r="3.5" fill="' + color + '" stroke="#0F0F17" stroke-width="1.5">' +
+        '<title>' + player + ' · R' + scored[i].round + ' ' + scored[i].short + ': P' + p.pos + ' (' + p.pts + ' pts)</title>' +
+        '</circle>';
+    });
+
+    // Etiqueta final (posición actual + nombre)
+    var last = pts[pts.length - 1];
+    var lx = (xScale(numRaces - 1) + 7).toFixed(1);
+    var ly = yScale(last.pos).toFixed(1);
+    lines += '<text x="' + lx + '" y="' + (parseFloat(ly) + 4) + '" font-size="9.5" font-weight="700" fill="' + color + '" font-family="Arial">' +
+      player.split(' ')[0] + '</text>';
+  });
+
+  // SVG final
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">' +
+    gridLines + xLabels + lines +
+    '</svg>';
+
+  // Leyenda debajo
+  var legend = players.map(function(p, pi) {
+    var last = posData[p][posData[p].length - 1];
+    var color = COLORS[pi % COLORS.length];
+    return '<div class="evo-legend-item">' +
+      '<span class="evo-legend-dot" style="background:' + color + '"></span>' +
+      '<span class="evo-legend-name">' + p + '</span>' +
+      '<span class="evo-legend-pos">P' + last.pos + '</span>' +
+      '</div>';
+  }).sort(function(a, b) {
+    // Ordenar leyenda por posición final
+    var posA = posData[players[players.indexOf(a.match(/evo-legend-name">(.*?)<\/span>/)?.[1])]];
+    return 0;
+  }).join('');
+
+  // Re-ordenar leyenda por posición final
+  var legendItems = players.map(function(p, pi) {
+    var last = posData[p][posData[p].length - 1];
+    return { player: p, pos: last.pos, pts: last.pts, color: COLORS[pi % COLORS.length] };
+  }).sort(function(a, b) { return a.pos - b.pos; });
+
+  var legendHtml = legendItems.map(function(item) {
+    return '<div class="evo-legend-item">' +
+      '<span class="evo-legend-rank">' + item.pos + '</span>' +
+      '<span class="evo-legend-dot" style="background:' + item.color + '"></span>' +
+      '<span class="evo-legend-name">' + item.player + '</span>' +
+      '<span class="evo-legend-pts">' + item.pts + ' pts</span>' +
+      '</div>';
+  }).join('');
+
+  el.innerHTML =
+    '<div class="evo-card">' +
+      '<div class="evo-header">' +
+        '<div class="evo-title">EVOLUCIÓN DE POSICIONES</div>' +
+        '<div class="evo-subtitle">Acumulado tras ' + numRaces + ' fecha' + (numRaces > 1 ? 's' : '') + '</div>' +
+      '</div>' +
+      '<div class="evo-chart-wrap">' + svg + '</div>' +
+      '<div class="evo-legend">' + legendHtml + '</div>' +
+    '</div>';
+}
+
 function renderProfileTab(el) {
   const saved = loadLastPredLocal();
   if (!saved) {
@@ -2674,6 +3249,7 @@ function appInit() {
     populateFormSelects();
     populateGPSelect('result-gp-select', '');
     initPredictionForm();
+    initPlayerNameHint();
     updateBanner();
   } catch(e) {
     console.error('appInit error:', e);
@@ -2706,7 +3282,9 @@ window.resetRace       = resetRace;
 window.saveResults     = saveResults;
 window.showView        = showView;
 window.toggleNoDNF     = toggleNoDNF;
-window.onGPSelectChange = onGPSelectChange;
+window.onGPSelectChange     = onGPSelectChange;
+window.applyRememberedName  = applyRememberedName;
+window.toggleAdminGP        = toggleAdminGP;
 
 // Arrancar polling silencioso de datos (puntos, predicciones) cada 60s
 // Ya no detectamos cambio de GP activo — el jugador elige el GP
