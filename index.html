@@ -174,11 +174,11 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 200;
-  background: rgba(8, 8, 13, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 2px solid var(--f1-red);
-  box-shadow: 0 4px 40px rgba(232,0,45,0.15);
+  background: rgba(6, 6, 10, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 2px solid rgba(232,0,45,0.8);
+  box-shadow: 0 4px 40px rgba(232,0,45,0.18), 0 1px 0 rgba(232,0,45,0.3);
 }
 
 .header-content {
@@ -216,16 +216,18 @@ body::before {
 .logo-main {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.25rem;
-  letter-spacing: 2px;
+  font-size: 1.35rem;
+  letter-spacing: 3px;
   color: var(--white);
+  text-shadow: 0 0 20px rgba(232,0,45,0.3);
 }
 .logo-season {
   font-family: var(--font-display);
-  font-size: 0.6rem;
-  letter-spacing: 2px;
+  font-size: 0.58rem;
+  letter-spacing: 3px;
   color: var(--f1-red);
-  font-weight: 700;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 /* ── ADMIN HIDDEN TRIGGER — solo visible con ?admin=1 ── */
@@ -257,8 +259,8 @@ body::before {
 .nav-btn {
   flex: 1; background: none; border: none; cursor: pointer;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 4px; padding: 10px 4px 14px;
-  color: rgba(255,255,255,0.3);
+  gap: 3px; padding: 10px 4px 14px;
+  color: rgba(255,255,255,0.25);
   transition: color 0.18s;
   position: relative;
   -webkit-tap-highlight-color: transparent;
@@ -272,19 +274,21 @@ body::before {
 .nav-btn.active::after { transform: scaleX(1); }
 .nav-btn:active { background: rgba(255,255,255,0.06); }
 .nav-icon { font-size: 1.4rem; line-height: 1; }
-.nav-label { font-family: var(--font-display); font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+.nav-label { font-family: var(--font-display); font-size: 0.62rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
 .nav-btn.active { color: var(--f1-red); }
+.nav-btn.active .nav-icon { filter: drop-shadow(0 0 6px rgba(232,0,45,0.5)); }
 
 /* ── ADMIN NAV BTN siempre visible ── */
 #nav-btn-admin { display: flex; }
 
 /* ============================================================ RACE BANNER */
 .race-banner {
-  background: linear-gradient(135deg, var(--black-3) 0%, #1a0308 60%, var(--black-3) 100%);
-  border-bottom: 1px solid var(--card-border);
-  padding: 14px 16px;
+  background: linear-gradient(135deg, #0d0d16 0%, #1a0308 50%, #0d0d16 100%);
+  border-bottom: 2px solid rgba(232,0,45,0.4);
+  padding: 16px 16px 14px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 30px rgba(232,0,45,0.08);
 }
 .race-banner::before {
   content: 'GP';
@@ -306,8 +310,9 @@ body::before {
 }
 .race-banner-name {
   font-family: var(--font-display);
-  font-size: 1.5rem; font-weight: 800; letter-spacing: 1px;
+  font-size: 1.6rem; font-weight: 900; letter-spacing: 2px;
   line-height: 1.1; text-transform: uppercase;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
 }
 .race-banner-meta {
   display: flex; align-items: center; gap: 8px; margin-top: 4px;
@@ -347,8 +352,8 @@ body::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(to right, var(--f1-red), transparent);
-  opacity: 0.6;
+  background: linear-gradient(to right, var(--f1-red), rgba(232,0,45,0.3), transparent);
+  opacity: 0.9;
 }
 
 .card-selector { padding: 14px 16px; }
@@ -356,7 +361,7 @@ body::before {
 .card-header { margin-bottom: 20px; }
 .card-title {
   font-family: var(--font-display);
-  font-size: 1.2rem; font-weight: 800; letter-spacing: 2px;
+  font-size: 1.25rem; font-weight: 900; letter-spacing: 2.5px;
   text-transform: uppercase; color: var(--white);
 }
 .card-subtitle { font-size: 0.9rem; color: var(--white-muted); margin-top: 2px; }
@@ -528,8 +533,8 @@ body::before {
 .btn-full { width: 100%; margin-top: 8px; }
 .btn-sm { padding: 8px 14px; font-size: 0.75rem; }
 
-.btn-primary { background: var(--f1-red); color: #fff; box-shadow: var(--shadow-red); }
-.btn-primary:hover { background: var(--f1-red-dark); box-shadow: 0 12px 40px rgba(232,0,45,0.35); transform: translateY(-1px); }
+.btn-primary { background: linear-gradient(135deg, var(--f1-red), #c5001f); color: #fff; box-shadow: var(--shadow-red); }
+.btn-primary:hover { background: linear-gradient(135deg, #ff1a3d, var(--f1-red)); box-shadow: 0 12px 40px rgba(232,0,45,0.4); transform: translateY(-1px); }
 .btn-primary:active { transform: translateY(0); }
 
 .btn-secondary { background: var(--white-faint); color: var(--white); border: 1px solid var(--card-border); }
@@ -636,8 +641,9 @@ body::before {
   text-transform: uppercase; color: var(--f1-red); font-weight: 700;
 }
 .section-title-text {
-  font-family: var(--font-display); font-size: 1.8rem; font-weight: 900;
-  letter-spacing: 2px; text-transform: uppercase; line-height: 1; margin-top: 4px;
+  font-family: var(--font-display); font-size: 2rem; font-weight: 900;
+  letter-spacing: 3px; text-transform: uppercase; line-height: 1; margin-top: 4px;
+  text-shadow: 0 2px 20px rgba(232,0,45,0.15);
 }
 
 /* ── MI PERFIL TAB ── */
@@ -687,16 +693,50 @@ body::before {
 .gp-tabs-wrapper::-webkit-scrollbar { display: none; }
 .gp-tabs { display: flex; gap: 6px; padding-bottom: 2px; min-width: max-content; }
 .gp-tab {
-  background: var(--card-bg); border: 1px solid var(--card-border);
-  color: var(--white-muted); padding: 8px 16px;
-  font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  color: var(--white-muted); padding: 7px 14px;
+  font-family: var(--font-display); font-size: 0.75rem; font-weight: 800;
   letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer;
   border-radius: 20px; transition: all var(--transition); white-space: nowrap;
 }
-.gp-tab:hover { border-color: var(--card-border-hover); color: var(--white); }
-.gp-tab.active { background: var(--f1-red); border-color: var(--f1-red); color: #fff; }
+.gp-tab:hover { border-color: rgba(232,0,45,0.4); color: var(--white); background: rgba(232,0,45,0.06); }
+.gp-tab.active { background: var(--f1-red); border-color: var(--f1-red); color: #fff; box-shadow: 0 2px 12px rgba(232,0,45,0.3); }
 .gp-tab.tab-profile { }
 .gp-tab.tab-profile.active { background: var(--accent-blue); border-color: var(--accent-blue); color: #000; }
+
+/* ── GP ROUNDS ACCORDION ── */
+.gp-accordion-wrap { margin-top: 4px; }
+.gp-accordion-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 10px 14px; cursor: pointer;
+  font-family: var(--font-display); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--white-muted);
+  transition: all var(--transition); margin-bottom: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.gp-accordion-toggle:hover { background: rgba(232,0,45,0.06); border-color: rgba(232,0,45,0.3); color: var(--white); }
+.gp-accordion-toggle.open { color: var(--f1-red); border-color: rgba(232,0,45,0.3); background: rgba(232,0,45,0.05); }
+.gp-accordion-arrow { font-size: 0.7rem; transition: transform 0.22s; }
+.gp-accordion-toggle.open .gp-accordion-arrow { transform: rotate(180deg); }
+.gp-accordion-count { font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; color: var(--white-muted); opacity: 0.6; margin-left: 6px; }
+.gp-rounds-grid {
+  display: none; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 6px;
+  padding: 4px 0 8px;
+}
+.gp-rounds-grid.open { display: grid; }
+.gp-round-btn {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  color: var(--white-muted); padding: 8px 10px; text-align: center;
+  font-family: var(--font-display); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer;
+  border-radius: 8px; transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+.gp-round-btn:hover { border-color: rgba(232,0,45,0.4); color: var(--white); background: rgba(232,0,45,0.07); }
+.gp-round-btn.active { background: var(--f1-red); border-color: var(--f1-red); color: #fff; box-shadow: 0 2px 10px rgba(232,0,45,0.25); }
+.gp-round-btn-flag { font-size: 1rem; display: block; margin-bottom: 2px; }
+.gp-round-btn-label { display: block; font-size: 0.62rem; letter-spacing: 0.5px; opacity: 0.85; }
 
 /* Leaderboard */
 .leaderboard-card {
@@ -704,7 +744,7 @@ body::before {
   border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 16px;
 }
 .lb-header {
-  padding: 12px 16px; background: var(--black-3);
+  padding: 12px 16px; background: linear-gradient(135deg, var(--black-3), rgba(232,0,45,0.04));
   border-bottom: 1px solid var(--card-border);
   display: flex; align-items: center; justify-content: space-between;
 }
@@ -738,7 +778,7 @@ body::before {
 .pos-delta.up   { color: var(--green); background: rgba(0,230,100,0.12); }
 .pos-delta.down { color: #ff4d4d; background: rgba(255,77,77,0.12); }
 .pos-delta.same { color: var(--white-muted); background: transparent; font-size: 0.8rem; }
-.pts-cell { font-family: var(--font-display); font-size: 1.1rem; font-weight: 900; color: var(--gold); }
+.pts-cell { font-family: var(--font-display); font-size: 1.15rem; font-weight: 900; color: var(--gold); letter-spacing: -0.5px; }
 .pts-breakdown { font-size: 0.75rem; color: var(--white-muted); }
 .pts-correct { color: var(--green); font-weight: 600; }
 .pts-bar { height: 4px; background: var(--white-faint); border-radius: 2px; overflow: hidden; }
@@ -921,15 +961,16 @@ body::before {
 
 /* ============================================================ TOAST */
 .toast {
-  position: fixed; bottom: 80px; left: 50%;
+  position: fixed; bottom: 90px; left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: var(--card-bg); border: 1px solid var(--card-border);
+  background: rgba(22,22,35,0.97); border: 1px solid rgba(232,0,45,0.3);
   border-left: 3px solid var(--f1-red); color: var(--white);
-  padding: 12px 20px; border-radius: var(--radius-lg);
-  font-size: 0.9rem; font-weight: 600;
-  z-index: 9000; box-shadow: var(--shadow);
+  padding: 12px 22px; border-radius: 50px;
+  font-size: 0.88rem; font-weight: 700;
+  z-index: 9000; box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,0,45,0.1);
   transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   white-space: nowrap; max-width: calc(100vw - 40px); text-align: center;
+  backdrop-filter: blur(12px);
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
@@ -970,8 +1011,9 @@ body::before {
 
 /* ============================================================ COUNTDOWN */
 #qualy-countdown {
-  background: rgba(0,0,0,0.35); border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px;
+  background: rgba(8,8,13,0.7); border-bottom: 1px solid rgba(232,0,45,0.15);
+  padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 46px;
+  backdrop-filter: blur(8px);
 }
 .cd-label {
   font-family: var(--font-display); font-size: 0.58rem; font-weight: 800;
@@ -979,7 +1021,7 @@ body::before {
 }
 .cd-units { display: flex; align-items: center; gap: 6px; }
 .cd-unit { display: flex; flex-direction: column; align-items: center; min-width: 38px; }
-.cd-num { font-family: var(--font-display); font-size: 1.4rem; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -1px; }
+.cd-num { font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -1px; text-shadow: 0 0 20px rgba(232,0,45,0.4); }
 .cd-unit-label { font-family: var(--font-display); font-size: 0.5rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-top: 2px; }
 .cd-sep { font-size: 1.1rem; font-weight: 900; color: var(--f1-red); line-height: 1; margin-bottom: 10px; }
 .cd-live { font-family: var(--font-display); font-size: 0.65rem; font-weight: 800; letter-spacing: 2px; color: var(--f1-red); animation: pulse 1s infinite; }
@@ -1000,6 +1042,87 @@ body::before {
 .mt-8 { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }
 .flex-between { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+/* ============================================================ PLAYER SUGGESTIONS */
+.player-suggestions {
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  background: var(--black-2);
+  border: 1px solid rgba(232,0,45,0.35);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  z-index: 500;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  max-height: 220px;
+  overflow-y: auto;
+}
+.player-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.12s;
+  -webkit-tap-highlight-color: transparent;
+}
+.player-suggestion-item:last-child { border-bottom: none; }
+.player-suggestion-item:hover,
+.player-suggestion-item.highlighted { background: rgba(232,0,45,0.1); }
+.player-suggestion-icon { font-size: 0.85rem; flex-shrink: 0; opacity: 0.6; }
+.player-suggestion-name { font-weight: 700; font-size: 0.95rem; color: var(--white); flex: 1; }
+.player-suggestion-badge {
+  font-family: var(--font-display);
+  font-size: 0.58rem; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; padding: 2px 7px; border-radius: 10px;
+  flex-shrink: 0;
+}
+.player-suggestion-badge.badge-me {
+  background: rgba(0,230,100,0.15); color: var(--green);
+  border: 1px solid rgba(0,230,100,0.3);
+}
+.player-suggestion-badge.badge-known {
+  background: rgba(255,255,255,0.06); color: var(--white-muted);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.player-suggestion-match { color: var(--f1-red); }
+
+/* ── CIRCUIT STATS ACCORDION ── */
+.circ-accordion-btn {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+  padding: 12px 14px; cursor: pointer;
+  transition: all 0.18s; -webkit-tap-highlight-color: transparent;
+  text-align: left;
+}
+.circ-accordion-btn:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.18); }
+.circ-accordion-btn:active { background: rgba(255,255,255,0.05); }
+.circ-accordion-btn.open { border-color: rgba(255,255,255,0.15); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.circ-btn-icon { font-size: 1.25rem; flex-shrink: 0; }
+.circ-btn-text { flex: 1; }
+.circ-btn-title {
+  font-family: var(--font-display); font-size: 0.8rem; font-weight: 800;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--white);
+  display: block; line-height: 1.2;
+}
+.circ-btn-sub {
+  font-size: 0.72rem; color: var(--white-muted); margin-top: 2px;
+  display: block; font-weight: 500;
+}
+.circ-accordion-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(255,255,255,0.07); color: var(--white-muted);
+  font-size: 0.6rem; transition: transform 0.22s, background 0.18s;
+}
+.circ-accordion-btn:hover .circ-accordion-arrow { background: rgba(255,255,255,0.12); color: var(--white); }
+.circ-accordion-btn.open .circ-accordion-arrow { transform: rotate(180deg); }
+.circ-accordion-body { display: none; border: 1px solid rgba(255,255,255,0.1); border-top: none; border-radius: 0 0 10px 10px; overflow: hidden; }
+.circ-accordion-body.open { display: block; }
+.circ-card { background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); padding: 14px; margin-bottom: 0; border-radius: 0; border: none; }
 </style>
 
 <script>
@@ -1167,9 +1290,11 @@ body::before {
           </div>
 
           <div id="form-fields-wrap" style="display:none;">
-            <div class="form-field">
+            <div class="form-field" style="position:relative;">
               <label class="field-label required">👤 NOMBRE DE JUGADOR</label>
               <input type="text" id="f-player" class="field-input" placeholder="Tu nombre..." maxlength="24" autocomplete="off" spellcheck="false">
+              <!-- Dropdown de sugerencias de jugadores -->
+              <div id="player-suggestions" class="player-suggestions" style="display:none;"></div>
               <div class="player-name-hint" id="player-name-hint">
                 <span>¿Sos</span>
                 <span class="player-name-chip" id="player-name-chip" onclick="applyRememberedName()">
@@ -1284,7 +1409,7 @@ body::before {
       <div class="gp-tabs-wrapper">
         <div class="gp-tabs" id="gp-tabs">
           <button class="gp-tab active" data-tab="general">GENERAL</button>
-          <button class="gp-tab tab-profile" data-tab="profile">👤 MI PERFIL</button>
+
         </div>
       </div>
       <div id="tabla-content">
@@ -1620,6 +1745,141 @@ function savePlayerName(name) {
 function loadPlayerName() {
   try { return localStorage.getItem(LS_PLAYER_KEY) || ''; } catch(e) { return ''; }
 }
+// ─── OBTENER LISTA DE JUGADORES CONOCIDOS ───────────────────
+function getKnownPlayers() {
+  var seen = {};
+  var players = [];
+  // Extraer jugadores únicos de todos los pronósticos cargados
+  if (appState.predictions && appState.predictions.length) {
+    appState.predictions.forEach(function(p) {
+      if (p.player && !seen[p.player.toLowerCase()]) {
+        seen[p.player.toLowerCase()] = true;
+        players.push(p.player);
+      }
+    });
+  }
+  // Ordenar alfabéticamente
+  players.sort(function(a, b) { return a.localeCompare(b); });
+  return players;
+}
+
+// ─── SUGERENCIAS DE NOMBRE ───────────────────────────────────
+var _suggestHighlight = -1;
+
+function showPlayerSuggestions(query) {
+  var box = document.getElementById('player-suggestions');
+  var input = document.getElementById('f-player');
+  if (!box) return;
+
+  var saved = loadPlayerName();
+  var known = getKnownPlayers();
+  var q = (query || '').trim().toLowerCase();
+
+  // Construir lista: siempre mostrar "yo" primero si hay nombre guardado
+  var items = [];
+
+  if (q === '') {
+    // Sin texto: mostrar nombre propio primero, luego todos los conocidos
+    if (saved) {
+      items.push({ name: saved, badge: 'me', match: '' });
+    }
+    known.forEach(function(name) {
+      if (!saved || name.toLowerCase() !== saved.toLowerCase()) {
+        items.push({ name: name, badge: 'known', match: '' });
+      }
+    });
+  } else {
+    // Con texto: filtrar por coincidencia (empieza por / contiene)
+    var startsWith = [];
+    var contains = [];
+    known.forEach(function(name) {
+      var nl = name.toLowerCase();
+      if (nl.startsWith(q)) startsWith.push(name);
+      else if (nl.includes(q)) contains.push(name);
+    });
+    var filtered = startsWith.concat(contains);
+
+    filtered.forEach(function(name) {
+      var badge = (saved && name.toLowerCase() === saved.toLowerCase()) ? 'me' : 'known';
+      items.push({ name: name, badge: badge, match: q });
+    });
+
+    // Si hay nombre propio guardado y no está en la lista, agregarlo si coincide
+    if (saved && q.length > 0 && saved.toLowerCase().startsWith(q) && !filtered.some(function(n) { return n.toLowerCase() === saved.toLowerCase(); })) {
+      items.unshift({ name: saved, badge: 'me', match: q });
+    }
+  }
+
+  if (!items.length) {
+    box.style.display = 'none';
+    return;
+  }
+
+  // Resaltar el fragmento coincidente en el nombre
+  function highlight(name, q) {
+    if (!q) return name;
+    var idx = name.toLowerCase().indexOf(q);
+    if (idx < 0) return name;
+    return name.substring(0, idx) +
+      '<span class="player-suggestion-match">' + name.substring(idx, idx + q.length) + '</span>' +
+      name.substring(idx + q.length);
+  }
+
+  box.innerHTML = items.map(function(item, i) {
+    var badgeHtml = item.badge === 'me'
+      ? '<span class="player-suggestion-badge badge-me">YO</span>'
+      : '<span class="player-suggestion-badge badge-known">Jugador</span>';
+    return '<div class="player-suggestion-item" data-name="' + item.name + '" data-index="' + i + '">' +
+      '<span class="player-suggestion-icon">👤</span>' +
+      '<span class="player-suggestion-name">' + highlight(item.name, item.match) + '</span>' +
+      badgeHtml +
+    '</div>';
+  }).join('');
+
+  // Click/tap handlers
+  box.querySelectorAll('.player-suggestion-item').forEach(function(el) {
+    el.addEventListener('mousedown', function(e) {
+      e.preventDefault(); // evitar que el input pierda foco antes del click
+    });
+    el.addEventListener('click', function() {
+      selectPlayerSuggestion(el.dataset.name);
+    });
+  });
+
+  _suggestHighlight = -1;
+  box.style.display = 'block';
+
+  // Ajustar estilo del input cuando el dropdown está abierto
+  if (input) {
+    input.style.borderBottomLeftRadius = '0';
+    input.style.borderBottomRightRadius = '0';
+    input.style.borderColor = 'rgba(232,0,45,0.5)';
+    input.style.borderBottom = 'none';
+  }
+}
+
+function hidePlayerSuggestions() {
+  var box = document.getElementById('player-suggestions');
+  var input = document.getElementById('f-player');
+  if (box) box.style.display = 'none';
+  if (input) {
+    input.style.borderBottomLeftRadius = '';
+    input.style.borderBottomRightRadius = '';
+    input.style.borderColor = '';
+    input.style.borderBottom = '';
+  }
+  _suggestHighlight = -1;
+}
+
+function selectPlayerSuggestion(name) {
+  var input = document.getElementById('f-player');
+  var hint  = document.getElementById('player-name-hint');
+  if (input) input.value = name;
+  if (hint) hint.classList.remove('visible');
+  hidePlayerSuggestions();
+  if (input) input.blur();
+}
+
 function initPlayerNameHint() {
   var saved = loadPlayerName();
   var input = document.getElementById('f-player');
@@ -1630,21 +1890,55 @@ function initPlayerNameHint() {
   // Si hay nombre guardado, precargarlo directamente en el campo
   if (saved) {
     input.value = saved;
-    hint.classList.remove('visible'); // campo ya relleno, no mostrar hint
+    hint.classList.remove('visible');
   }
 
-  // Al limpiar el campo manualmente: mostrar el chip de sugerencia
+  // Mostrar sugerencias al hacer foco
+  input.addEventListener('focus', function() {
+    showPlayerSuggestions(input.value);
+  });
+
+  // Filtrar sugerencias mientras escribe
   input.addEventListener('input', function() {
-    if (!saved) return;
     var current = input.value.trim();
-    if (current === '') {
+    if (saved && current === '') {
       chip.textContent = saved;
       hint.classList.add('visible');
     } else {
       hint.classList.remove('visible');
     }
+    showPlayerSuggestions(current);
+  });
+
+  // Teclado: navegar con flechas y Enter
+  input.addEventListener('keydown', function(e) {
+    var box = document.getElementById('player-suggestions');
+    if (!box || box.style.display === 'none') return;
+    var items = box.querySelectorAll('.player-suggestion-item');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      _suggestHighlight = Math.min(_suggestHighlight + 1, items.length - 1);
+      items.forEach(function(el, i) { el.classList.toggle('highlighted', i === _suggestHighlight); });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      _suggestHighlight = Math.max(_suggestHighlight - 1, 0);
+      items.forEach(function(el, i) { el.classList.toggle('highlighted', i === _suggestHighlight); });
+    } else if (e.key === 'Enter' && _suggestHighlight >= 0) {
+      e.preventDefault();
+      selectPlayerSuggestion(items[_suggestHighlight].dataset.name);
+    } else if (e.key === 'Escape') {
+      hidePlayerSuggestions();
+    }
+  });
+
+  // Cerrar al perder foco (con pequeño delay para permitir clicks)
+  input.addEventListener('blur', function() {
+    setTimeout(hidePlayerSuggestions, 180);
   });
 }
+
 function applyRememberedName() {
   var saved = loadPlayerName();
   var input = document.getElementById('f-player');
@@ -1652,6 +1946,7 @@ function applyRememberedName() {
   if (input && saved) {
     input.value = saved;
     if (hint) hint.classList.remove('visible');
+    hidePlayerSuggestions();
     input.focus();
   }
 }
@@ -1841,20 +2136,40 @@ function renderCircuitStats(gpId) {
   var wrap  = document.getElementById('circuit-stats-wrap');
   if (!wrap) return;
   var stats = CIRCUIT_STATS[gpId];
-  var race  = RACES_2026.find(r => r.id === gpId);
+  var race  = RACES_2026.find(function(r) { return r.id === gpId; });
   if (!stats || !race) { wrap.innerHTML = ''; wrap.style.display = 'none'; return; }
+
+  // Recordar si estaba abierto para el GP anterior
+  var wasOpen = wrap.querySelector('.circ-accordion-body.open') !== null;
+
   wrap.style.display = 'block';
   wrap.innerHTML =
-    '<div class="circ-card">' +
-      '<div class="circ-title">' + race.flag + ' Estadísticas · ' + race.circuit + '</div>' +
-      '<div class="circ-grid">' +
-        '<div class="circ-item"><div class="circ-icon">⚡</div><div class="circ-lbl">Última Pole</div><div class="circ-val">' + stats.lastPole + '</div></div>' +
-        '<div class="circ-item"><div class="circ-icon">🏆</div><div class="circ-lbl">Último Ganador</div><div class="circ-val">' + stats.lastWinner + '</div></div>' +
-        '<div class="circ-item"><div class="circ-icon">⏱</div><div class="circ-lbl">Vuelta Rápida</div><div class="circ-val">' + stats.lastFastest + '</div></div>' +
-        '<div class="circ-item circ-wide"><div class="circ-icon">🥇</div><div class="circ-lbl">Último Podio</div><div class="circ-val">' + stats.lastPodium + '</div></div>' +
+    '<button class="circ-accordion-btn' + (wasOpen ? ' open' : '') + '" onclick="toggleCircuitStats(this)" type="button">' +
+      '<span class="circ-btn-icon">📊</span>' +
+      '<span class="circ-btn-text">' +
+        '<span class="circ-btn-title">Estadísticas del circuito</span>' +
+        '<span class="circ-btn-sub">' + race.flag + ' ' + race.circuit + ' · Tocá para ver historial</span>' +
+      '</span>' +
+      '<span class="circ-accordion-arrow">▼</span>' +
+    '</button>' +
+    '<div class="circ-accordion-body' + (wasOpen ? ' open' : '') + '">' +
+      '<div class="circ-card">' +
+        '<div class="circ-grid">' +
+          '<div class="circ-item"><div class="circ-icon">⚡</div><div class="circ-lbl">Última Pole</div><div class="circ-val">' + stats.lastPole + '</div></div>' +
+          '<div class="circ-item"><div class="circ-icon">🏆</div><div class="circ-lbl">Último Ganador</div><div class="circ-val">' + stats.lastWinner + '</div></div>' +
+          '<div class="circ-item"><div class="circ-icon">⏱</div><div class="circ-lbl">Vuelta Rápida</div><div class="circ-val">' + stats.lastFastest + '</div></div>' +
+          '<div class="circ-item circ-wide"><div class="circ-icon">🥇</div><div class="circ-lbl">Último Podio</div><div class="circ-val">' + stats.lastPodium + '</div></div>' +
+        '</div>' +
+        '<div class="circ-fact">💡 ' + stats.fact + '</div>' +
       '</div>' +
-      '<div class="circ-fact">💡 ' + stats.fact + '</div>' +
     '</div>';
+}
+
+function toggleCircuitStats(btn) {
+  var body = btn.nextElementSibling;
+  var open = body.classList.contains('open');
+  btn.classList.toggle('open', !open);
+  body.classList.toggle('open', !open);
 }
 
 // ─── BANNER ──────────────────────────────────────────────────
@@ -1893,19 +2208,31 @@ function teamOptions(sel = '') {
   return TEAMS_2026.map(t => `<option value="${t}"${t === sel ? ' selected' : ''}>${t}</option>`).join('');
 }
 
-function populateGPSelect(id, sel = '') {
-  const el = document.getElementById(id);
+function populateGPSelect(id, sel) {
+  sel = sel || '';
+  var el = document.getElementById(id);
   if (!el) return;
-  const now = Date.now();
-  const isPlayerForm = id === 'f-gp';
+  var now = Date.now();
+  var isPlayerForm = id === 'f-gp';
+  var isAdminResult = id === 'result-gp-select';
   el.innerHTML = '<option value="">— Seleccioná el GP —</option>' +
-    RACES_2026.map(r => {
-      // Para sprint weekends, el cierre es la Sprint Qualy (viernes). Para el resto, la Qualy normal.
-      const closingTime = isPlayerForm ? (r.sprintQualy || r.qualy) : null;
-      const qualyPassed = closingTime && (now - new Date(closingTime).getTime()) > 7200000;
-      const disabled    = qualyPassed ? ' disabled' : '';
-      const label       = `${r.flag} R${r.round} — ${r.short} (${r.date})${r.sprint ? ' ⚡ SPRINT' : ''}${qualyPassed ? ' 🔒' : ''}`;
-      return `<option value="${r.id}"${r.id === sel ? ' selected' : ''}${disabled}>${label}</option>`;
+    RACES_2026.map(function(r) {
+      var disabled = '';
+      var suffix = '';
+      if (r.sprint) suffix += ' ⚡ SPRINT';
+
+      if (isPlayerForm) {
+        // Jugador: bloquear si la qualy ya pasó
+        var closingTime = r.sprintQualy || r.qualy;
+        var qualyPassed = closingTime && (now - new Date(closingTime).getTime()) > 7200000;
+        if (qualyPassed) { disabled = ' disabled'; suffix += ' 🔒'; }
+      } else if (isAdminResult) {
+        // Admin resultados: bloquear si ese GP ya tiene resultados cargados
+        if (appState.results && appState.results[r.id]) { disabled = ' disabled'; suffix += ' ✅ Puntuado'; }
+      }
+
+      var label = r.flag + ' R' + r.round + ' — ' + r.short + ' (' + r.date + ')' + suffix;
+      return '<option value="' + r.id + '"' + (r.id === sel ? ' selected' : '') + disabled + '>' + label + '</option>';
     }).join('');
 }
 
@@ -2559,20 +2886,53 @@ function _fmtCountdown(ms) {
 }
 
 function renderTablas() {
-  const scored = RACES_2026.filter(r => appState.results[r.id]);
-  const tabs = [
-    { id:'general',   label:'GENERAL',       cls: '' },
-    { id:'evolucion', label:'📈 EVOLUCIÓN',   cls: '' },
-    { id:'profile',   label:'👤 MI PERFIL',  cls: 'tab-profile' },
-    ...scored.map(r => ({ id: r.id, label: `R${r.round} ${r.short}`, cls: '' }))
+  var scored = RACES_2026.filter(function(r) { return appState.results[r.id]; });
+  var mainTabs = [
+    { id:'general',   label:'GENERAL' },
+    { id:'evolucion', label:'📈 EVOLUCIÓN' },
   ];
-  const cont = document.getElementById('gp-tabs');
-  cont.innerHTML = tabs.map(t =>
-    `<button class="gp-tab${t.cls ? ' ' + t.cls : ''}${t.id === 'general' ? ' active' : ''}" data-tab="${t.id}">${t.label}</button>`
-  ).join('');
-  cont.querySelectorAll('.gp-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      cont.querySelectorAll('.gp-tab').forEach(b => b.classList.remove('active'));
+  var cont = document.getElementById('gp-tabs');
+
+  // Renderizar tabs principales
+  var tabsHtml = mainTabs.map(function(t) {
+    return '<button class="gp-tab' + (t.id === 'general' ? ' active' : '') + '" data-tab="' + t.id + '">' + t.label + '</button>';
+  }).join('');
+
+  // Accordion de GPs por ronda
+  var accordionHtml = '';
+  if (scored.length > 0) {
+    accordionHtml = '<div class="gp-accordion-wrap">' +
+      '<button class="gp-accordion-toggle" id="gp-accordion-btn" onclick="toggleGPAccordion()">' +
+        '<span>📊 RESULTADOS POR GP <span class="gp-accordion-count">(' + scored.length + ' disputado' + (scored.length !== 1 ? 's' : '') + ')</span></span>' +
+        '<span class="gp-accordion-arrow">▼</span>' +
+      '</button>' +
+      '<div class="gp-rounds-grid" id="gp-rounds-grid">' +
+        scored.map(function(r) {
+          return '<button class="gp-round-btn" data-tab="' + r.id + '" onclick="selectGPRound(this)">' +
+            '<span class="gp-round-btn-flag">' + r.flag + '</span>' +
+            '<span class="gp-round-btn-label">R' + r.round + ' ' + r.short + '</span>' +
+          '</button>';
+        }).join('') +
+      '</div>' +
+    '</div>';
+  }
+
+  cont.innerHTML = tabsHtml;
+  // Insertar accordion DESPUÉS del wrapper de tabs
+  var wrapper = cont.closest('.gp-tabs-wrapper');
+  var existingAccordion = document.getElementById('gp-accordion-container');
+  if (existingAccordion) existingAccordion.remove();
+  var accordionContainer = document.createElement('div');
+  accordionContainer.id = 'gp-accordion-container';
+  accordionContainer.innerHTML = accordionHtml;
+  wrapper.parentNode.insertBefore(accordionContainer, wrapper.nextSibling);
+
+  cont.querySelectorAll('.gp-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      cont.querySelectorAll('.gp-tab').forEach(function(b) { b.classList.remove('active'); });
+      // Desactivar round buttons
+      var grid = document.getElementById('gp-rounds-grid');
+      if (grid) grid.querySelectorAll('.gp-round-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
       renderTable(btn.dataset.tab);
     });
@@ -2580,12 +2940,33 @@ function renderTablas() {
   renderTable('general');
 }
 
+function toggleGPAccordion() {
+  var btn = document.getElementById('gp-accordion-btn');
+  var grid = document.getElementById('gp-rounds-grid');
+  if (!btn || !grid) return;
+  var isOpen = grid.classList.contains('open');
+  if (isOpen) {
+    grid.classList.remove('open');
+    btn.classList.remove('open');
+  } else {
+    grid.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
+function selectGPRound(el) {
+  // Desactivar tabs principales
+  var cont = document.getElementById('gp-tabs');
+  cont.querySelectorAll('.gp-tab').forEach(function(b) { b.classList.remove('active'); });
+  // Desactivar otros round buttons
+  var grid = document.getElementById('gp-rounds-grid');
+  grid.querySelectorAll('.gp-round-btn').forEach(function(b) { b.classList.remove('active'); });
+  el.classList.add('active');
+  renderTable(el.dataset.tab);
+}
+
 function renderTable(tabId) {
   const el = document.getElementById('tabla-content');
-  if (tabId === 'profile') {
-    renderProfileTab(el);
-    return;
-  }
   if (tabId === 'evolucion') {
     renderEvolucion(el);
     return;
@@ -3350,6 +3731,8 @@ window.showView        = showView;
 window.toggleNoDNF     = toggleNoDNF;
 window.onGPSelectChange     = onGPSelectChange;
 window.applyRememberedName  = applyRememberedName;
+window.hidePlayerSuggestions = hidePlayerSuggestions;
+window.showPlayerSuggestions = showPlayerSuggestions;
 window.toggleAdminGP        = toggleAdminGP;
 
 // Arrancar polling silencioso de datos (puntos, predicciones) cada 60s
