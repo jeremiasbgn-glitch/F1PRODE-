@@ -3915,19 +3915,40 @@ setTimeout(() => startDataPolling(), 5000);
   document.addEventListener('DOMContentLoaded', function() {
     OneSignalDeferred.push(function(OneSignal) {
       var isSubscribed = OneSignal.User.PushSubscription.optedIn;
-      if (!isSubscribed) {
+      if (!isSubscribed && 'Notification' in window && Notification.permission !== 'denied') {
         var banner = document.createElement('div');
         banner.id = 'notif-banner';
-        banner.style.cssText = 'background:rgba(232,0,45,0.08);border:1px solid rgba(232,0,45,0.2);border-radius:10px;padding:12px 14px;margin:0 16px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;';
-        banner.innerHTML = '<span style="font-size:1.2rem;flex-shrink:0;">🔔</span>' +
-          '<div style="flex:1"><div style="font-family:var(--font-display);font-size:0.75rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:white;">Activar notificaciones</div>' +
+        banner.style.cssText = 'background:rgba(232,0,45,0.08);border:1px solid rgba(232,0,45,0.2);border-radius:10px;padding:12px 14px;margin:0 16px 12px;display:flex;align-items:center;gap:10px;-webkit-tap-highlight-color:transparent;';
+        banner.innerHTML = '<span style="font-size:1.2rem;flex-shrink:0;pointer-events:none;">🔔</span>' +
+          '<div style="flex:1;pointer-events:none;"><div style="font-family:var(--font-display);font-size:0.75rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:white;">Activar notificaciones</div>' +
           '<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:2px;">Alertas de cierres y resultados</div></div>' +
-          '<span style="color:rgba(232,0,45,0.7);font-size:0.7rem;font-weight:800;flex-shrink:0;">ACTIVAR ›</span>';
-        banner.onclick = function() { window.fcmRequestPermission(); };
+          '<button id="notif-activate-btn" style="background:rgba(232,0,45,0.8);border:none;border-radius:6px;padding:7px 12px;color:white;font-family:var(--font-display);font-size:0.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;flex-shrink:0;">ACTIVAR</button>';
+        
         var raceBanner = document.querySelector('.race-banner');
         if (raceBanner && raceBanner.parentNode) {
           raceBanner.parentNode.insertBefore(banner, raceBanner.nextSibling);
         }
+
+        // El botón usa Notification API nativa directamente
+        document.getElementById('notif-activate-btn').addEventListener('click', function(e) {
+          e.stopPropagation();
+          Notification.requestPermission().then(function(permission) {
+            if (permission === 'granted') {
+              // Una vez que el usuario aceptó, inicializar OneSignal
+              OneSignal.User.PushSubscription.optIn().then(function() {
+                banner.remove();
+                showToast('🔔 Notificaciones activadas');
+                var dot = document.getElementById('notif-dot');
+                if (dot) dot.classList.remove('off');
+              }).catch(function() {
+                banner.remove();
+                showToast('🔔 Notificaciones activadas');
+              });
+            } else {
+              showToast('❌ Permiso denegado');
+            }
+          });
+        });
       }
     });
   });
